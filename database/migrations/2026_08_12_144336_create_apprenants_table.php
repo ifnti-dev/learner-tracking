@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('apprenants', function (Blueprint $table) {
             $table->id();
             $table->string("etablissement");
+            $table->foreignId('promotion_id')->constrained('promotions')->onDelete('set null');
             $table->timestamps();
+           
             
         });
     }
