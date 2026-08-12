@@ -57,6 +57,7 @@ npm run dev
 
 Démarrez le serveur de développement Laravel :
 ```bash
-php artisan serve
+php artisan serve 
+Composer run dev 
 ```
  L'application sera accessible sur : `http://127.0.0.1:8000`
