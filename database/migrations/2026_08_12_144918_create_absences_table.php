@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('absences', function (Blueprint $table) {
             $table->id();
+            $table->string('motif');
             $table->timestamps();
         });
     }

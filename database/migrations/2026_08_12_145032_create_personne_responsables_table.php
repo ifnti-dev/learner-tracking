@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('personne_responsables', function (Blueprint $table) {
             $table->id();
+            $table->string('nom');
+            $table->string('prenom');
+            $table->string('telephone')->unique();
+            $table->enum('type', ['PERE', 'MERE', 'TUTEUR']);
             $table->timestamps();
         });
     }

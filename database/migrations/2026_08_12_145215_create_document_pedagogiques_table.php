@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('document_pedagogiques', function (Blueprint $table) {
             $table->id();
+            $table->string('titre');
+            $table->string('description');
+            $table->string('auteur');
+            $table->unsignedInteger('quantite');
             $table->timestamps();
         });
     }
