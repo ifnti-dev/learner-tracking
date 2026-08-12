@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('absences', function (Blueprint $table) {
             $table->id();
             $table->string('motif');
+
+            $table->foreignId('apprenant_id')->constrained('apprenants')->onDelete('set null');
+            $table->foreignId('seance_id')->constrained('seances')->onDelete('set null');
             $table->timestamps();
         });
     }

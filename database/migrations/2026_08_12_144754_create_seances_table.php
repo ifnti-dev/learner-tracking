@@ -19,6 +19,8 @@ return new class extends Migration
             $table->time('heure_debut');
             $table->time('heure_fin');
             $table->enum('type_seance', ['ENLIGNE', 'PRESENTIEL']);
+            $table->foreignId('user_id')->constrained('users')->onDelete('set null');
+            $table->foreignId('promotion_id')->constrained('promotions')->onDelete('set null');
             $table->timestamps();
         });
     }

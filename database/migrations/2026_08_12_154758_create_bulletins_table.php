@@ -11,11 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('emprunts', function (Blueprint $table) {
+        Schema::create('bulletins', function (Blueprint $table) {
             $table->id();
-            $table->date('date');
-            $table->date('date_restitution');
+            $table->string('titre');
+            $table->string('type_document');
+            $table->string('chemin_fichier');
+            $table->json('data');
+
+            $table->foreignId('niveau_id')->constrained('niveaux')->onDelete('set null');
             $table->foreignId('apprenant_id')->constrained('apprenants')->onDelete('set null');
+
             $table->timestamps();
         });
     }
@@ -25,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('emprunts');
+        Schema::dropIfExists('bulletins');
     }
 };
