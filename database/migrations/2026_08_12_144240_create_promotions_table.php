@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('promotions', function (Blueprint $table) {
             $table->id();
+            $table->string("nom")->unique();
+            $table->integer("annee_creation")->unsigned();
+            
             $table->timestamps();
         });
     }

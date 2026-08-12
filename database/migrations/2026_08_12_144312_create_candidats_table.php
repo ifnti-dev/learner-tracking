@@ -13,6 +13,15 @@ return new class extends Migration
     {
         Schema::create('candidats', function (Blueprint $table) {
             $table->id();
+            $table->string("nom");
+            $table->string("prenom");
+            $table->string("telephone")->unique();
+            $table->string("email")->unique();
+            $table->string("password");
+            $table->enum('sexe',['M','F']);
+            $table->string("adresse");
+            $table->date("date_naissance");
+
             $table->timestamps();
         });
     }
