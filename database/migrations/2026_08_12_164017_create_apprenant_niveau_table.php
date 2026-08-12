@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('apprenant_niveau', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('apprenant_id')->constrained('apprenants')->onDelete('set null');
+            $table->foreignId('niveau_id')->constrained('niveaux')->onDelete('set null');
             $table->timestamps();
         });
     }

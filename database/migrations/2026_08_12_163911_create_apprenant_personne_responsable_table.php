@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('apprenant_personne_responsable', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('apprenant_id')->constrained('apprenants')->onDelete('set null');
+            $table->foreignId('personne_responsable_id')->constrained('personne_responsables')->onDelete('set null');
+
             $table->timestamps();
         });
     }
