@@ -21,7 +21,6 @@ return new class extends Migration
             $table->enum('sexe',['M','F']);
             $table->string("adresse");
             $table->date("date_naissance");
-
             $table->timestamps();
         });
     }

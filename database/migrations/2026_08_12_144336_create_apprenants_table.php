@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string("etablissement");
             $table->foreignId('promotion_id')->constrained('promotions')->onDelete('set null');
+            $table->foreignId('candidat_id')->constrained('candidats')->onDelete('set null');
             $table->timestamps();
            
             

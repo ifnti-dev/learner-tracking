@@ -23,6 +23,7 @@ return new class extends Migration
             $table->foreignId('promotion_id')->constrained('promotions')->onDelete('set null');
             $table->timestamps();
         });
+        
     }
 
     /**
