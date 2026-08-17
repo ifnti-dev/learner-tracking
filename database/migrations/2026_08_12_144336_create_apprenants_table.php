@@ -18,7 +18,6 @@ return new class extends Migration
             $table->foreignId('candidat_id')->constrained('candidats')->onDelete('set null');
             $table->timestamps();
            
-            
         });
     }
 

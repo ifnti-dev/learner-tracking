@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-
+use App\Enums\TypeSeance;
 class SeanceSeeder extends Seeder
 {
     /**
@@ -28,7 +28,7 @@ class SeanceSeeder extends Seeder
                 "prenom" => "Essofa",
                 "mot_de_passe" =>Hash::make("essofa123"),
                 "email" => "essofa@gmail.com",
-                "telephone" => 90786260,
+                "telepho.ne" => 90786260,
                 "sexe" => "M"
             ],
             [
@@ -58,7 +58,7 @@ class SeanceSeeder extends Seeder
                 'date'          => '2026-08-20',
                 'heure_debut'   => '09:00:00',
                 'heure_fin'     => '12:00:00',
-                'type_seance'   => 'PRESENTIEL',
+                'type_seance'   =>TypeSeance::PRESENTIEL,
                 'user_id'       => 1,
                 'promotion_id'  => $promotions_ids[0],
                 'created_at'    => now(),
@@ -70,7 +70,7 @@ class SeanceSeeder extends Seeder
                 'date'          => '2026-08-21',
                 'heure_debut'   => '14:00:00',
                 'heure_fin'     => '17:00:00',
-                'type_seance'   => 'ENLIGNE',
+                'type_seance'   => TypeSeance::ENLIGNE,
                 'user_id'       => 2,
                 'promotion_id'  => $promotions_ids[1],
                 'created_at'    => now(),
@@ -82,7 +82,7 @@ class SeanceSeeder extends Seeder
                 'date'          => '2026-08-22',
                 'heure_debut'   => '09:30:00',
                 'heure_fin'     => '11:30:00',
-                'type_seance'   => 'PRESENTIEL',
+                'type_seance'   => TypeSeance::PRESENTIEL,
                 'user_id'       => 3,
                 'promotion_id'  => $promotions_ids[2],
                 'created_at'    => now(),
@@ -94,7 +94,7 @@ class SeanceSeeder extends Seeder
                 'date'          => '2026-08-25',
                 'heure_debut'   => '13:00:00',
                 'heure_fin'     => '16:30:00',
-                'type_seance'   => 'ENLIGNE',
+                'type_seance'   => TypeSeance::ENLIGNE,
                 'user_id'       => 4,
                 'promotion_id'  => $promotions_ids[2],
                 'created_at'    => now(),

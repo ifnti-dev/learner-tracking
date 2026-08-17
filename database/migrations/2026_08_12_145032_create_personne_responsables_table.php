@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nom');
             $table->string('prenom');
             $table->string('telephone')->unique();
-            $table->string('type')->default(Type::TUTEURE->value);
+            $table->string('type')->default(Type::TUTEUR->value);
             $table->timestamps();
         });
     }

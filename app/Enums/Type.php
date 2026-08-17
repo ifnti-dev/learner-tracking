@@ -4,7 +4,7 @@ namespace App\Enums;
 
 enum Type:string
 {
-    case TUTEURE = 'TUTEURE';
+    case TUTEUR = 'TUTEUR';
     case PERE = 'PERE';
     case MERE = 'MERE';
 }

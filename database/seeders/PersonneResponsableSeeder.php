@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use App\Enums\Type;
+
 class PersonneResponsableSeeder extends Seeder
 {
     /**
@@ -35,7 +36,7 @@ class PersonneResponsableSeeder extends Seeder
                 'nom'        => 'Ba',
                 'prenom'     => 'Mamadou',
                 'telephone'  => '770100003',
-                'type'       => Type::TUTEURE->value,
+                'type'       => Type::TUTEUR->value,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
