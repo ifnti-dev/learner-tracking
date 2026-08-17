@@ -18,7 +18,7 @@ class SeanceSeeder extends Seeder
             [
                 "nom" => "BABA",
                 "prenom" => "Aliou",
-                "mot_de_passe" =>Hash::make("123456789"),
+                "password" =>Hash::make("123456789"),
                 "email" => "aliou@gmail.com",
                 "telephone" => 93786260,
                 "sexe" => "M"
@@ -26,7 +26,7 @@ class SeanceSeeder extends Seeder
             [
                 "nom" => "ASSOUMANAOU",
                 "prenom" => "Essofa",
-                "mot_de_passe" =>Hash::make("essofa123"),
+                "password" =>Hash::make("essofa123"),
                 "email" => "essofa@gmail.com",
                 "telepho.ne" => 90786260,
                 "sexe" => "M"
@@ -34,7 +34,7 @@ class SeanceSeeder extends Seeder
             [
                 "nom" => "ABOUBAKAR",
                 "prenom" => "sakirou",
-                "mot_de_passe" =>Hash::make("sakirou236"),
+                "password" =>Hash::make("sakirou236"),
                 "email" => "sakirou@gmail.com",
                 "telephone" => 91736260,
                 "sexe" => "M"
@@ -42,7 +42,7 @@ class SeanceSeeder extends Seeder
             [
                 "nom" => "BAMASSI",
                 "prenom" => "Fadila",
-                "mot_de_passe" =>Hash::make("236558"),
+                "password" =>Hash::make("236558"),
                 "email" => "fadilabamassi@gmail.com",
                 "telephone" => 70706260,
                 "sexe" => "F"
