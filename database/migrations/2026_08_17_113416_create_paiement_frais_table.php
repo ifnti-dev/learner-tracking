@@ -11,10 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('apprenant_niveau', function (Blueprint $table) {
+        Schema::create('paiement_frais', function (Blueprint $table) {
             $table->id();
             $table->foreignId('apprenant_id')->constrained('apprenants')->onDelete('set null');
             $table->foreignId('niveau_id')->constrained('niveaux')->onDelete('set null');
+            $table->boolean('prise_en_charge')->default(false);
+            $table->decimal('montant')->default(0);
+            $table->boolean('verse')->default(false);
+            $table->string('piece_justificatif')->nullable();
+            $table->json('data')->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('apprenant_niveau');
+        Schema::dropIfExists('paiement_frais');
     }
 };

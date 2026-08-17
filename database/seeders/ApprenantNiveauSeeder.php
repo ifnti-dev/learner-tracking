@@ -15,7 +15,7 @@ class ApprenantNiveauSeeder extends Seeder
     {
         $apprenant_ids = DB::table("apprenants")->pluck('id')->all();
         $niveau_ids = DB::table("niveaux")->pluck('id')->all();
-        DB::table('apprenant_niveau')->insert([
+        DB::table('paiement_frais')->insert([
             [
                 'apprenant_id' => $apprenant_ids[0],
                 'niveau_id'    => $niveau_ids[0],
@@ -41,6 +41,6 @@ class ApprenantNiveauSeeder extends Seeder
                 'updated_at'   => now(),
             ],
         ]);
-        echo "apprenant_niveau seeder";
+        echo "paiement_frais seeder";
     }
 }
