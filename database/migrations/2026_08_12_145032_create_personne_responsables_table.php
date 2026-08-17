@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
+use App\Enums\Type;
 return new class extends Migration
 {
     /**
@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nom');
             $table->string('prenom');
             $table->string('telephone')->unique();
-            $table->enum('type', ['PERE', 'MERE', 'TUTEUR']);
+            $table->string('type')->default(Type::TUTEURE->value);
             $table->timestamps();
         });
     }

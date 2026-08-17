@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Enums\TypeSeance;
 
 return new class extends Migration
 {
@@ -18,7 +19,7 @@ return new class extends Migration
             $table->date('date');
             $table->time('heure_debut');
             $table->time('heure_fin');
-            $table->enum('type_seance', ['ENLIGNE', 'PRESENTIEL']);
+            $table->string('type_seance')->default(TypeSeance::PRESENTIEL->value);
             $table->foreignId('user_id')->constrained('users')->onDelete('set null');
             $table->foreignId('promotion_id')->constrained('promotions')->onDelete('set null');
             $table->timestamps();

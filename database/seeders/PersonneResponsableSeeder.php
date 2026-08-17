@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Enums\Type;
 class PersonneResponsableSeeder extends Seeder
 {
     /**
@@ -18,7 +19,7 @@ class PersonneResponsableSeeder extends Seeder
                 'nom'        => 'Diallo',
                 'prenom'     => 'Ousmane',
                 'telephone'  => '770100001',
-                'type'       => 'PERE',
+                'type'       => Type::PERE->value,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -26,7 +27,7 @@ class PersonneResponsableSeeder extends Seeder
                 'nom'        => 'Ndiaye',
                 'prenom'     => 'Aïssatou',
                 'telephone'  => '770100002',
-                'type'       => 'MERE',
+                'type'       => Type::MERE->value,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -34,7 +35,7 @@ class PersonneResponsableSeeder extends Seeder
                 'nom'        => 'Ba',
                 'prenom'     => 'Mamadou',
                 'telephone'  => '770100003',
-                'type'       => 'TUTEUR',
+                'type'       => Type::TUTEURE->value,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -42,7 +43,7 @@ class PersonneResponsableSeeder extends Seeder
                 'nom'        => 'Sarr',
                 'prenom'     => 'Khady',
                 'telephone'  => '770100004',
-                'type'       => 'MERE',
+                'type'       => Type::MERE->value,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
