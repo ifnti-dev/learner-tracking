@@ -1,3 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* CSS du template TailAdmin */
+@import url('/css/style.css');   /* adapte le nom exact du fichier */

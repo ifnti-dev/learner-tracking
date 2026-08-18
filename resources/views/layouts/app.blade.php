@@ -1,36 +1,54 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+    <!-- CSS du template (si tu as un fichier compilé) -->
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
+    <!-- Scripts Vite -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+<body
+    x-data="{
+        page: 'blank',
+        loaded: true,
+        darkMode: localStorage.getItem('darkMode') === 'true',
+        stickyMenu: false,
+        sidebarToggle: false,
+        scrollTop: false
+    }"
+    x-init="
+        darkMode = JSON.parse(localStorage.getItem('darkMode') || 'false');
+        $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))
+    "
+    :class="{ 'dark': darkMode }"
+    class="bg-gray-50 dark:bg-gray-900"
+>
+    <div class="flex h-screen overflow-hidden bg-white dark:bg-gray-900">
+        {{-- Sidebar --}}
+        @include('layouts.sidebar')
+
+        {{-- Content Area --}}
+        <div class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
             @include('layouts.navigation')
 
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white dark:bg-gray-800 shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
-
-            <!-- Page Content -->
             <main>
                 {{ $slot }}
             </main>
         </div>
-    </body>
+    </div>
+
+    {{-- JS du template --}}
+    <script src="{{ asset('js/index.js') }}"></script>
+    @stack('scripts')
+</body>
 </html>
