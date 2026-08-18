@@ -39,4 +39,10 @@ class Apprenant extends Model
     {
         return $this->belongsToMany(Niveau::class);
     }
+    public function paiementFrais():HasMany 
+    {
+        return $this->hasMany(PaiementFrais::class);
+    }
+    
+
 }
