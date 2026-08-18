@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Enums\TypeSeance;
+
 class SeanceSeeder extends Seeder
 {
     /**
@@ -48,6 +49,7 @@ class SeanceSeeder extends Seeder
                 "sexe" => "F"
             ]
         ]);
+        $user_ids=DB::table("users")->pluck('id')->all();
         $promotions_ids = DB::table("promotions")->pluck('id')->all();
 
 
