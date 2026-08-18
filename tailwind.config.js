@@ -3,7 +3,7 @@ import forms from '@tailwindcss/forms';
 
 /** @type {import('tailwindcss').Config} */
 export default {
-    darkMode: 'class', // très important pour le dark mode
+    darkMode: 'class', 
     content: [
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './storage/framework/views/*.php',
@@ -15,9 +15,9 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
-            // Tu peux ajouter ici les couleurs custom du template si besoin
+            
             colors: {
-                // Exemple (adapte selon le template)
+                
                 brand: {
                     25: '#f2f7ff',
                     50: '#ecf3ff',
