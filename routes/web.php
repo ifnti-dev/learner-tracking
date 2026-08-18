@@ -2,6 +2,10 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PersonneResponsableController;
+use App\Http\Controllers\ApprenantController;
+
+
 
 Route::get('/', function () {
     return to_route('dashboard');
@@ -16,7 +20,12 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    
+    Route::resources(
+        [
+            'personne-responsables' => PersonneResponsableController::class,
+            'apprenants' => ApprenantController::class,
+        ]
+    );
 });
 
 require __DIR__.'/auth.php';
