@@ -12,7 +12,8 @@ class PersonneResponsableController extends Controller
      */
     public function index()
     {
-        //
+        $personneResponsables = PersonneResponsable::all();
+        return view('personne-responsables.index', compact('personneResponsables'));
     }
 
     /**
