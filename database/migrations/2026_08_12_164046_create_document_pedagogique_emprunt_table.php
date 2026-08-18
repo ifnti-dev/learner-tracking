@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('document_pedagogique_emprunt', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('document_pedagogique_id')->constrained('document_pedagogiques')->onDelete('set null');
-            $table->foreignId('emprunt_id')->constrained('emprunts')->onDelete('set null');
+            $table->foreignId('document_pedagogique_id')->nullable()->constrained('document_pedagogiques')->onDelete('set null');
+            $table->foreignId('emprunt_id')->nullable()->constrained('emprunts')->onDelete('set null');
             $table->timestamps();
         });
     }

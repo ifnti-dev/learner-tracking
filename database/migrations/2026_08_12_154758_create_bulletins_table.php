@@ -18,8 +18,9 @@ return new class extends Migration
             $table->string('chemin_fichier');
             $table->json('data');
 
-            $table->foreignId('niveau_id')->constrained('niveaux')->onDelete('set null');
-            $table->foreignId('apprenant_id')->constrained('apprenants')->onDelete('set null');
+            $table->foreignId('niveau_id')->nullable()->constrained('niveaux')->onDelete('set null');
+            $table->foreignId('apprenant_id')->nullable()->constrained('apprenants')->onDelete('set null');
+
 
             $table->timestamps();
         });

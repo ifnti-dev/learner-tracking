@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('motif');
 
-            $table->foreignId('apprenant_id')->constrained('apprenants')->onDelete('set null');
-            $table->foreignId('seance_id')->constrained('seances')->onDelete('set null');
+            $table->foreignId('apprenant_id')->nullable()->constrained('apprenants')->onDelete('set null');
+            $table->foreignId('seance_id')->nullable()->constrained('seances')->onDelete('set null');
             $table->timestamps();
         });
     }

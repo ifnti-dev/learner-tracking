@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('paiement_frais', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('apprenant_id')->constrained('apprenants')->onDelete('set null');
-            $table->foreignId('niveau_id')->constrained('niveaux')->onDelete('set null');
+            $table->foreignId('apprenant_id')->nullable()->constrained('apprenants')->onDelete('set null');
+            $table->foreignId('niveau_id')->nullable()->constrained('niveaux')->onDelete('set null');
             $table->boolean('prise_en_charge')->default(false);
             $table->decimal('montant')->default(0);
             $table->boolean('verse')->default(false);

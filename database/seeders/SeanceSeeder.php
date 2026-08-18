@@ -24,10 +24,10 @@ class SeanceSeeder extends Seeder
                 "sexe" => "M"
             ],
             [
-                "nom" => "ASSOUMANAOU",
-                "prenom" => "Essofa",
-                "password" =>Hash::make("essofa123"),
-                "email" => "essofa@gmail.com",
+                "nom" => "ASSIKPA",
+                "prenom" => "izandine",
+                "password" =>Hash::make("123456789"),
+                "email" => "assikpaizandine@gmail.com",
                 "telepho.ne" => 90786260,
                 "sexe" => "M"
             ],

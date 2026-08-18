@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->date('date');
             $table->date('date_restitution');
-            $table->foreignId('apprenant_id')->constrained('apprenants')->onDelete('set null');
+            $table->foreignId('apprenant_id')->nullable()->constrained('apprenants')->onDelete('set null');
             $table->timestamps();
         });
     }
