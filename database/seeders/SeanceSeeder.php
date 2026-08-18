@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
+
 use App\Enums\TypeSeance;
 
 class SeanceSeeder extends Seeder
@@ -15,44 +15,9 @@ class SeanceSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table("users")->insert([
-            [
-                "nom" => "BABA",
-                "prenom" => "Aliou",
-                "password" =>Hash::make("123456789"),
-                "email" => "aliou@gmail.com",
-                "telephone" => 93786260,
-                "sexe" => "M"
-            ],
-            [
-                "nom" => "ASSIKPA",
-                "prenom" => "izandine",
-                "password" =>Hash::make("123456789"),
-                "email" => "assikpaizandine@gmail.com",
-                "telepho.ne" => 90786260,
-                "sexe" => "M"
-            ],
-            [
-                "nom" => "ABOUBAKAR",
-                "prenom" => "sakirou",
-                "password" =>Hash::make("sakirou236"),
-                "email" => "sakirou@gmail.com",
-                "telephone" => 91736260,
-                "sexe" => "M"
-            ],
-            [
-                "nom" => "BAMASSI",
-                "prenom" => "Fadila",
-                "password" =>Hash::make("236558"),
-                "email" => "fadilabamassi@gmail.com",
-                "telephone" => 70706260,
-                "sexe" => "F"
-            ]
-        ]);
-        $user_ids=DB::table("users")->pluck('id')->all();
+        $user_ids = DB::table("users")->pluck('id')->all();
         $promotions_ids = DB::table("promotions")->pluck('id')->all();
-
-
+        
         DB::table('seances')->insert([
             [
                 'intitule'      => 'Introduction à Laravel',
@@ -60,8 +25,8 @@ class SeanceSeeder extends Seeder
                 'date'          => '2026-08-20',
                 'heure_debut'   => '09:00:00',
                 'heure_fin'     => '12:00:00',
-                'type_seance'   =>TypeSeance::PRESENTIEL,
-                'user_id'       => 1,
+                'type_seance'   => TypeSeance::PRESENTIEL,
+                'user_id'       =>  $user_ids[0],
                 'promotion_id'  => $promotions_ids[0],
                 'created_at'    => now(),
                 'updated_at'    => now(),
@@ -73,7 +38,7 @@ class SeanceSeeder extends Seeder
                 'heure_debut'   => '14:00:00',
                 'heure_fin'     => '17:00:00',
                 'type_seance'   => TypeSeance::ENLIGNE,
-                'user_id'       => 2,
+                'user_id'       => $user_ids[2],
                 'promotion_id'  => $promotions_ids[1],
                 'created_at'    => now(),
                 'updated_at'    => now(),
@@ -85,7 +50,7 @@ class SeanceSeeder extends Seeder
                 'heure_debut'   => '09:30:00',
                 'heure_fin'     => '11:30:00',
                 'type_seance'   => TypeSeance::PRESENTIEL,
-                'user_id'       => 3,
+                'user_id'       => $user_ids[1],
                 'promotion_id'  => $promotions_ids[2],
                 'created_at'    => now(),
                 'updated_at'    => now(),
@@ -97,7 +62,7 @@ class SeanceSeeder extends Seeder
                 'heure_debut'   => '13:00:00',
                 'heure_fin'     => '16:30:00',
                 'type_seance'   => TypeSeance::ENLIGNE,
-                'user_id'       => 4,
+                'user_id'       => $user_ids[0],
                 'promotion_id'  => $promotions_ids[2],
                 'created_at'    => now(),
                 'updated_at'    => now(),
