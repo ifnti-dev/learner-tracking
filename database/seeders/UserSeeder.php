@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-
+use App\Models\User;
 class UserSeeder extends Seeder
 {
     /**
@@ -49,5 +49,14 @@ class UserSeeder extends Seeder
             ]
         ]);
         
+        $respo = User::where("email", "respo@gmail.com")->first();
+        $candidat = User::where("email", "candidat@gmail.com")->first();
+        $secretaire = User::where("email", "secret@gmail.com")->first();
+        $enseignant = User::where("email", "enseignant@gmail.com")->first();
+
+        $respo->assignRole("responsable");
+        $candidat->assignRole("candidat");
+        $secretaire->assignRole("secretaire");
+        $enseignant->assignRole("enseignant");
     }
 }
