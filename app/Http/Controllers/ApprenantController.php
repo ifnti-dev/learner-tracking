@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Apprenant;
 use Illuminate\Http\Request;
+use App\Models\Candidat;
 
 class ApprenantController extends Controller
 {
@@ -12,7 +13,10 @@ class ApprenantController extends Controller
      */
     public function index()
     {
-        //
+        $apprenants = Apprenant::join('candidats', 'apprenants.candidat_id', '=', 'candidats.id')
+            ->select('apprenants.*', 'candidats.nom',"candidats.telephone", 'candidats.prenom', 'candidats.email', 'candidats.sexe', 'candidats.adresse')
+            ->get();
+        return view('apprenants.index', compact('apprenants'));
     }
 
     /**
@@ -20,7 +24,9 @@ class ApprenantController extends Controller
      */
     public function create()
     {
-        //
+        $candidats = Candidat::whereDoesntHave('apprenant')
+            ->get();
+        return view('apprenants.create', compact('candidats'));
     }
 
     /**
@@ -28,7 +34,7 @@ class ApprenantController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**

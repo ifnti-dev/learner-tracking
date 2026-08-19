@@ -41,6 +41,18 @@ class ApprenantSeeder extends Seeder
                 'updated_at'     => now(),
             ],
             [
+                'nom'            => 'soulemane',
+                'prenom'         => 'Moussa abamassa',
+                'telephone'      => '7700004526',
+                'email'          => 'abamassa.ndiaye@email.com',
+                'password'       => Hash::make('123456789'),
+                'sexe'           => 'M',
+                'adresse'        => 'Thiès, Sénégal',
+                'date_naissance' => '1995-11-03',
+                'created_at'     => now(),
+                'updated_at'     => now(),
+            ],
+            [
                 'nom'            => 'Ba',
                 'prenom'         => 'Fatou',
                 'telephone'      => '770000003',

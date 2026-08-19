@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Http\Requests\Message;
 use App\Models\PersonneResponsable;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class PersonneResponsableController extends Controller
 {
@@ -29,17 +31,16 @@ class PersonneResponsableController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $validated = $request->validate([
             'nom' => 'required|string|max:255',
             'prenom' => 'required|string|max:255',
-            'telephone' => 'required|string|max:20',
+            'telephone' => 'required|string|max:20|unique:personne_responsables,telephone',
             'type' => 'required|string|in:TUTEUR,PERE,MERE',
         ]);
         $message = Message::success('Le tuteur a été ajouté avec succès');
         PersonneResponsable::create($validated);
         return to_route('personne-responsables.index')->with($message->toMap());
-
     }
 
     /**
@@ -55,7 +56,7 @@ class PersonneResponsableController extends Controller
      */
     public function edit(PersonneResponsable $personneResponsable)
     {
-        //
+        return view('personne-responsables.edit', compact('personneResponsable'));
     }
 
     /**
@@ -63,7 +64,22 @@ class PersonneResponsableController extends Controller
      */
     public function update(Request $request, PersonneResponsable $personneResponsable)
     {
-        //
+    
+        $validated = $request->validate([
+            'nom' => 'required|string|max:255',
+            'prenom' => 'required|string|max:255',
+            'telephone' => [
+                'required',
+                'max:20',
+                'string',
+                Rule::unique('personne_responsables', 'telephone')->ignore($personneResponsable->id,'id'),
+            ],
+            'type' => 'required|string|in:TUTEUR,PERE,MERE',
+        ]);
+
+        $personneResponsable->update($validated);
+        $message = Message::success('Le tuteur a été mis à jour avec succès');
+        return to_route('personne-responsables.index')->with($message->toMap());
     }
 
     /**
@@ -76,7 +92,7 @@ class PersonneResponsableController extends Controller
             $personneResponsable->delete();
             $message = Message::success('Le tuteur a été supprimé avec succès');
         } else {
-            $message = Message::error('Impossible de supprimer le tuteur car il est associé à des apprenants.');            
+            $message = Message::error('Impossible de supprimer le tuteur car il est associé à des apprenants.');
         }
         return to_route("personne-responsables.index")->with($message->toMap());
     }

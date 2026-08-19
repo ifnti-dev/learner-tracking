@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class PersonneResponsable extends Model
 {
+    protected $fillable = [
+        'nom',
+        'prenom',
+        'telephone',
+        'type',
+    ];
     public function apprenants(): BelongsToMany
     {
         return $this->belongsToMany(Apprenant::class);
