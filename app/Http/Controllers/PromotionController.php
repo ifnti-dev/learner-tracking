@@ -25,7 +25,7 @@ class PromotionController extends Controller
      */
     public function create()
     {
-        echo "create action";
+        return view("promotions.create");
     }
 
     /**
@@ -33,7 +33,15 @@ class PromotionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $validated = $request->validate([
+            'nom'   => ['required', 'string', 'max:255', 'unique:promotions,nom'],
+            'annee_creation' => ['required', 'integer', 'min:1900'],
+        ]);
+
+        $message = Message::success('la promotion est enregistrée avec succès');
+        Promotion::create($validated);
+        return to_route('promotions.index')->with($message->toMap());
     }
 
     /**
@@ -41,7 +49,8 @@ class PromotionController extends Controller
      */
     public function show(Promotion $promotion)
     {
-        echo "show";
+        $promotion->load('apprenants');
+        return view('promotions.show', compact('promotion'));
     }
 
     /**
@@ -49,7 +58,7 @@ class PromotionController extends Controller
      */
     public function edit(Promotion $promotion)
     {
-        echo "edit action";
+        return view("promotions.edit",compact("promotion"));
     }
 
     /**
@@ -57,8 +66,21 @@ class PromotionController extends Controller
      */
     public function update(Request $request, Promotion $promotion)
     {
-        //
+        $validated = $request->validate([
+            'nom' => [
+                'required',
+                'string',
+                'max:255',
+                'unique:promotions,nom,' . $promotion->id
+            ],
+            'annee_creation' => ['required', 'integer', 'min:1900'],
+        ]);
+        $promotion->update($validated);
+        $message = Message::success('La promotion a été modifiée avec succès');
+        return to_route('promotions.index')->with($message->toMap());
     }
+
+
 
     /**
      * Remove the specified resource from storage.
@@ -70,7 +92,7 @@ class PromotionController extends Controller
             $promotion->delete();
             $message = Message::success('Supprimer avec success');
         } else {
-            $message = Message::error('Supprimer impossible');            
+            $message = Message::error('Suppression impossible car la promotion contenant des apprenants');
         }
         return to_route("promotions.index")->with($message->toMap());
     }

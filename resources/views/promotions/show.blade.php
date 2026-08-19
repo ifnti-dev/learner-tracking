@@ -7,7 +7,7 @@
 
                 <h3
                     class="text-base font-medium text-gray-800 dark:text-white/90">
-                    Liste des promotions
+                    Les apprenants de la Promotion : <span class="text-blue-500">{{ $promotion->nom }}</span>
                 </h3>
 
                 <div class="justify-end ml-auto">
@@ -30,21 +30,21 @@
                                     <th class="px-5 py-3 sm:px-6">
                                         <div class="flex items-center">
                                             <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">
-                                                Nom de la promotion
+                                                Nom 
                                             </p>
                                         </div>
                                     </th>
                                     <th class="px-5 py-3 sm:px-6">
                                         <div class="flex items-center">
                                             <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">
-                                                Année de création
+                                                Prenom 
                                             </p>
                                         </div>
                                     </th>
                                     <th class="px-5 py-3 sm:px-6">
                                         <div class="flex items-center">
                                             <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">
-                                                Nombre d'apprenant
+                                                Etablissement
                                             </p>
                                         </div>
                                     </th>
@@ -60,7 +60,7 @@
                             <!-- table header end -->
                             <!-- table body start -->
                             <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
-                                @forelse ($promotions as $promotion)
+                               @forelse ($promotion->apprenants as $apprenant)
                                 <tr>
                                     <td class="px-5 py-4 sm:px-6">
                                         <div class="flex items-center">
@@ -68,7 +68,7 @@
 
                                                 <div>
                                                     <span class="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
-                                                        {{ $promotion->nom }}
+                                                        {{ $apprenant->candidat->nom }}
                                                     </span>
 
                                                 </div>
@@ -78,37 +78,27 @@
                                     <td class="px-5 py-4 sm:px-6">
                                         <div class="flex items-center">
                                             <p class="text-gray-500 text-theme-sm dark:text-gray-400">
-                                                {{ $promotion->annee_creation }}
+                                                {{ $apprenant->candidat->prenom }}
                                             </p>
                                         </div>
                                     </td>
                                     <td class="px-5 py-4 sm:px-6">
                                         <div class="flex items-center">
                                             <p class="text-gray-500 text-theme-sm dark:text-gray-400">
-                                                {{ $promotion->apprenants_count }}
+                                                {{ $apprenant->etablissement }}
                                             </p>
                                         </div>
                                     </td>
                                     <td class="px-5 py-4 sm:px-6 ">
                                         <div class="flex items-center gap-x-4">
-
-                                            <x-secondary-button>
-                                                <a href="{{route('promotions.edit',$promotion->id)}}">
-                                                    {{ __('Modifier') }}
-                                                </a>
-                                            </x-secondary-button>
-                                            <x-secondary-button>
-                                                <a href="{{route('promotions.show',$promotion->id)}}">
-                                                    {{ __('Consulter les Apprenants ') }}
-                                                </a>
-                                            </x-secondary-button>
-                                            <form action="{{route('promotions.destroy',$promotion->id)}}" onclick="deleteDialogue('Souhaitez vous vraiment supprimer cette promotion.....', 'oui', 'annuler', this)" method="POST">
+                                            <form action="" method="post">
                                                 @csrf
                                                 @method('DELETE')
                                                 <x-danger-button class="bg-red-500 ">
-                                                    {{ __('Supprimer') }}
+                                                    {{ __('Retirer') }}
                                                 </x-danger-button>
                                             </form>
+                                           
                                         </div>
                                     </td>
                                 </tr>
