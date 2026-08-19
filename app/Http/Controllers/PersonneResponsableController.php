@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PersonneResponsable;
 use Illuminate\Http\Request;
+use App\Http\Requests\Message;
 
 class PersonneResponsableController extends Controller
 {
@@ -61,7 +62,13 @@ class PersonneResponsableController extends Controller
      */
     public function destroy(PersonneResponsable $personneResponsable)
     {
-        $personneResponsable->delete();
-        return redirect()->back();
+        $message = null;
+        if ($personneResponsable->apprenants->count() == 0) {
+            $personneResponsable->delete();
+            $message = Message::success('Le tuteur a été supprimé avec succès');
+        } else {
+            $message = Message::error('Impossible de supprimer le tuteur car il est associé à des apprenants.');            
+        }
+        return to_route("personne-responsables.index")->with($message->toMap());
     }
 }

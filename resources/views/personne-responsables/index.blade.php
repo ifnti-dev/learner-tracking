@@ -1,5 +1,5 @@
 <x-app-layout>
-
+    <x-http-message-swal />
 
     <div class="mx-auto max-w-(--breakpoint-2xl) p-4 md:p-6 bg-gray-50 dark:bg-gray-900">
 
@@ -114,7 +114,7 @@
                                                         {{ __('Modifier') }}
                                                     </a>
                                                 </x-secondary-button>
-                                                <form action="{{ route('personne-responsables.destroy', $personneResponsable->id) }}" method="POST" class="ml-2">
+                                                <form action="{{ route('personne-responsables.destroy', $personneResponsable->id) }}" onclick="deleteDialogue('Souhaitez vous vraiem.....', 'oui', 'annuler', this)" method="POST" class="ml-2">
                                                     @csrf
                                                     @method('DELETE')
                                                     <x-danger-button type="submit"  >

@@ -22,11 +22,13 @@ class PermissionSeeder extends Seeder
 
             'create.personne.responsable',
             'show.personne.responsable',
+            'index.personne.responsable',
             'update.personne.responsable',
             'delete.personne.responsable',
 
             'create.apprenant',
             'show.apprenant',
+            'index.apprenant',
             'update.apprenant',
             'delete.apprenant',
 
