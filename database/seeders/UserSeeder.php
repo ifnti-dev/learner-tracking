@@ -58,5 +58,6 @@ class UserSeeder extends Seeder
         $candidat->assignRole("candidat");
         $secretaire->assignRole("secretaire");
         $enseignant->assignRole("enseignant");
+        
     }
 }

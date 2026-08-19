@@ -16,6 +16,7 @@ class PermissionSeeder extends Seeder
         $permissions = [
             'create.promotion',
             'show.promotion',
+            'index.promotion',
             'update.promotion',
             'delete.promotion',
 

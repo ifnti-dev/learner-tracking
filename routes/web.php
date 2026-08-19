@@ -4,7 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PersonneResponsableController;
 use App\Http\Controllers\ApprenantController;
-
+use App\Http\Controllers\PromotionController;
 
 
 Route::get('/', function () {
@@ -24,6 +24,7 @@ Route::middleware('auth')->group(function () {
         [
             'personne-responsables' => PersonneResponsableController::class,
             'apprenants' => ApprenantController::class,
+            'promotions' => PromotionController::class,
         ]
     );
 });
