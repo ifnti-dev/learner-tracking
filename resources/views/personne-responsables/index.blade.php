@@ -114,7 +114,13 @@
                                                         {{ __('Modifier') }}
                                                     </a>
                                                 </x-secondary-button>
-                                                
+                                                <form action="{{ route('personne-responsables.destroy', $personneResponsable->id) }}" method="POST" class="ml-2">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <x-danger-button type="submit"  >
+                                                        {{ __('Supprimer') }}
+                                                    </x-danger-button>
+                                                </form>
                                             </div>
                                         </td>
                                     </tr>

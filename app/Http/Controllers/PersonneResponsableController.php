@@ -61,6 +61,7 @@ class PersonneResponsableController extends Controller
      */
     public function destroy(PersonneResponsable $personneResponsable)
     {
-        //
+        $personneResponsable->delete();
+        return redirect()->back();
     }
 }
