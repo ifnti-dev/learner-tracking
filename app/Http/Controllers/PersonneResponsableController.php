@@ -1,10 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Requests\Message;
 use App\Models\PersonneResponsable;
 use Illuminate\Http\Request;
-use App\Http\Requests\Message;
 
 class PersonneResponsableController extends Controller
 {
@@ -22,7 +21,7 @@ class PersonneResponsableController extends Controller
      */
     public function create()
     {
-        //
+        return view('personne-responsables.create');
     }
 
     /**
@@ -30,7 +29,17 @@ class PersonneResponsableController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $validated = $request->validate([
+            'nom' => 'required|string|max:255',
+            'prenom' => 'required|string|max:255',
+            'telephone' => 'required|string|max:20',
+            'type' => 'required|string|in:TUTEUR,PERE,MERE',
+        ]);
+        $message = Message::success('Le tuteur a été ajouté avec succès');
+        PersonneResponsable::create($validated);
+        return to_route('personne-responsables.index')->with($message->toMap());
+
     }
 
     /**
