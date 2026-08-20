@@ -49,8 +49,9 @@ class PromotionController extends Controller
      */
     public function show(Promotion $promotion)
     {
-        $promotion->load('apprenants');
-        return view('promotions.show', compact('promotion'));
+        $promotion->with('apprenants')->get();
+        $apprenantsDisponibles = Apprenant::whereNull("promotion_id")->get();
+        return view('promotions.show', compact('promotion', 'apprenantsDisponibles'));
     }
 
     /**
@@ -58,7 +59,7 @@ class PromotionController extends Controller
      */
     public function edit(Promotion $promotion)
     {
-        return view("promotions.edit",compact("promotion"));
+        return view("promotions.edit", compact("promotion"));
     }
 
     /**
@@ -95,5 +96,37 @@ class PromotionController extends Controller
             $message = Message::error('Suppression impossible car la promotion contenant des apprenants');
         }
         return to_route("promotions.index")->with($message->toMap());
+    }
+    public function ajouterApprenant(Request $request, Promotion $promotion)
+    {
+        $request->validate([
+            'apprenant_id' => 'required|integer|exists:apprenants,id',
+        ]);
+
+        $apprenant = Apprenant::find($request->apprenant_id);
+        if (!$apprenant) {
+            Message::error("cet apprenant n'existe pas");
+        }
+        if ($apprenant->promotion_id !== null) {
+            Message::error("cet appartient deja a une promotion");
+        }
+        $apprenant->update([
+            'promotion_id' => $promotion->id
+        ]);
+
+        $message = Message::success("apprenant a été a la  promotion  avec succès");
+        return to_route('promotions.show', $promotion->id)->with($message->toMap());
+    }
+    public function retirerApprenant(Promotion $promotion, Apprenant $apprenant)
+    {
+        if ($apprenant->promotion_id !== $promotion->id) {
+            Message::error(" Cet apprenant n'appartient pas à cette promotion");
+        }
+        else {
+            $message = Message::success('Apprenant est retiré  avec succès !');
+            $apprenant->update(['promotion_id' => null]);
+            return to_route('promotions.show', $promotion->id)->with($message->toMap());
+        }
+        
     }
 }

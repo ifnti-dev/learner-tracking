@@ -34,4 +34,11 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/inscription',[CandidatController::class,'inscription'])->name('inscription');
 Route::post('/inscription',[CandidatController::class,'store'])->name('inscription.store');
+
+
+Route::post('/promotions/{promotion}/apprenants', [PromotionController::class, 'ajouterApprenant'])
+    ->name('promotions.apprenants.ajouter');
+
+Route::delete('/promotions/{promotion}/apprenants/{apprenant}', [PromotionController::class, 'retirerApprenant'])
+    ->name('promotions.apprenants.retirer');
 require __DIR__.'/auth.php';
