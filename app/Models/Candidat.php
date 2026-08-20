@@ -7,6 +7,17 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Candidat extends Model
 {
+    protected $fillable = [
+        'nom',
+        'prenom',
+        'telephone',
+        'email',
+        'password',
+        'sexe',
+        'adresse',
+        'date_naissance',
+    ];
+
     public function apprenant(): HasOne
     {
         return $this->hasOne(Apprenant::class);

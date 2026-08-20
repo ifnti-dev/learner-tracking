@@ -8,11 +8,19 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Apprenant extends Model
-{   
+{
 
     protected $fillable = [
+        'nom'    ,            
+        'prenom'     ,        
+        'telephone'         , 
+        'email'              ,
+        'sexe'               ,
+        'adresse'            ,
+        'date_naissance'     ,
+        'etablissement'     ,
+        'promotion_id'     ,
         'etablissement',
-        'candidat_id'
     ];
 
     public function promotion(): belongsTo
@@ -45,10 +53,8 @@ class Apprenant extends Model
     {
         return $this->belongsToMany(Niveau::class);
     }
-    public function paiementFrais():HasMany 
+    public function paiementFrais(): HasMany
     {
         return $this->hasMany(PaiementFrais::class);
     }
-    
-
 }

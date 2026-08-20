@@ -7,6 +7,7 @@ use App\Models\Apprenant;
 use Illuminate\Http\Request;
 use App\Models\Candidat;
 use App\Models\PersonneResponsable;
+use Illuminate\Validation\Rule;
 
 class ApprenantController extends Controller
 {
@@ -15,9 +16,7 @@ class ApprenantController extends Controller
      */
     public function index()
     {
-        $apprenants = Apprenant::join('candidats', 'apprenants.candidat_id', '=', 'candidats.id')
-            ->select('apprenants.*', 'candidats.nom', "candidats.telephone", 'candidats.prenom', 'candidats.email', 'candidats.sexe', 'candidats.adresse')
-            ->get();
+        $apprenants = Apprenant::all();
         return view('apprenants.index', compact('apprenants'));
     }
 
@@ -26,10 +25,9 @@ class ApprenantController extends Controller
      */
     public function create()
     {
-        $candidats = Candidat::whereDoesntHave('apprenant')
-            ->get();
-        $personnes_reponsables = PersonneResponsable::all();
-        return view('apprenants.create', compact('candidats','personnes_reponsables'));
+
+        $personne_reponsables = PersonneResponsable::all();
+        return view('apprenants.create', compact('personne_reponsables'));
     }
 
     /**
@@ -37,12 +35,23 @@ class ApprenantController extends Controller
      */
     public function store(Request $request)
     {
-        
+        //dd($request->all());
         $validated = $request->validate([
-            'etablissement' => 'required|min:1|string',
-            'candidat_id' => 'required|integer|exists:candidats,id'
+            'nom' => 'required|string|max:255|min:3',
+            'prenom' => 'required|string|max:255|min:3',
+            'telephone' => 'required|min:4|string|max:20|unique:candidats,telephone',
+            'email' => 'required|email|max:255|unique:candidats,email',
+            'sexe' => 'required|in:M,F',
+            'adresse' => 'required|string|max:255|min:3',
+            'date_naissance' => 'required|date',
+            'etablissement' => 'required|string|max:255|min:2',
+            'personne_reponsable_id' => 'nullable|exists:personne_responsables,id',
         ]);
-        Apprenant::create($validated);
+
+        $apprenant = Apprenant::create($validated);
+
+
+
         $message = Message::success('Apprenant créer avec success !');
 
         return to_route('apprenants.index')->with($message->toMap());
@@ -61,7 +70,8 @@ class ApprenantController extends Controller
      */
     public function edit(Apprenant $apprenant)
     {
-        //
+        $personne_reponsables = PersonneResponsable::all();
+        return view('apprenants.edit', compact('apprenant', 'personne_reponsables'));
     }
 
     /**
@@ -69,7 +79,38 @@ class ApprenantController extends Controller
      */
     public function update(Request $request, Apprenant $apprenant)
     {
-        //
+        $validated = $request->validate([
+            'nom' => 'required|string|max:255|min:3',
+            'prenom' => 'required|string|max:255|min:3',
+            'telephone' => [
+                'required',
+                'min:4',
+                'string',
+                'max:20',
+                Rule::unique('apprenants', 'telephone')->ignore($apprenant->id, 'id'),
+            ],
+            'email' => [
+                'required',
+                'email',
+                'max:255',
+                'email',
+                Rule::unique('apprenants', 'email')->ignore($apprenant->id, 'id'),
+
+            ],
+            'sexe' => 'required|in:M,F',
+            'adresse' => 'required|string|max:255|min:3',
+            'date_naissance' => 'required|date',
+            'etablissement' => 'required|string|max:255|min:2',
+            'personne_reponsable_id' => 'nullable|exists:personne_responsables,id',
+        ]);
+
+        $apprenant->update($validated);
+
+
+
+        $message = Message::success('Apprenant créer avec success !');
+
+        return to_route('apprenants.index')->with($message->toMap());
     }
 
     /**
