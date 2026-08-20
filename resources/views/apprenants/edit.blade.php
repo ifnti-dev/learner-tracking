@@ -193,20 +193,22 @@
                         <div class="col-span-12 space-x-2">
                             <x-input-label for="personnes_reponsable_id" :value="__('Parents/Tuteur')" />
                             <div class="flex space-x-2">
-                                <div class="w-1/2" x-data="{ selectedType: String('{{ old('personnes_reponsable_id', $apprenant->personneResponsables()->first()->id ?? '') }}') }">
+                                <div class="w-1/2">
                                     <select
-                                        name="personnes_reponsable_id"
+                                        name="personne_reponsable_id"
                                         id="personne_reponsables_id"
-                                        x-model="selectedType"
                                         class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 pr-11 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90">
 
-                                        @foreach ($personne_reponsables as $personnes_reponsable)
-                                        <option :value="String('{{ $personnes_reponsable->id }}')">
-                                            {{ $personnes_reponsable->nom }} {{ $personnes_reponsable->prenom }}
+                                        @foreach ($personne_reponsables as $personne_reponsable)
+                                        <option
+                                            :value="String('{{ $personne_reponsable->id }}')"
+                                            {{ $personne_reponsable->id == old('personne_reponsable_id', $apprenant->personneResponsables()->first()->id) ? 'selected' : '' }}>
+                                            {{ $personne_reponsable->nom }} {{ $personne_reponsable->prenom }}
                                         </option>
                                         @endforeach
                                     </select>
                                 </div>
+
 
 
                                 <div class="w-1/2 ">

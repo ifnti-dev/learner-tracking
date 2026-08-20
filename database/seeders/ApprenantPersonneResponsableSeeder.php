@@ -16,7 +16,7 @@ class ApprenantPersonneResponsableSeeder extends Seeder
         $apprenant_ids = DB::table("apprenants")->pluck('id')->all();
         $personne_responsable_ids = DB::table("personne_responsables")->pluck('id')->all();
 
-        DB::table('apprenant_personne_responsable')->insert([
+        DB::table('apprenant_personne_responsables')->insert([
             [
                 'apprenant_id'             => $apprenant_ids[0],
                 'personne_responsable_id'  => $personne_responsable_ids[0],

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
+use App\Models\ApprenantPersonneResponsable;
 use App\Http\Requests\Message;
 use App\Models\Apprenant;
 use Illuminate\Http\Request;
@@ -47,8 +49,17 @@ class ApprenantController extends Controller
             'etablissement' => 'required|string|max:255|min:2',
             'personne_reponsable_id' => 'nullable|exists:personne_responsables,id',
         ]);
-
-        $apprenant = Apprenant::create($validated);
+        DB::transaction(
+            function () use ($validated) {
+                $apprenant = Apprenant::create($validated);
+                ApprenantPersonneResponsable::create(
+                    [
+                        'personne_responsable_id' => $validated['personne_reponsable_id'],
+                        'apprenant_id' => $apprenant->id,
+                    ]
+                );
+            }
+        );
 
 
 
@@ -71,6 +82,8 @@ class ApprenantController extends Controller
     public function edit(Apprenant $apprenant)
     {
         $personne_reponsables = PersonneResponsable::all();
+        
+
         return view('apprenants.edit', compact('apprenant', 'personne_reponsables'));
     }
 

@@ -47,7 +47,7 @@ class Apprenant extends Model
 
     public function personneResponsables(): BelongsToMany
     {
-        return $this->belongsToMany(PersonneResponsable::class);
+        return $this->belongsToMany(PersonneResponsable::class,'apprenant_personne_responsables');
     }
     public function niveaux(): BelongsToMany
     {
