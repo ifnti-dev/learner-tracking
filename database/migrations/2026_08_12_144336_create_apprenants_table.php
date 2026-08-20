@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('apprenants', function (Blueprint $table) {
             $table->id();
+            $table->string("nom");
+            $table->string("prenom");
+            $table->string("telephone")->unique();
+            $table->string("email")->unique();
+            $table->enum('sexe',['M','F']);
+            $table->string("adresse");
+            $table->date("date_naissance");
             $table->string("etablissement");
             $table->foreignId('promotion_id')->nullable()->constrained('promotions')->onDelete('set null');
             $table->foreignId('candidat_id')->nullable()->constrained('candidats')->onDelete('set null');

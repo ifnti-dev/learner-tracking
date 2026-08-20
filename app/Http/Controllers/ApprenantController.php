@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Message;
 use App\Models\Apprenant;
 use Illuminate\Http\Request;
 use App\Models\Candidat;
+use App\Models\PersonneResponsable;
 
 class ApprenantController extends Controller
 {
@@ -14,7 +16,7 @@ class ApprenantController extends Controller
     public function index()
     {
         $apprenants = Apprenant::join('candidats', 'apprenants.candidat_id', '=', 'candidats.id')
-            ->select('apprenants.*', 'candidats.nom',"candidats.telephone", 'candidats.prenom', 'candidats.email', 'candidats.sexe', 'candidats.adresse')
+            ->select('apprenants.*', 'candidats.nom', "candidats.telephone", 'candidats.prenom', 'candidats.email', 'candidats.sexe', 'candidats.adresse')
             ->get();
         return view('apprenants.index', compact('apprenants'));
     }
@@ -26,7 +28,8 @@ class ApprenantController extends Controller
     {
         $candidats = Candidat::whereDoesntHave('apprenant')
             ->get();
-        return view('apprenants.create', compact('candidats'));
+        $personnes_reponsables = PersonneResponsable::all();
+        return view('apprenants.create', compact('candidats','personnes_reponsables'));
     }
 
     /**
@@ -35,6 +38,14 @@ class ApprenantController extends Controller
     public function store(Request $request)
     {
         
+        $validated = $request->validate([
+            'etablissement' => 'required|min:1|string',
+            'candidat_id' => 'required|integer|exists:candidats,id'
+        ]);
+        Apprenant::create($validated);
+        $message = Message::success('Apprenant créer avec success !');
+
+        return to_route('apprenants.index')->with($message->toMap());
     }
 
     /**
@@ -66,6 +77,9 @@ class ApprenantController extends Controller
      */
     public function destroy(Apprenant $apprenant)
     {
-        //
+        $apprenant->delete();
+        $message = Message::success('Apprenant supprimer avec success !');
+
+        return to_route('apprenants.index')->with($message->toMap());
     }
 }

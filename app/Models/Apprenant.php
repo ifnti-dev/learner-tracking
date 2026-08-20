@@ -8,7 +8,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Apprenant extends Model
-{
+{   
+
+    protected $fillable = [
+        'etablissement',
+        'candidat_id'
+    ];
+
     public function promotion(): belongsTo
     {
         return $this->belongsTo(Promotion::class);

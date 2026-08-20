@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PersonneResponsableController;
 use App\Http\Controllers\ApprenantController;
+use App\Http\Controllers\CandidatController;
 use App\Http\Controllers\PromotionController;
 
 
@@ -29,4 +30,8 @@ Route::middleware('auth')->group(function () {
     );
 });
 
+//Route public
+
+Route::get('/inscription',[CandidatController::class,'inscription'])->name('inscription');
+Route::post('/inscription',[CandidatController::class,'store'])->name('inscription.store');
 require __DIR__.'/auth.php';
