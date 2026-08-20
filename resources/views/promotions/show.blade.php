@@ -1,5 +1,4 @@
 <x-app-layout>
-    <x-http-message-swal />
     <div class="mx-auto max-w-(--breakpoint-2xl) p-4 md:p-6 bg-gray-50 dark:bg-gray-900">
         <div
             class="min-h-screen rounded-2xl border border-gray-200 bg-white px-5 py-7 dark:border-gray-800 dark:bg-white/[0.03] xl:px-10 xl:py-12">
@@ -12,8 +11,8 @@
 
                 <div class="justify-end ml-auto">
                     <x-primary-button>
-                        <a href="{{route('promotions.create')}}">
-                            {{ __('Ajouter ') }}
+                        <a href="">
+                            {{ __('Inscrire un apprenant ') }}
                         </a>
                     </x-primary-button>
                 </div>
@@ -94,11 +93,11 @@
                                             <form action="" method="post">
                                                 @csrf
                                                 @method('DELETE')
-                                                <x-danger-button class="bg-red-500 ">
+                                                <x-danger-button >
                                                     {{ __('Retirer') }}
                                                 </x-danger-button>
                                             </form>
-                                           
+                                
                                         </div>
                                     </td>
                                 </tr>

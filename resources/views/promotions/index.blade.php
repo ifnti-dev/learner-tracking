@@ -99,10 +99,10 @@
                                             </x-secondary-button>
                                             <x-secondary-button>
                                                 <a href="{{route('promotions.show',$promotion->id)}}">
-                                                    {{ __('Consulter les Apprenants ') }}
+                                                    {{ __('Consulter ') }}
                                                 </a>
                                             </x-secondary-button>
-                                            <form action="{{route('promotions.destroy',$promotion->id)}}" onclick="deleteDialogue('Souhaitez vous vraiment supprimer cette promotion.....', 'oui', 'annuler', this)" method="POST">
+                                            <form action="{{route('promotions.destroy',$promotion->id)}}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <x-danger-button class="bg-red-500 ">
