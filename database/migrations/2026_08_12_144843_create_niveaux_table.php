@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\TypeNiveau;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,6 +15,7 @@ return new class extends Migration
         Schema::create('niveaux', function (Blueprint $table) {
             $table->id();
             $table->string('nom');
+            $table->string('type_niveau')->default(TypeNiveau::TRIMESTRIEL->value);
             $table->timestamps();
         });
     }

@@ -188,7 +188,7 @@
                             <x-input-error :messages="$errors->get('etablissement')" class="mt-2" />
                         </div>
                         <!-- Elements -->
-
+                        
                         <div class="col-span-12 space-x-2">
                             <x-input-label for="personne_reponsable_id" :value="__('Parents/Tuteur')" />
                             <div class="flex space-x-2">
@@ -211,7 +211,7 @@
 
                                 <div class="w-1/2 ">
                                     <x-primary-button>
-                                        <a href="{{ route('personne-responsables.index') }}">
+                                        <a href="{{ route('personne-responsables.create') }}">
                                             {{ __('Ajouter un personnes reponsables') }}
                                         </a>
                                     </x-primary-button>

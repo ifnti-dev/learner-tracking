@@ -8,6 +8,7 @@ use App\Http\Requests\Message;
 use App\Models\Apprenant;
 use Illuminate\Http\Request;
 use App\Models\Candidat;
+use App\Models\Niveau;
 use App\Models\PersonneResponsable;
 use Illuminate\Validation\Rule;
 
@@ -29,7 +30,8 @@ class ApprenantController extends Controller
     {
 
         $personne_reponsables = PersonneResponsable::all();
-        return view('apprenants.create', compact('personne_reponsables'));
+        $niveau = Niveau::all();
+        return view('apprenants.create', compact('personne_reponsables','niveau'));
     }
 
     /**
