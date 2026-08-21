@@ -17,8 +17,6 @@ class ApprenantPersonneResponsable extends Model
     {
         return $this->belongsTo(Apprenant::class, 'apprenant_id');
     }
-
-
     public function personneResponsable(): BelongsTo
     {
         return $this->belongsTo(PersonneResponsable::class, 'personne_reponsable_id');

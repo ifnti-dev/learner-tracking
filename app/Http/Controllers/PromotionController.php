@@ -6,6 +6,7 @@ use App\Http\Requests\Message;
 use App\Models\Promotion;
 use Illuminate\Http\Request;
 use App\Models\Apprenant;
+use Illuminate\Validation\Rule;
 
 class PromotionController extends Controller
 {
@@ -72,7 +73,7 @@ class PromotionController extends Controller
                 'required',
                 'string',
                 'max:255',
-                'unique:promotions,nom,' . $promotion->id
+                Rule::unique("promotions")->ignore($promotion->id),
             ],
             'annee_creation' => ['required', 'integer', 'min:1900'],
         ]);
@@ -121,12 +122,10 @@ class PromotionController extends Controller
     {
         if ($apprenant->promotion_id !== $promotion->id) {
             Message::error(" Cet apprenant n'appartient pas à cette promotion");
-        }
-        else {
+        } else {
             $message = Message::success('Apprenant est retiré  avec succès !');
             $apprenant->update(['promotion_id' => null]);
             return to_route('promotions.show', $promotion->id)->with($message->toMap());
         }
-        
     }
 }

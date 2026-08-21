@@ -21,13 +21,13 @@
                         </h3>
                     </div>
 
-                    <div class="space-y-6 border-t border-gray-100 p-5 sm:p-6 dark:border-gray-800">
-                        <!-- Nom -->
-                        <div>
+                    <div class="grid grid-cols-12 gap-6 border-t border-gray-100 p-5 sm:p-6 dark:border-gray-800">
+                
+                        <div class="col-span-6 lg:col-span-6">
                             <x-input-label for="nom" :value="__('Nom')" />
                             <x-text-input
                                 id="nom"
-                                class=""
+                                class="w-full"
                                 type="text"
                                 name="nom"
                                 :value="old('nom', $promotion->nom)"
@@ -35,13 +35,11 @@
                                 autocomplete="name" />
                             <x-input-error :messages="$errors->get('nom')" class="mt-2" />
                         </div>
-
-                        <!-- Année de création -->
-                        <div>
+                        <div class="col-span-6 lg:col-span-6">
                             <x-input-label for="annee_creation" :value="__('Année de création')" />
                             <x-text-input
                                 id="annee_creation"
-                                class=""
+                                class="w-full"
                                 type="number"
                                 name="annee_creation"
                                 :value="old('annee_creation', $promotion->annee_creation)"

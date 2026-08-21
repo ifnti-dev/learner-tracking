@@ -74,7 +74,9 @@
 
                                         <div class="flex items-center justify-end gap-x-3">
                                             <x-secondary-button>
-                                                <a href="#">{{ __('Modifier') }}</a>
+                                                <a href="{{ route('apprenants.edit', $apprenant->id) }}">
+                                                    {{ __('Modifier') }}
+                                                </a>
                                             </x-secondary-button>
                                             <form action="{{ route('promotions.apprenants.retirer', [$promotion->id, $apprenant->id]) }}" method="POST" class="inline" onclick="deleteDialogue('Souhaitez vous vraiment retirer cet apprenant', 'oui', 'annuler', this)" >
                                                 @csrf
