@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('absences', function (Blueprint $table) {
             $table->id();
-            $table->string('motif');
-
+            $table->string('justification');
+            $table-> boolean("est_justifie")->default(false);
             $table->foreignId('apprenant_id')->nullable()->constrained('apprenants')->onDelete('set null');
             $table->foreignId('seance_id')->nullable()->constrained('seances')->onDelete('set null');
             $table->timestamps();
