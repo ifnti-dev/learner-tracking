@@ -1,6 +1,9 @@
 <x-app-layout>
     <x-http-message-swal />
-
+    @vite(['resources/js/apprenant-create.js'])
+    <template id="file-input-template">
+        <x-uploade-file type="file" name="bulletins[]" />
+    </template>
     <div class="mx-auto max-w-(--breakpoint-2xl) p-4 md:p-6 bg-gray-50 dark:bg-gray-900">
 
 
@@ -14,10 +17,11 @@
 
 
             </div>
-            <form action="{{ route('apprenants.store') }}" method="POST">
-                @csrf
-                <div
-                    class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
+
+            <div
+                class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
+                <form action="{{ route('apprenants.store') }}" method="POST">
+                    @csrf
                     <div class="px-5 py-4 sm:px-6 sm:py-5">
                         <h3
                             class="text-base font-medium text-gray-800 dark:text-white/90">
@@ -44,11 +48,9 @@
 
                         <div class="col-span-12 lg:col-span-2">
                             <x-input-label for="sexe" :value="__('Sexe')" />
-
-                            <!-- Initialisation d'une vraie valeur par défaut pour Alpine -->
                             <div
                                 x-data="{ selectedType: '{{ old('sexe', 'M') }}' }"
-                                class="relative z-20 bg-transparent flex items-center">
+                                class="relative z-0 bg-transparent flex items-center">
 
                                 <select
                                     name="sexe"
@@ -148,7 +150,7 @@
                                         </svg>
                                     </div>
                                 </div>
-                                <x-number-input id="telephone" class="pl-[84px]" type="text" name="telephone" :value="old('telephone')" required autofocus autocomplete="username" />
+                                <x-number-input id="telephone" class="pl-[84px]" type="text" name="telephone" :value="old('telephone')" required />
                             </div>
                             <x-input-error :messages="$errors->get('telephone')" class="mt-2" />
                         </div>
@@ -177,7 +179,7 @@
                                             fill="#667085" />
                                     </svg>
                                 </span>
-                                <x-email-input id="email" class="" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+                                <x-email-input id="email" class="" type="email" name="email" :value="old('email')" required autofocus />
                             </div>
                             <x-input-error :messages="$errors->get('email')" class="mt-2" />
                         </div>
@@ -188,11 +190,38 @@
                             <x-input-error :messages="$errors->get('etablissement')" class="mt-2" />
                         </div>
                         <!-- Elements -->
-                        
-                        <div class="col-span-12 space-x-2">
-                            <x-input-label for="personne_reponsable_id" :value="__('Parents/Tuteur')" />
-                            <div class="flex space-x-2">
-                                <div class="w-1/2">
+                    </div>
+
+
+                    <div class="p-5">
+                        <x-fildset-group class="grid grid-cols-12 gap-4">
+                            <x-fildset-legend>Informations personnelle</x-fildset-legend>
+                            <div class="col-span-12 lg:col-span-2">
+                                <x-input-label for="niveau_id" :value="__('Niveau actuelle')" />
+                                <div>
+                                    <div>
+                                        <select
+                                            name="niveau_id"
+                                            id="niveau_id"
+                                            class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 pr-11 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90">
+
+                                            @foreach ($niveaux as $niveau)
+                                            <option
+                                                :value="String('{{ $niveau->id }}')"
+                                                {{ $niveau->id == old('niveau_id') ? 'selected' : '' }}>
+                                                {{ $niveau->nom }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <x-input-error :messages="$errors->get('niveau_id')" class="mt-2" />
+
+                            </div>
+                            <div class="col-span-12 lg:col-span-6">
+                                <x-input-label for="personne_reponsable_id" :value="__('Parents/Tuteur')" />
+
+                                <div>
                                     <select
                                         name="personne_reponsable_id"
                                         id="personne_reponsables_id"
@@ -207,44 +236,85 @@
                                         @endforeach
                                     </select>
                                 </div>
+                                <x-input-error :messages="$errors->get('personnes_reponsable_id')" class="mt-2" />
 
-
-                                <div class="w-1/2 ">
-                                    <x-primary-button>
-                                        <a href="{{ route('personne-responsables.create') }}">
-                                            {{ __('Ajouter un personnes reponsables') }}
-                                        </a>
-                                    </x-primary-button>
-                                </div>
                             </div>
-                            <x-input-error :messages="$errors->get('personnes_reponsable_id')" class="mt-2" />
 
-                        </div>
+                            <div class="col-span-12 lg:col-span-4  items-center">
+                                <br>
 
-
-
-
-
-                        <div class="px-5 py-4 sm:px-6 sm:py-5 flex ">
-
-
-                            <div class="justify-end ml-auto flex space-x-2">
-                                <x-secondary-button>
-                                    <a href="{{ route('apprenants.index') }}">
-                                        {{ __('Annuler') }}
+                                <x-primary-button>
+                                    <a href="{{ route('personne-responsables.create') }}" class="w-full h-full block">
+                                        {{ __('Ajouter un Parent/Tuteur') }}
                                     </a>
-                                </x-secondary-button>
-
-
-
-                                <x-primary-button type="submit">
-                                    {{ __('Enregistrer') }}
                                 </x-primary-button>
-
                             </div>
-                        </div>
-            </form>
-        </div>
+                        </x-fildset-group>
 
-    </div>
+
+                    </div>
+                    <div class=" p-5  ">
+                        <x-primary-button id="ajouter-bulletins" type="button">
+                            Ajouter Bulletins
+                        </x-primary-button>
+                    </div>
+                    <div class="p-5 hidden" id="table_bulltins">
+                        <x-fildset-group>
+                            <x-fildset-legend>Bulletins</x-fildset-legend>
+
+                            <div class="w-full overflow-x-auto scrollbar-thin border border-gray-100 dark:border-gray-800 rounded-xl">
+                                <table class="w-full min-w-[800px] table-fixed divide-y divide-gray-100 dark:divide-gray-800">
+                                    <thead>
+                                        <tr class="bg-gray-50/50 dark:bg-white/[0.01]">
+                                            <th class="w-1/4 px-5 py-3 text-left text-theme-xs font-medium text-gray-500 dark:text-gray-400">
+                                                Trimestre/Semestre
+                                            </th>
+                                            <th class="w-1/4 px-5 py-3 text-center text-theme-xs font-medium text-gray-500 dark:text-gray-400">
+                                                Bulletin 01
+                                            </th>
+                                            <th class="w-1/4 px-5 py-3 text-center text-theme-xs font-medium text-gray-500 dark:text-gray-400">
+                                                Bulletin 02
+                                            </th>
+                                            <th class="w-1/4 px-5 py-3 text-center text-theme-xs font-medium text-gray-500 dark:text-gray-400">
+                                                Bulletin 03
+                                            </th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody id="tbody" class="bg-white dark:bg-transparent">
+                                        <tr>
+                                            <td colspan="4" class="px-5 py-8 text-center text-theme-sm text-gray-500 dark:text-gray-400">
+                                                Rien pour le moment
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </x-fildset-group>
+                    </div>
+
+
+
+                    <div class="px-5 py-4 sm:px-6 sm:py-5 flex ">
+
+
+                        <div class="justify-end ml-auto flex space-x-2">
+                            <x-secondary-button>
+                                <a href="{{ route('apprenants.index') }}">
+                                    {{ __('Annuler') }}
+                                </a>
+                            </x-secondary-button>
+
+
+
+                            <x-primary-button type="submit">
+                                {{ __('Enregistrer') }}
+                            </x-primary-button>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
 </x-app-layout>

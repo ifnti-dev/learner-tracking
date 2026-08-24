@@ -30,8 +30,9 @@ class ApprenantController extends Controller
     {
 
         $personne_reponsables = PersonneResponsable::all();
-        $niveau = Niveau::all();
-        return view('apprenants.create', compact('personne_reponsables','niveau'));
+        $niveaux = Niveau::all();
+
+        return view('apprenants.create', compact('personne_reponsables','niveaux'));
     }
 
     /**

@@ -25,10 +25,10 @@
                         </h3>
                     </div>
                     <div
-                        class="space-y-6 border-t border-gray-100 p-5 sm:p-6 dark:border-gray-800">
+                        class=" gap-4 grid grid-cols-12 border-t border-gray-100 p-5 sm:p-6 dark:border-gray-800">
                         <!-- Elements -->
 
-                        <div>
+                        <div class="col-span-12 lg:col-span-6">
                             <x-input-label for="nom" :value="__('Nom')" />
                             <x-text-input id="nom" class="" type="text" name="nom" :value="old('nom')" required autofocus autocomplete="username" />
                             <x-input-error :messages="$errors->get('nom')" class="mt-2" />
@@ -36,7 +36,7 @@
 
                         <!-- Elements -->
 
-                        <div>
+                        <div class="col-span-12 lg:col-span-6">
                             <x-input-label for="prenom" :value="__('Prénom')" />
                             <x-text-input id="prenom" class="" type="text" name="prenom" :value="old('prenom')" required autofocus autocomplete="username" />
                             <x-input-error :messages="$errors->get('prenom')" class="mt-2" />
@@ -44,7 +44,7 @@
 
                         <!-- Elements -->
                         
-                        <div>
+                        <div class="col-span-12 lg:col-span-4">
                             <x-input-label for="type" :value="__('Type')" />
 
                             <!-- Initialisation d'une vraie valeur par défaut pour Alpine -->
@@ -75,7 +75,7 @@
 
 
                         <!-- Elements -->
-                        <div
+                        <div class="col-span-12 lg:col-span-4"
                             x-data="{
                             selectedCountry: 'TG',
                             countryCodes: {
