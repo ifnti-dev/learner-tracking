@@ -40,7 +40,6 @@ class ApprenantController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all());
         $validated = $request->validate([
             'nom' => 'required|string|max:255|min:3',
             'prenom' => 'required|string|max:255|min:3',
@@ -51,7 +50,12 @@ class ApprenantController extends Controller
             'date_naissance' => 'required|date',
             'etablissement' => 'required|string|max:255|min:2',
             'personne_reponsable_id' => 'nullable|exists:personne_responsables,id',
+            'bulletins' => 'nullable|array',
+            'bulletins.*' => 'nullable|array',
+            'bulletins.*.*' => 'nullable|mimes:jpg,png,pdf',
         ]);
+        dd($request->all());
+
         DB::transaction(
             function () use ($validated) {
                 $apprenant = Apprenant::create($validated);

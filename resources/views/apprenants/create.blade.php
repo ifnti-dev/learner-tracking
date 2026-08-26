@@ -19,8 +19,8 @@
             </div>
 
             <div
-                class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
-                <form action="{{ route('apprenants.store') }}" method="POST">
+                class="z-0 rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
+                <form action="{{ route('apprenants.store') }}" method="POST" enctype="multipart/form-data" >
                     @csrf
                     <div class="px-5 py-4 sm:px-6 sm:py-5">
                         <h3
@@ -265,7 +265,7 @@
                             <div class="w-full overflow-x-auto scrollbar-thin border border-gray-100 dark:border-gray-800 rounded-xl">
                                 <table class="w-full min-w-[800px] table-fixed divide-y divide-gray-100 dark:divide-gray-800">
                                     <thead>
-                                        <tr class="bg-gray-50/50 dark:bg-white/[0.01]">
+                                        <tr id="thead_tr" class="bg-gray-50/50 dark:bg-white/[0.01]">
                                             <th class="w-1/4 px-5 py-3 text-left text-theme-xs font-medium text-gray-500 dark:text-gray-400">
                                                 Trimestre/Semestre
                                             </th>
