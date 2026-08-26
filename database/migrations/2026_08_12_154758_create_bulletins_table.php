@@ -13,10 +13,17 @@ return new class extends Migration
     {
         Schema::create('bulletins', function (Blueprint $table) {
             $table->id();
-            $table->string('titre');
-            $table->string('type_document');
-            $table->string('chemin_fichier');
-            $table->json('data');
+            $table->string('bulletin1')->nullable();
+            $table->string('bulletin2')->nullable();
+            $table->string('bulletin3')->nullable();
+            $table->string('bulletin4')->nullable();
+            $table->string('bulletin5')->nullable();
+
+            $table->json('data1')->nullable();
+            $table->json('data2')->nullable();
+            $table->json('data3')->nullable();
+            $table->json('data4')->nullable();
+            $table->json('data5')->nullable();
 
             $table->foreignId('niveau_id')->nullable()->constrained('niveaux')->onDelete('set null');
             $table->foreignId('apprenant_id')->nullable()->constrained('apprenants')->onDelete('set null');

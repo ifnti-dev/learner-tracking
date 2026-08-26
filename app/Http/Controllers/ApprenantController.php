@@ -11,6 +11,7 @@ use App\Models\Candidat;
 use App\Models\Niveau;
 use App\Models\PersonneResponsable;
 use Illuminate\Validation\Rule;
+use App\Models\Bulletin;
 
 class ApprenantController extends Controller
 {
@@ -32,7 +33,7 @@ class ApprenantController extends Controller
         $personne_reponsables = PersonneResponsable::all();
         $niveaux = Niveau::all();
 
-        return view('apprenants.create', compact('personne_reponsables','niveaux'));
+        return view('apprenants.create', compact('personne_reponsables', 'niveaux'));
     }
 
     /**
@@ -44,7 +45,7 @@ class ApprenantController extends Controller
             'nom' => 'required|string|max:255|min:3',
             'prenom' => 'required|string|max:255|min:3',
             'telephone' => 'required|min:4|string|max:20|unique:candidats,telephone',
-            'email' => 'required|email|max:255|unique:candidats,email',
+            'email' => 'required|email|max:255|unique:apprenants,email',
             'sexe' => 'required|in:M,F',
             'adresse' => 'required|string|max:255|min:3',
             'date_naissance' => 'required|date',
@@ -54,10 +55,13 @@ class ApprenantController extends Controller
             'bulletins.*' => 'nullable|array',
             'bulletins.*.*' => 'nullable|mimes:jpg,png,pdf',
         ]);
-        dd($request->all());
+
+        //bulletins
+
+        //dd($request->all());
 
         DB::transaction(
-            function () use ($validated) {
+            function () use ($validated,$request) {
                 $apprenant = Apprenant::create($validated);
                 ApprenantPersonneResponsable::create(
                     [
@@ -65,8 +69,46 @@ class ApprenantController extends Controller
                         'apprenant_id' => $apprenant->id,
                     ]
                 );
+
+                if (isset($validated['bulletins'])) {
+                    $bulletins = $validated['bulletins'];
+                    $cles = array_keys($bulletins);
+                    $niveau_id = 0;
+                    foreach ($bulletins as $niveau) {
+                        $num_buletin = 1;
+                        $niveau_file_path = [];
+                        $niveau_bd;
+                        foreach ($niveau as $bulletin) {
+
+                            $niveau_bd = Niveau::find($cles[$niveau_id]);
+                            $file_name = $niveau_bd->nom . '-' . $num_buletin . '.' . $bulletin->extension();
+                            $bulletin_path = $bulletin->storeAs('bulettins/' . $validated['nom'] . '.' . $validated['prenom'] . '/' . $cles[$niveau_id], $file_name, 'public');
+                            $niveau_file_path[] = $bulletin_path;
+                            $num_buletin++;
+                        }
+
+                        $bulletin = Bulletin::create(
+                            [
+                                'bulletin1' => $niveau_file_path[0] ?? null,
+                                'bulletin2' => $niveau_file_path[1] ?? null,
+                                'bulletin3' => $niveau_file_path[2] ?? null,
+                                'bulletin4' => $niveau_file_path[3] ?? null,
+                                'bulletin5' => $niveau_file_path[4] ?? null,
+                                "niveau_id" => $niveau_bd->id,
+                                "apprenant_id" => $apprenant->id,
+                            ]
+                        );
+                        $niveau_id++;
+
+                    }
+                     
+                }
             }
         );
+
+
+
+
 
 
 
@@ -89,7 +131,7 @@ class ApprenantController extends Controller
     public function edit(Apprenant $apprenant)
     {
         $personne_reponsables = PersonneResponsable::all();
-        
+
 
         return view('apprenants.edit', compact('apprenant', 'personne_reponsables'));
     }

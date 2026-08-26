@@ -16,7 +16,7 @@ class BulletinSeeder extends Seeder
         $apprenant_ids = DB::table("apprenants")->pluck('id')->all();
         $niveau_ids = DB::table("niveaux")->pluck('id')->all();
 
-
+        /*
         DB::table('bulletins')->insert([
             [
                 'titre'          => 'Bulletin Semestre 1',
@@ -88,5 +88,6 @@ class BulletinSeeder extends Seeder
             ],
         ]);
         echo "bulletin seeder";
+        */
     }
 }
