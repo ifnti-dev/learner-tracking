@@ -29,16 +29,18 @@ Route::middleware('auth')->group(function () {
         ]
     );
     Route::get('/seances', [SeanceController::class, 'index'])->name('seances.index');
-    Route::get('/seances/create', [SeanceController::class, 'create'])->name('seances.create');
+    Route::get('/seances/planifierSeance', [SeanceController::class, 'planifierSeance'])->name('seances.planifierSeance');
     Route::post('/seances/planifier', [SeanceController::class, 'planifier'])->name('seances.planifier');
+    Route::get('/seances/{seance}/create', [SeanceController::class, 'create'])->name('seances.create');
+    Route::post('/seances/{seance}/creer', [SeanceController::class, 'store'])
+        ->name('seances.store');
     Route::get('/seances/{seance}/absences', [SeanceController::class, 'absences'])->name('seances.absences');
-
 });
 
 //Route public
 
-Route::get('/inscription',[CandidatController::class,'inscription'])->name('inscription');
-Route::post('/inscription',[CandidatController::class,'store'])->name('inscription.store');
+Route::get('/inscription', [CandidatController::class, 'inscription'])->name('inscription');
+Route::post('/inscription', [CandidatController::class, 'store'])->name('inscription.store');
 
 
 Route::post('/promotions/{promotion}/apprenants', [PromotionController::class, 'ajouterApprenant'])
@@ -46,4 +48,4 @@ Route::post('/promotions/{promotion}/apprenants', [PromotionController::class, '
 
 Route::delete('/promotions/{promotion}/apprenants/{apprenant}', [PromotionController::class, 'retirerApprenant'])
     ->name('promotions.apprenants.retirer');
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
