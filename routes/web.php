@@ -6,7 +6,7 @@ use App\Http\Controllers\PersonneResponsableController;
 use App\Http\Controllers\ApprenantController;
 use App\Http\Controllers\CandidatController;
 use App\Http\Controllers\PromotionController;
-
+use App\Http\Controllers\SeanceController;
 
 Route::get('/', function () {
     return to_route('dashboard');
@@ -28,6 +28,11 @@ Route::middleware('auth')->group(function () {
             'promotions' => PromotionController::class,
         ]
     );
+    Route::get('/seances', [SeanceController::class, 'index'])->name('seances.index');
+    Route::get('/seances/create', [SeanceController::class, 'create'])->name('seances.create');
+    Route::post('/seances/planifier', [SeanceController::class, 'planifier'])->name('seances.planifier');
+    Route::get('/seances/{seance}/absences', [SeanceController::class, 'absences'])->name('seances.absences');
+
 });
 
 //Route public

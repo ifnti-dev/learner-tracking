@@ -19,28 +19,28 @@ class AbsenceSeeder extends Seeder
 
 DB::table('absences')->insert([
     [
-        'motif'        => 'Maladie',
+        'justification'=> 'Maladie',
         'apprenant_id' => $apprenant_ids[0],
         'seance_id'    =>  $seance_ids[0],
         'created_at'   => now(),
         'updated_at'   => now(),
     ],
     [
-        'motif'        => 'Rendez-vous médical',
+        'justification'=> 'voyage ',
         'apprenant_id' => $apprenant_ids[1],
         'seance_id'    => $seance_ids[1],
         'created_at'   => now(),
         'updated_at'   => now(),
     ],
     [
-        'motif'        => 'Problème de transport',
+        'justification'=> 'probleme de transport ',
         'apprenant_id' => $apprenant_ids[2],
         'seance_id'    => $seance_ids[2],
         'created_at'   => now(),
         'updated_at'   => now(),
     ],
     [
-        'motif'        => 'Événement familial',
+        'justification'=> 'evenement famillial ',
         'apprenant_id' => $apprenant_ids[0],
         'seance_id'    => $seance_ids[1],
         'created_at'   => now(),

@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Absence extends Model
 {
+    protected $fillable = [
+        'seance_id',
+        'apprenant_id',
+        'justification',
+        'est_justifie',
+    ];
     public function seance(): BelongsTo
     {
         return $this->belongsTo(Seance::class);
