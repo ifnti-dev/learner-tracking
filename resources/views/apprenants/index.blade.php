@@ -17,10 +17,10 @@
         </div>
     </div>
     <div
-        class="p-5 border-t border-gray-100 dark:border-gray-800 sm:p-6">
+        class="">
         <!-- ====== Table Six Start -->
 
-        <div class="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
+        <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
             <div class="max-w-full overflow-x-auto">
                 <table class="min-w-full">
                     <!-- table header start -->
@@ -88,7 +88,7 @@
                     <!-- table body start -->
                     <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
                         @forelse ($apprenants as $apprenant)
-                        <tr>
+                        <tr class="hover:bg-gray-100 dark:hover:bg-gray-800 ">
                             <td class="px-5 py-4 sm:px-6">
                                 <div class="flex items-center">
                                     <div class="flex items-center gap-3">

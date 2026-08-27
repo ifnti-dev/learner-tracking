@@ -20,12 +20,12 @@
         class="">
         <!-- ====== Table Six Start -->
 
-        <div class="overflow-hidden border rounded-2xl">
+        <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
             <div class="max-w-full overflow-x-auto">
                 <table class="min-w-full">
                     <!-- table header start -->
                     <thead>
-                        <tr class="bg-gray-50 border-b border-gray-100 dark:border-gray-800">
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
                             <th class="px-5 py-3 sm:px-6">
                                 <div class="flex items-center">
                                     <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">
@@ -67,7 +67,7 @@
                     <!-- table body start -->
                     <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
                         @forelse ($personneResponsables as $personneResponsable)
-                        <tr class="hover:bg-gray-100 ">
+                        <tr class="hover:bg-gray-100  dark:hover:bg-gray-800  ">
                             <td class="px-5 py-4 sm:px-6">
                                 <div class="flex items-center">
                                     <div class="flex items-center gap-3">
