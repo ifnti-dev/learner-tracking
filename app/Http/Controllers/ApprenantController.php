@@ -12,6 +12,7 @@ use App\Models\Niveau;
 use App\Models\PersonneResponsable;
 use Illuminate\Validation\Rule;
 use App\Models\Bulletin;
+use Illuminate\Support\Facades\Storage;
 
 class ApprenantController extends Controller
 {
@@ -172,26 +173,51 @@ class ApprenantController extends Controller
 
                 $apprenant->update($validated);
 
+                ApprenantPersonneResponsable::firstOrCreate([
+                    'apprenant_id' => $apprenant->id,
+                    'personne_responsable_id' => $validated['personne_reponsable_id']
+                ]);
 
-                ApprenantPersonneResponsable::update(
-                    ['apprenant_id' => $apprenant->id],
-                    ['personne_responsable_id' => $validated['personne_reponsable_id']]
-                );
+             
 
-                
+
                 if (isset($validated['bulletins'])) {
                     $bulletins = $validated['bulletins'];
-                    
+
                     foreach ($bulletins as $niveau_id => $bulletin_files) {
                         $niveau_bd = Niveau::find($niveau_id);
-                       
+                        if (!$niveau_bd) continue;
+
+                        $bulletinModel = Bulletin::firstOrNew([
+                            'niveau_id' => $niveau_bd->id,
+                            'apprenant_id' => $apprenant->id,
+                        ]);
+
+                        $bulletins_limites = array_slice($bulletin_files, 0, 5);
 
                         $num_bulletin = 1;
-                        foreach ($bulletin_files as $bulletin_file) {
-                           
-                            //
+                        foreach ($bulletins_limites as $bulletin_file) {
+                            $champ_bulletin = 'bulletin' . $num_bulletin;
+
+                            if (!empty($bulletinModel->$champ_bulletin)) {
+                                if (Storage::disk('public')->exists($bulletinModel->$champ_bulletin)) {
+                                    Storage::disk('public')->delete($bulletinModel->$champ_bulletin);
+                                }
+                            }
+
+                            $file_name = $niveau_bd->nom . '-' . $num_bulletin . '.' . $bulletin_file->extension();
+                            $bulletin_path = $bulletin_file->storeAs(
+                                'bulettins/' . $validated['nom'] . '.' . $validated['prenom'] . '/' . $niveau_id,
+                                $file_name,
+                                'public'
+                            );
+
+                            $bulletinModel->$champ_bulletin = $bulletin_path;
+
+                            $num_bulletin++;
                         }
-                
+
+                        $bulletinModel->save();
                     }
                 }
             }

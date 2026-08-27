@@ -22,6 +22,7 @@
         class="z-0 rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
         <form action="{{ $action }}" method="POST" enctype="multipart/form-data">
             @csrf
+            @method("PUT")
             <div class="px-5 py-4 sm:px-6 sm:py-5">
                 <h3
                     class="text-base font-medium text-gray-800 dark:text-white/90">

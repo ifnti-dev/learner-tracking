@@ -35,12 +35,18 @@ Route::middleware('auth')->group(function () {
     Route::post('/seances/{seance}/creer', [SeanceController::class, 'store'])
         ->name('seances.store');
     Route::get('/seances/{seance}/absences', [SeanceController::class, 'absences'])->name('seances.absences');
+
+
+    //candidats
+    Route::get('/candidats', [CandidatController::class, 'index'])->name('candidats.index');
+    Route::post('/promotions/{candidat}/appouver', [CandidatController::class, 'approuver'])->name('candidater.approuver');
+    Route::delete('/promotions/{candidat}/rejeter', [CandidatController::class, 'rejeter'])->name('candidater.rejeter');
 });
 
 //Route public
 
-Route::get('/inscription', [CandidatController::class, 'inscription'])->name('inscription');
-Route::post('/inscription', [CandidatController::class, 'store'])->name('inscription.store');
+Route::get('/promotions/{promotion}/candidater', [CandidatController::class, 'candidater'])->name('candidater');
+Route::post('/promotions/{promotion}/candidater', [CandidatController::class, 'store'])->name('candidater.store');
 
 
 Route::post('/promotions/{promotion}/apprenants', [PromotionController::class, 'ajouterApprenant'])
