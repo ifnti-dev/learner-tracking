@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-http-message-swal />
-    <div class="mx-auto max-w-(--breakpoint-2xl) p-4 md:p-6 bg-gray-50 dark:bg-gray-900">
-        <div class="min-h-screen rounded-2xl border border-gray-200 bg-white px-5 py-7 dark:border-gray-800 dark:bg-white/[0.03] xl:px-10 xl:py-12">
+    
+       
             <div class="px-5 py-4 sm:px-6 sm:py-5 flex ">
 
                 <h3 class="text-base font-medium text-gray-800 dark:text-white/90">
@@ -16,8 +16,6 @@
                     </x-primary-button>
                 </div>
             </div>
-            <div class="p-5 border-t border-gray-100 dark:border-gray-800 sm:p-6">
-
                 <div class="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
                     <div class="max-w-full overflow-x-auto">
                         <table class="min-w-full table-auto">
@@ -72,25 +70,36 @@
                                         </p>
                                     </td>
                                     <td class="px-5 py-4 sm:px-6 text-center">
-                                        <div class="flex items-center justify-center gap-x-3">
-                                            <x-secondary-button>
-                                                <a href="{{route('promotions.edit',$promotion->id)}}">
-                                                    {{ __('Modifier') }}
+                                        <details class="relative inline-block text-left">
+                                            <summary class="cursor-pointer list-none rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 shadow-sm hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">
+
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+                                                    <path d="M10 3a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM10 8.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM11.5 15.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0Z" />
+                                                </svg>
+
+                                            </summary>
+                                            <div class="absolute right-0 z-10 mt-1 w-48 origin-top-right rounded-lg border border-gray-200 bg-white py-1 shadow-lg dark:border-gray-700 dark:bg-gray-800">
+                                                <a href="{{ route('promotions.edit', $promotion) }}"
+                                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700">
+                                                    Modifier
                                                 </a>
-                                            </x-secondary-button>
-                                            <x-secondary-button>
-                                                <a href="{{route('promotions.show',$promotion->id)}}">
-                                                    {{ __('Gérer la promotion') }}
+                                                <a href="{{ route('promotions.show', $promotion) }}"
+                                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700">
+                                                    Gérer la promotion
                                                 </a>
-                                            </x-secondary-button>
-                                            <form action="{{route('promotions.destroy',$promotion->id)}}" method="POST" class="inline" onclick="deleteDialogue('Souhaitez vous vraiment supprimer cette promotion', 'oui', 'annuler', this)">
-                                                @csrf
-                                                @method('DELETE')
-                                                <x-danger-button class="bg-red-500 hover:bg-red-600">
-                                                    {{ __('Supprimer') }}
-                                                </x-danger-button>
-                                            </form>
-                                        </div>
+                                                <form action="{{ route('promotions.destroy', $promotion) }}"
+                                                    method="POST"
+                                                    class="block"
+                                                    onclick="deleteDialogue('Souhaitez vous vraiment supprimer cette promotion ?', 'oui', 'annuler', this)">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit"
+                                                        class="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20">
+                                                        Supprimer
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </details>
                                     </td>
                                 </tr>
                                 @empty
@@ -106,7 +115,7 @@
                         </table>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
+            
+        
+    
 </x-app-layout>

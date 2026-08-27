@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,6 +18,7 @@
     <!-- Scripts Vite -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
+
 <body
     x-data="{
         page: 'blank',
@@ -31,8 +33,7 @@
         $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))
     "
     :class="{ 'dark': darkMode }"
-    class="bg-gray-50 dark:bg-gray-900"
->
+    class="bg-gray-50 dark:bg-gray-900">
     <div class="flex h-screen overflow-hidden bg-white dark:bg-gray-900">
         {{-- Sidebar --}}
         @include('layouts.sidebar')
@@ -42,7 +43,12 @@
             @include('layouts.navigation')
 
             <main>
-                {{ $slot }}
+                <div class="mx-auto max-w-(--breakpoint-2xl) p-4 md:p-6 bg-gray-50 dark:bg-gray-900">
+                    <div
+                        class="min-h-screen rounded-2xl border border-gray-200 bg-white px-5 py-3 dark:border-gray-800 dark:bg-white/[0.03] xl:px-10 xl:py-6">
+                        {{ $slot }}
+                    </div>
+                </div>
             </main>
         </div>
     </div>
@@ -51,4 +57,5 @@
     <script src="{{ asset('js/index.js') }}"></script>
     @stack('scripts')
 </body>
+
 </html>

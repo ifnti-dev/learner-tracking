@@ -33,7 +33,7 @@ class ApprenantController extends Controller
         $personne_reponsables = PersonneResponsable::all();
         $niveaux = Niveau::all();
 
-        return view('apprenants.create', compact('personne_reponsables', 'niveaux'));
+        return view('apprenants.form', compact('personne_reponsables', 'niveaux'));
     }
 
     /**
@@ -131,9 +131,9 @@ class ApprenantController extends Controller
     public function edit(Apprenant $apprenant)
     {
         $personne_reponsables = PersonneResponsable::all();
+        $niveaux = Niveau::all();
 
-
-        return view('apprenants.edit', compact('apprenant', 'personne_reponsables'));
+        return view('apprenants.form', compact('apprenant', 'personne_reponsables', 'niveaux'));
     }
 
     /**
