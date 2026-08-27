@@ -10,7 +10,7 @@ class Niveau extends Model
 {
     public function apprenants(): BelongsToMany
     {
-        return $this->belongsToMany(Apprenant::class);
+        return $this->belongsToMany(Apprenant::class,"bulletins");
     }
     public function bulletins(): HasMany
     {

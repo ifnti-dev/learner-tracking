@@ -51,7 +51,7 @@ class Apprenant extends Model
     }
     public function niveaux(): BelongsToMany
     {
-        return $this->belongsToMany(Niveau::class);
+        return $this->belongsToMany(Niveau::class,'bulletins');
     }
     public function paiementFrais(): HasMany
     {

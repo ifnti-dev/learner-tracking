@@ -61,7 +61,7 @@ class ApprenantController extends Controller
         //dd($request->all());
 
         DB::transaction(
-            function () use ($validated,$request) {
+            function () use ($validated, $request) {
                 $apprenant = Apprenant::create($validated);
                 ApprenantPersonneResponsable::create(
                     [
@@ -99,9 +99,7 @@ class ApprenantController extends Controller
                             ]
                         );
                         $niveau_id++;
-
                     }
-                     
                 }
             }
         );
@@ -164,13 +162,44 @@ class ApprenantController extends Controller
             'date_naissance' => 'required|date',
             'etablissement' => 'required|string|max:255|min:2',
             'personne_reponsable_id' => 'nullable|exists:personne_responsables,id',
+            'bulletins' => 'nullable|array',
+            'bulletins.*' => 'nullable|array',
+            'bulletins.*.*' => 'nullable|mimes:jpg,png,pdf',
         ]);
 
-        $apprenant->update($validated);
+        DB::transaction(
+            function () use ($validated, $request, $apprenant) {
+
+                $apprenant->update($validated);
+
+
+                ApprenantPersonneResponsable::update(
+                    ['apprenant_id' => $apprenant->id],
+                    ['personne_responsable_id' => $validated['personne_reponsable_id']]
+                );
+
+                
+                if (isset($validated['bulletins'])) {
+                    $bulletins = $validated['bulletins'];
+                    
+                    foreach ($bulletins as $niveau_id => $bulletin_files) {
+                        $niveau_bd = Niveau::find($niveau_id);
+                       
+
+                        $num_bulletin = 1;
+                        foreach ($bulletin_files as $bulletin_file) {
+                           
+                            //
+                        }
+                
+                    }
+                }
+            }
+        );
 
 
 
-        $message = Message::success('Apprenant créer avec success !');
+        $message = Message::success('Apprenant â été mofifier avec success !');
 
         return to_route('apprenants.index')->with($message->toMap());
     }
