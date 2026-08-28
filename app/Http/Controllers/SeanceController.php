@@ -60,29 +60,29 @@ class SeanceController extends Controller
     {
         dd($request->all());
         
-        // $message = Message::error(" La séance n'est pas encore terminée");
-        // if (!$this->peutCreerSeance($seance)) {
-        //     return to_route('seances.index')->with($message->toMap());
-        // }
-        // $request->validate([
-        //     'absents'   => 'nullable|array',
-        //     'absents.*' => 'exists:apprenants,id',
-        // ]);
-        // DB::transaction(function () use ($seance, $request) {
+        $message = Message::error(" La séance n'est pas encore terminée");
+        if (!$this->peutCreerSeance($seance)) {
+            return to_route('seances.index')->with($message->toMap());
+        }
+        $request->validate([
+            'absents'   => 'nullable|array',
+            'absents.*' => 'exists:apprenants,id',
+        ]);
+        DB::transaction(function () use ($seance, $request) {
 
-        //     $seance->update(['etat' => 'TERMINER']);
-        //     if ($request->filled('absents')) {
-        //         foreach ($request->absents as $apprenantId) {
-        //             Absence::create([
-        //                 'seance_id'    => $seance->id,
-        //                 'apprenant_id' => $apprenantId,
-        //             ]);
-        //         }
-        //     }
-        // });
+            $seance->update(['etat' => 'TERMINER']);
+            if ($request->filled('absents')) {
+                foreach ($request->absents as $apprenantId) {
+                    Absence::create([
+                        'seance_id'    => $seance->id,
+                        'apprenant_id' => $apprenantId,
+                    ]);
+                }
+            }
+        });
 
-        // $message = Message::success('Séance créée avec succès');
-        // return to_route('seances.index')->with($message->toMap());
+        $message = Message::success('Séance créée avec succès');
+        return to_route('seances.index')->with($message->toMap());
     }
     public function peutCreerSeance(Seance $seance): bool
     {

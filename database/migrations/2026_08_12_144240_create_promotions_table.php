@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string("nom")->unique();
             $table->integer("annee_creation")->unsigned();
+            $table->date("date_limite");
+            $table->enum('est_active',['oui','non'])->default("oui");
             
             $table->timestamps();
         });

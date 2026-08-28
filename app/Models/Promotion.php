@@ -9,7 +9,9 @@ class Promotion extends Model
 {
     protected $fillable = [
         "nom",
-        "annee_creation"
+        "annee_creation",
+        "date_limite",
+        "est_active"
     ];
     public function seances(): HasMany
     {

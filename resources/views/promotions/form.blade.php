@@ -1,4 +1,5 @@
 <x-app-layout>
+    
     <x-http-message-swal />
 
     <div class="mx-auto max-w-(--breakpoint-2xl) p-4 md:p-6 bg-gray-50 dark:bg-gray-900">
@@ -45,40 +46,6 @@
                                 :value="old('annee_creation', $promotion->annee_creation)"
                                 autocomplete="off" />
                             <x-input-error :messages="$errors->get('annee_creation')" class="mt-2" />
-                        </div>
-                         <div class="col-span-6 lg:col-span-6">
-                            <x-input-label for="date" :value="__('Date limite')" />
-                            <x-text-input
-                                id="date_limite"
-                                class="w-full"
-                                type="date"
-                                :value="old('date_limite', $promotion->date_limite)"
-                                name="date_limite"
-                                autofocus
-                                autocomplete="name" />
-                            <x-input-error :messages="$errors->get('date_limite')" class="mt-2 " />
-                        </div>
-                         <div class="col-span-3 lg:col-span-3">
-                            <x-input-label for="type" :value="__('Est Active')" />
-                            <div
-                                x-data="{ selectedType: '{{ old('est_active',$promotion->est_active ) }}' }"
-                                class="relative z-20 bg-transparent flex items-center">
-
-                                <select
-                                    name="est_active"
-                                    id="est_active"
-                                    x-model="selectedType"
-                                    class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 pr-11 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90">
-
-                                    <option value="oui" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
-                                        Oui
-                                    </option>
-                                    <option value="non" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
-                                        Non
-                                    </option>
-                                </select>
-                                <x-input-error :messages="$errors->get('est_active')" class="mt-2 " />
-                            </div>
                         </div>
                     </div>
                 </div>

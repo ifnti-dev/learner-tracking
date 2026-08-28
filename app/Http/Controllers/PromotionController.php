@@ -38,6 +38,8 @@ class PromotionController extends Controller
         $validated = $request->validate([
             'nom'   => ['required', 'string', 'max:255', 'unique:promotions,nom'],
             'annee_creation' => ['required', 'integer', 'min:1900'],
+            'est_active'=>"required",
+            "date_limite"=>"required|date"
         ]);
 
         $message = Message::success('la promotion est enregistrée avec succès');
@@ -68,6 +70,7 @@ class PromotionController extends Controller
      */
     public function update(Request $request, Promotion $promotion)
     {
+       
         $validated = $request->validate([
             'nom' => [
                 'required',
@@ -76,6 +79,9 @@ class PromotionController extends Controller
                 Rule::unique("promotions")->ignore($promotion->id),
             ],
             'annee_creation' => ['required', 'integer', 'min:1900'],
+            "date_limite"=>"required",
+            'est_active'=>"required"
+
         ]);
         $promotion->update($validated);
         $message = Message::success('La promotion a été modifiée avec succès');
