@@ -83,6 +83,11 @@ public function approuver(Candidat $candidat)
         ]);
 
         $validated['promotion_id'] = $promotion->id;
+        if($promotion->date_limite > now() || $promotion->est_active == 'non' ){
+            $message = Message::error("Fin du delais d' inscription !");
+            return to_route('candidater',$promotion)->with($message->toMap());
+
+        }
         Candidat::create($validated);
 
 
@@ -91,7 +96,7 @@ public function approuver(Candidat $candidat)
             return to_route('candidats.index')->with($message->toMap());
 
         }else{
-            return to_route('candidater')->with($message->toMap());
+            return to_route('candidater',$promotion)->with($message->toMap());
         }
     }
 }

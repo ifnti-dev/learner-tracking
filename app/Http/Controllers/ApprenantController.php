@@ -72,6 +72,7 @@ class ApprenantController extends Controller implements HasMiddleware
             'bulletins' => 'nullable|array',
             'bulletins.*' => 'nullable|array',
             'bulletins.*.*' => 'nullable|mimes:jpg,png,pdf',
+            'prise_en_charge' => 'required|integer|in:0,1'
         ]);
 
         //bulletins
@@ -183,6 +184,7 @@ class ApprenantController extends Controller implements HasMiddleware
             'bulletins' => 'nullable|array',
             'bulletins.*' => 'nullable|array',
             'bulletins.*.*' => 'nullable|mimes:jpg,png,pdf',
+            'prise_en_charge' => 'required|integer|in:0,1',
         ]);
 
         DB::transaction(

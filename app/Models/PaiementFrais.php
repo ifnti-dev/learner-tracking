@@ -7,6 +7,17 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PaiementFrais extends Model
 {
+
+    protected $fillable = [
+        'apprenant_id',
+        'niveau_id',
+        'prise_en_charge',
+        'montant',
+        'verse',
+        'piece_justificatif',
+        'data',
+    ];
+
     public function apprenant(): BelongsTo
     {
         return $this->belongsTo(Apprenant::class);
