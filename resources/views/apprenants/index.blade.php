@@ -7,7 +7,7 @@
             class="text-base font-medium text-gray-800 dark:text-white/90">
             Apprenants
         </h3>
-
+        @can('create.apprenant')
         <div class="justify-end ml-auto">
             <x-primary-button>
                 <a href="{{ route('apprenants.create') }}">
@@ -15,6 +15,8 @@
                 </a>
             </x-primary-button>
         </div>
+
+        @endcan
     </div>
     <div
         class="">
@@ -150,11 +152,14 @@
                             </td>
                             <td class="px-5 py-4 sm:px-6">
                                 <div class="flex items-center">
+                                    @can('update.apprenant')
                                     <x-secondary-button>
                                         <a href="{{ route('apprenants.edit', $apprenant->id) }}">
                                             {{ __('Modifier') }}
                                         </a>
                                     </x-secondary-button>
+                                    @endcan
+                                    @can('delete.apprenant')
                                     <form action="{{ route('apprenants.destroy', $apprenant->id) }}" onclick="deleteDialogue('Souhaitez vous vraiem.....', 'oui', 'annuler', this)" method="POST" class="ml-2">
                                         @csrf
                                         @method('DELETE')
@@ -162,6 +167,7 @@
                                             {{ __('Supprimer') }}
                                         </x-danger-button>
                                     </form>
+                                    @endcan
                                 </div>
                             </td>
                         </tr>

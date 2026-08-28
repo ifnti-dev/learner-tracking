@@ -7,11 +7,30 @@ use App\Models\PersonneResponsable;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-class PersonneResponsableController extends Controller
+
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+
+use Spatie\Permission\Middleware\RoleMiddleware;
+use Spatie\Permission\Middleware\PermissionMiddleware;
+
+
+class PersonneResponsableController extends Controller implements HasMiddleware
 {
     /**
      * Display a listing of the resource.
      */
+
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:view.personne.responsable', only: ['index', 'show']),
+            new Middleware('permission:create.personne.responsable', only: ['create', 'store']),
+            new Middleware('permission:update.personne.responsable', only: ['edit', 'update']),
+            new Middleware('permission:delete.personne.responsable', only: ['destroy']),
+        ];
+    }
+
     public function index()
     {
         $personneResponsables = PersonneResponsable::all();
@@ -64,7 +83,7 @@ class PersonneResponsableController extends Controller
      */
     public function update(Request $request, PersonneResponsable $personneResponsable)
     {
-    
+
         $validated = $request->validate([
             'nom' => 'required|string|max:255',
             'prenom' => 'required|string|max:255',
@@ -72,7 +91,7 @@ class PersonneResponsableController extends Controller
                 'required',
                 'max:20',
                 'string',
-                Rule::unique('personne_responsables', 'telephone')->ignore($personneResponsable->id,'id'),
+                Rule::unique('personne_responsables', 'telephone')->ignore($personneResponsable->id, 'id'),
             ],
             'type' => 'required|string|in:TUTEUR,PERE,MERE',
         ]);

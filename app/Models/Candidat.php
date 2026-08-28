@@ -12,10 +12,11 @@ class Candidat extends Model
         'prenom',
         'telephone',
         'email',
-        'password',
         'sexe',
         'adresse',
         'date_naissance',
+        'etablissement',
+        'promotion_id'
     ];
 
     public function apprenant(): HasOne

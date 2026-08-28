@@ -27,7 +27,10 @@ class RolePermissionSeeder extends Seeder
         );
 
         $candidatRole->syncPermissions(
-            Permission::where('name', 'inscrire.apprenant')->get()
+            Permission::where('name', 'candidater')->get()
         );
+
+        
+
     }
 }

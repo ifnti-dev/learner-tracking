@@ -144,13 +144,16 @@
                             </td>
                             <td class="px-5 py-4 sm:px-6">
                                 <div class="flex items-center">
-
+                                    @can('appouver.candidat')
                                     <form action="{{ route('candidater.approuver', $candidat) }}" method="POST">
                                         @csrf
                                         <x-secondary-button type="submit">
                                             {{ __('Approuver') }}
                                         </x-secondary-button>
                                     </form>
+                                    @endcan
+                                    
+                                    @can('rejeter.candidat')
 
                                     <form action="{{ route('candidater.rejeter', $candidat) }}" onclick="deleteDialogue('Souhaitez vous vraiem.....', 'oui', 'annuler', this)" method="POST" class="ml-2">
                                         @csrf
@@ -159,6 +162,7 @@
                                             {{ __('Rejeter') }}
                                         </x-danger-button>
                                     </form>
+                                    @endcan
                                 </div>
                             </td>
                         </tr>

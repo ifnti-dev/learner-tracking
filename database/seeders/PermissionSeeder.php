@@ -15,24 +15,24 @@ class PermissionSeeder extends Seeder
     {
         $permissions = [
             'create.promotion',
-            'show.promotion',
-            'index.promotion',
+            'view.promotion',
             'update.promotion',
             'delete.promotion',
 
             'create.personne.responsable',
-            'show.personne.responsable',
-            'index.personne.responsable',
+            'view.personne.responsable',
             'update.personne.responsable',
             'delete.personne.responsable',
 
             'create.apprenant',
-            'show.apprenant',
-            'index.apprenant',
+            'view.apprenant',
             'update.apprenant',
             'delete.apprenant',
 
-            'inscrire.apprenant',
+            'appouver.candidat',
+            'view.candidat',
+            'rejeter.candidat',
+            'candidater',
         ];
 
         foreach ($permissions as $permission) {

@@ -7,14 +7,16 @@
             class="text-base font-medium text-gray-800 dark:text-white/90">
             Personne Responsables
         </h3>
-
+        @can('create.personne.responsable')
         <div class="justify-end ml-auto">
+            
             <x-primary-button>
                 <a href="{{ route('personne-responsables.create') }}">
                     {{ __('Ajouter ') }}
                 </a>
             </x-primary-button>
         </div>
+        @endcan
     </div>
     <div
         class="">
@@ -105,11 +107,14 @@
                             </td>
                             <td class="px-5 py-4 sm:px-6">
                                 <div class="flex items-center">
+                                    @can('update.personne.responsable')
                                     <x-secondary-button>
                                         <a href="{{ route('personne-responsables.edit', $personneResponsable->id) }}">
                                             {{ __('Modifier') }}
                                         </a>
                                     </x-secondary-button>
+                                    @endcan
+                                    @can('delete.personne.responsable')
                                     <form action="{{ route('personne-responsables.destroy', $personneResponsable->id) }}" onclick="deleteDialogue('Souhaitez vous vraiem.....', 'oui', 'annuler', this)" method="POST" class="ml-2">
                                         @csrf
                                         @method('DELETE')
@@ -117,6 +122,7 @@
                                             {{ __('Supprimer') }}
                                         </x-danger-button>
                                     </form>
+                                    @endcan
                                 </div>
                             </td>
                         </tr>

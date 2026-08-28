@@ -21,11 +21,12 @@ class ApprenantSeeder extends Seeder
                 'prenom'         => 'Aminata',
                 'telephone'      => '770000001',
                 'email'          => 'aminata.diallo@email.com',
-                'password'       => Hash::make('password123'),
+                'etablissement'  => 'Université de kara',
                 'sexe'           => 'F',
                 'adresse'        => 'Dakar, Sénégal',
                 'date_naissance' => '1998-05-12',
                 'created_at'     => now(),
+                'promotion_id'  => $promotions_ids[0],
                 'updated_at'     => now(),
             ],
 

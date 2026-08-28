@@ -20,6 +20,8 @@ return new class extends Migration
             $table->enum('sexe',['M','F']);
             $table->string("adresse");
             $table->date("date_naissance");
+            $table->string('etablissement');
+            $table->string('promotion_id');
             $table->timestamps();
         });
     }

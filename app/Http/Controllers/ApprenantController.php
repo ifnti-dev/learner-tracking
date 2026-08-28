@@ -14,11 +14,28 @@ use Illuminate\Validation\Rule;
 use App\Models\Bulletin;
 use Illuminate\Support\Facades\Storage;
 
-class ApprenantController extends Controller
+
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+
+use Spatie\Permission\Middleware\RoleMiddleware;
+use Spatie\Permission\Middleware\PermissionMiddleware;
+
+class ApprenantController extends Controller implements HasMiddleware
 {
     /**
      * Display a listing of the resource.
      */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:view.apprenant',only:['index','show']),
+            new Middleware('permission:create.apprenant',only:['create','store']),
+            new Middleware('permission:update.apprenant',only:['edit','update']),
+            new Middleware('permission:delete.apprenant',only:['destroy']),
+        ];
+    }
+
     public function index()
     {
         $apprenants = Apprenant::all();
