@@ -17,8 +17,9 @@ class Seance extends Model
         'date',
         'type_seance',
         'etat',
-        'utilisateur_id',
+        'user_id',
         'promotion_id',
+        
     ];
 
     public function user(): BelongsTo

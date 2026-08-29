@@ -14,11 +14,7 @@ class PermissionSeeder extends Seeder
     public function run(): void
     {
         $permissions = [
-            'create.promotion',
-            'view.promotion',
-            'update.promotion',
-            'delete.promotion',
-
+        
             'create.personne.responsable',
             'view.personne.responsable',
             'update.personne.responsable',
@@ -33,6 +29,15 @@ class PermissionSeeder extends Seeder
             'view.candidat',
             'rejeter.candidat',
             'candidater',
+
+            'create.promotion',
+            'view.promotion',
+            'update.promotion',
+            'destroy.promotion',
+            
+            'planifier.seance',
+            
+            
         ];
 
         foreach ($permissions as $permission) {

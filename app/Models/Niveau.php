@@ -20,4 +20,5 @@ class Niveau extends Model
     {
         return $this->hasMany(PaiementFrais::class);
     }
+    
 }

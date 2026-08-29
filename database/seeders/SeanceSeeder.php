@@ -27,7 +27,7 @@ class SeanceSeeder extends Seeder
                 'heure_debut'   => '09:00:00',
                 'heure_fin'     => '12:00:00',
                 'type_seance'   => TypeSeance::PRESENTIEL,
-                'etat'          => Etat::DEMARRER,
+                'etat'          => Etat::ENCOURS,
                 'user_id'       =>  $user_ids[0],
                 'promotion_id'  => $promotions_ids[0],
                 'created_at'    => now(),

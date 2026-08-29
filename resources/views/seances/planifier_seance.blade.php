@@ -7,20 +7,20 @@
         </h3>
     </div>
 
-    <form action="{{ route('seances.planifier') }}" method="POST">
+    <form action="{{ route('seances.creer') }}" method="POST">
         @csrf
 
         <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
             <div class="grid grid-cols-12 gap-6 border-t border-gray-100 p-5 sm:p-6 dark:border-gray-800">
 
-                {{-- Intitulé --}}
+               
                 <div class="col-span-5">
                     <x-input-label for="intitule" value="Intitulé de la séance" />
                     <x-text-input id="intitule" name="intitule" type="text" :value="old('intitule')" autofocus />
                     <x-input-error :messages="$errors->get('intitule')" class="mt-2" />
                 </div>
 
-                {{-- Promotion --}}
+              
                 <div class="col-span-4">
                     <x-input-label for="promotion_id" value="Promotion" />
                     <select name="promotion_id" id="promotion_id"
@@ -35,7 +35,7 @@
                     <x-input-error :messages="$errors->get('promotion_id')" class="mt-2" />
                 </div>
 
-                {{-- Type de séance --}}
+                
                 <div class="col-span-3">
                     <x-input-label for="type_seance" value="Type de séance" />
                     <select name="type_seance" id="type_seance"
@@ -46,7 +46,7 @@
                     <x-input-error :messages="$errors->get('type_seance')" class="mt-2" />
                 </div>
 
-                {{-- Date --}}
+               
                 <div class="col-span-4">
                     <x-input-label for="date" value="Date de la séance" />
                     <input id="date" name="date" type="date" value="{{ old('date') }}"
@@ -54,14 +54,14 @@
                     <x-input-error :messages="$errors->get('date')" class="mt-2" />
                 </div>
 
-                {{-- Heure début --}}
+               
                 <div class="col-span-4">
                     <x-input-label for="heure_debut" value="Heure de début" />
                     <x-text-input id="heure_debut" name="heure_debut" type="time" :value="old('heure_debut')" />
                     <x-input-error :messages="$errors->get('heure_debut')" class="mt-2" />
                 </div>
 
-                {{-- Heure fin --}}
+               
                 <div class="col-span-4">
                     <x-input-label for="heure_fin" value="Heure de fin" />
                     <x-text-input id="heure_fin" name="heure_fin" type="time" :value="old('heure_fin')" />
@@ -72,7 +72,7 @@
                 <div id="lien-visio-container" class="col-span-12 {{ old('type_seance') === 'ENLIGNE' ? '' : 'hidden' }}">
                     <x-input-label for="lien_visio" value="Lien de la réunion (Teams / Google Meet)" />
                     <x-text-input id="lien_visio" name="lien_visio" type="url"
-                        placeholder="https://teams.microsoft.com/... ou https://meet.google.com/..."
+                        placeholder="https://teams.microsoft.com/ ou https://meet.google.com/"
                         :value="old('lien_visio')" />
                     <x-input-error :messages="$errors->get('lien_visio')" class="mt-2" />
                 </div>
@@ -97,8 +97,6 @@
             </div>
         </div>
     </form>
-
-    
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const typeSelect = document.getElementById('type_seance');

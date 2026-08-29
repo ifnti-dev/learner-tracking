@@ -4,6 +4,7 @@
         <h3 class="text-base font-medium text-gray-800 dark:text-white/90">
             Liste des promotions
         </h3>
+        @can("create.promotion")
         <div class="justify-end ml-auto">
             <x-primary-button>
                 <a href="{{ route('promotions.create') }}">
@@ -11,6 +12,7 @@
                 </a>
             </x-primary-button>
         </div>
+        @endcan
     </div>
 
     <div class="">
@@ -97,10 +99,12 @@
 
                                     <div
                                         class="absolute right-0 z-50 mt-1 w-48 origin-top-right rounded-lg border border-gray-200 bg-white py-1 shadow-lg dark:border-gray-700 dark:bg-gray-800">
+                                        @can("update.promotion")
                                         <a href="{{ route('promotions.edit', $promotion->id) }}"
                                             class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700">
                                             Modifier
                                         </a>
+                                        @endcan
                                         <a href="{{ route('promotions.show', $promotion->id) }}"
                                             class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700">
                                             Gérer la promotion
@@ -109,6 +113,7 @@
                                             class="block px-4 py-2 text-sm text-blue-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700">
                                             partager le lien
                                         </a>
+                                        @can("destroy.promotion")
                                         <form action="{{ route('promotions.destroy', $promotion->id) }}"
                                             method="POST" class="block"
                                             onclick="deleteDialogue('Souhaitez vous vraiment supprimer cette promotion ?', 'oui', 'annuler', this)">
@@ -119,6 +124,7 @@
                                                 Supprimer
                                             </button>
                                         </form>
+                                        @endcan
                                     </div>
                                 </details>
                             </td>

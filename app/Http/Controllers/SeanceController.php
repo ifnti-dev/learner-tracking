@@ -11,9 +11,18 @@ use App\Http\Requests\Message;
 use Illuminate\Support\Carbon;
 use App\Models\Absence;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class SeanceController extends Controller
+class SeanceController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:planifier.seance', only: ['planifierSeance', 'creer']),
+        ];
+    }
+
     public function index()
     {
         $seances = Seance::with(['promotion', 'user'])
@@ -21,73 +30,151 @@ class SeanceController extends Controller
             ->get();
         return view('seances.index', compact('seances'));
     }
+
     public function planifierSeance()
     {
         $promotions = Promotion::orderBy('nom')->get();
-        return view('seances.planifier-seance', compact('promotions'));
+        return view('seances.planifier_seance', compact('promotions'));
     }
-    public function planifier(Request $request)
+
+    public function creer(Request $request)
     {
+
         $validated = $request->validate([
-            'intitule'     => 'required|string|max:255',
-            'description'  => 'nullable|string',
-            'heure_debut'  => 'required',
-            'heure_fin'    => 'required|after:heure_debut',
-            'date'         => 'required|date',
-            'type_seance'  => 'required|string',
-            'promotion_id' => 'required|exists:promotions,id',
+            'intitule'      => 'required|string|max:255',
+            'promotion_id'  => 'required|exists:promotions,id',
+            'type_seance'   => 'required|in:PRESENTIEL,ENLIGNE',
+            'date'          => 'required|date|after_or_equal:today',
+            'heure_debut'   => 'required|date_format:H:i',
+            'heure_fin'     => 'required|date_format:H:i|after:heure_debut',
+            'lien_visio'    => 'nullable|required_if:type_seance,ENLIGNE|url',
+            'description'   => 'nullable|string',
         ]);
-        $validated['etat'] = Etat::PLANIFIER;
-        $validated['user_id'] = Auth::id();
-        $message = Message::success('la seance est planifiée avec succès');
-        $seance = Seance::create($validated);
+
+        $chevauchement = Seance::where('promotion_id', $validated['promotion_id'])
+            ->where('date', $validated['date'])
+            ->where('etat', '!=', 'ANNULER')
+            ->where(function ($query) use ($validated) {
+                $query->where('heure_debut', '<', $validated['heure_fin'])
+                    ->where('heure_fin', '>', $validated['heure_debut']);
+            })->exists();
+        if ($chevauchement) {
+            $message = Message::error(
+                'Impossible de planifier : une séance existe déjà pour cette promotion à cette date avec un horaire qui chevauche'
+            );
+            return back()->withInput()->with($message->toMap());
+        }
+        Seance::create([
+            'intitule'     => $validated['intitule'],
+            'promotion_id' => $validated['promotion_id'],
+            'type_seance'  => $validated['type_seance'],
+            'date'         => $validated['date'],
+            'heure_debut'  => $validated['heure_debut'],
+            'heure_fin'    => $validated['heure_fin'],
+            'lien_visio'   => $validated['type_seance'] === 'ENLIGNE' ? $validated['lien_visio'] : null,
+            'description'  => $validated['description'] ?? null,
+            'etat'         => 'PLANIFIER',
+        ]);
+        $message = Message::success('Séance planifiée avec succès');
         return to_route('seances.index')->with($message->toMap());
     }
-    public function create(Seance $seance)
-    {
-        $message = Message::error(" La séance n'est pas encore terminée");
-        if (!$this->peutCreerSeance($seance)) {
-            return to_route('seances.index')->with($message->toMap());
-        }
-        if ($seance->promotion) {
-            $apprenants = $seance->promotion->apprenants;
-            return view('seances.create', compact('seance', 'apprenants'));
-        } else {
-            $apprenants = collect();
-        }
-    }
-    public function store(Request $request, Seance $seance)
-    {
-        dd($request->all());
-        
-        $message = Message::error(" La séance n'est pas encore terminée");
-        if (!$this->peutCreerSeance($seance)) {
-            return to_route('seances.index')->with($message->toMap());
-        }
-        $request->validate([
-            'absents'   => 'nullable|array',
-            'absents.*' => 'exists:apprenants,id',
-        ]);
-        DB::transaction(function () use ($seance, $request) {
 
-            $seance->update(['etat' => 'TERMINER']);
-            if ($request->filled('absents')) {
-                foreach ($request->absents as $apprenantId) {
-                    Absence::create([
-                        'seance_id'    => $seance->id,
-                        'apprenant_id' => $apprenantId,
-                    ]);
-                }
+    public function demarrer(Seance $seance)
+    {
+        if ($seance->etat !== 'PLANIFIER') {
+            $message = Message::error('Seule une séance planifiée peut être démarrée.');
+            return back()->with($message->toMap());
+        }
+        $seance->update(['etat' => 'ENCOURS']);
+
+        $message = Message::success('Séance démarrée.');
+        return back()->with($message->toMap());
+    }
+
+    public function annuler(Seance $seance)
+    {
+        if (!in_array($seance->etat, ['PLANIFIER'])) {
+            $message = Message::error('Cette séance ne peut plus être annulée.');
+            return back()->with($message->toMap());
+        }
+
+        $seance->update(['etat' => 'ANNULER']);
+        $message = Message::success('Séance annulée.');
+        return back()->with($message->toMap());
+    }
+
+    public function terminer(Seance $seance)
+    {
+
+        if ($seance->etat !== 'ENCOURS') {
+            $message = Message::error('Seule une séance en cours peut être terminée.');
+            return back()->with($message->toMap());
+        }
+
+
+        $maintenant = Carbon::now();
+        $dateHeureFin = Carbon::parse($seance->date . ' ' . $seance->heure_fin);
+
+        if ($maintenant < $dateHeureFin) {
+            $message = Message::error("Impossible de terminer : heure de fin n'est pas encore terminer");
+            return back()->with($message->toMap());
+        }
+
+        $seance->update(['etat' => 'TERMINER']);
+        $message = Message::success('Séance terminée avec succès.');
+        return back()->with($message->toMap());
+    }
+
+    public function enregisterAbsents(Seance $seance)
+    {
+        if ($seance->etat !== 'TERMINER') {
+            $message = Message::error('La séance doit être terminée avant de gérer les absents.');
+            return back()->with($message->toMap());
+        }
+        $apprenants = $seance->promotion->apprenants;
+        $absencesExistantes = Absence::where('seance_id', $seance->id)
+            ->get();
+        return view('seances.enregister_absents', compact('seance', 'apprenants', 'absencesExistantes'));
+    }
+
+
+
+    public function enregistrerAbsents(Request $request, Seance $seance)
+    {
+        if ($seance->etat !== 'TERMINER') {
+            $message = Message::error('La séance doit être terminée.');
+            return back()->with($message->toMap());
+        }
+
+        $validated = $request->validate([
+            'absents' => 'nullable|array',
+            'absents.*.apprenant_id' => 'required|exists:apprenants,id',
+            'absents.*.est_justifie' => 'nullable|boolean',
+            'absents.*.justification' => 'required_if:absents.*.absent,1|string|max:500',
+        ]);
+        Absence::where('seance_id', $seance->id)->delete();
+        if (!empty($validated['absents'])) {
+            foreach ($validated['absents'] as $absent) {
+                Absence::create([
+                    'seance_id'     => $seance->id,
+                    'etudiant_id'   => $absent['apprenant_id'],
+                    'est_justifie'  => $absent['est_justifie'] ?? false,
+                    'justification' => $absent['justification'] ?? null,
+                ]);
             }
-        });
-
-        $message = Message::success('Séance créée avec succès');
+        }
+        $message = Message::success('Absences enregistrées avec succès.');
         return to_route('seances.index')->with($message->toMap());
     }
-    public function peutCreerSeance(Seance $seance): bool
+    public function voirAbsents(Seance $seance)
     {
-        $dateFin = Carbon::parse($seance->date . ' ' . $seance->heureFin);
-        return now()->greaterThan($dateFin)
-            && !in_array($seance->etat, ['TERMINER', 'ANNULER']);
+        if ($seance->etat !== 'TERMINER') {
+            $message = Message::error('La séance doit être terminée pour voir les absents.');
+            return back()->with($message->toMap());
+        }
+        $absences = Absence::where('seance_id', $seance->id)
+            ->with('apprenant')
+            ->get();
+        return view('seances.voir_absents', compact('seance', 'absences'));
     }
 }

@@ -1,8 +1,7 @@
 <x-app-layout>
     <x-http-message-swal />
 
-    <div class="mx-auto max-w-(--breakpoint-2xl) p-4 md:p-6 bg-gray-50 dark:bg-gray-900">
-        <div class="min-h-screen rounded-2xl border border-gray-200 bg-white px-5 py-7 dark:border-gray-800 dark:bg-white/[0.03] xl:px-10 xl:py-12">
+   
 
             <div class="px-5 py-4 sm:px-6 sm:py-5 flex">
                 <h3 class="text-base font-medium text-gray-800 dark:text-white/90">
@@ -91,12 +90,10 @@
                             </a>
                         </x-secondary-button>
 
-                        <x-primary-button type="submit">
+                        <x-primary-button>
                             {{ __('Mettre à jour') }}
                         </x-primary-button>
                     </div>
                 </div>
             </form>
-        </div>
-    </div>
 </x-app-layout>

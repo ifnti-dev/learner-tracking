@@ -28,15 +28,16 @@ Route::middleware('auth')->group(function () {
             'promotions' => PromotionController::class,
         ]
     );
+    // routes seances et absences
     Route::get('/seances', [SeanceController::class, 'index'])->name('seances.index');
     Route::get('/seances/planifierSeance', [SeanceController::class, 'planifierSeance'])->name('seances.planifierSeance');
-    Route::post('/seances/planifier', [SeanceController::class, 'planifier'])->name('seances.planifier');
-    Route::get('/seances/{seance}/create', [SeanceController::class, 'create'])->name('seances.create');
-    Route::post('/seances/{seance}/creer', [SeanceController::class, 'store'])
-        ->name('seances.store');
-    Route::get('/seances/{seance}/absences', [SeanceController::class, 'absences'])->name('seances.absences');
-
-
+    Route::post('/seances/creer', [SeanceController::class, 'creer'])->name('seances.creer');
+    Route::patch('/seances/{seance}/demarrer', [SeanceController::class, 'demarrer'])->name('seances.demarrer');
+    Route::patch('/seances/{seance}/annuler', [SeanceController::class, 'annuler'])->name('seances.annuler');
+    Route::patch('/seances/{seance}/terminer', [SeanceController::class, 'terminer'])->name('seances.terminer');
+    Route::get('/seances/{seance}/absents/enregister', [SeanceController::class, 'enregisterAbsents'])->name('seances.enregisterAbsents');
+    Route::post('/seances/{seance}/absents', [SeanceController::class, 'enregistrerAbsents'])->name('seances.enregistrerAbsents');
+    Route::get('/seances/{seance}/absents', [SeanceController::class, 'voirAbsents'])->name('seances.voirAbsents');
     //candidats
     Route::get('/candidats', [CandidatController::class, 'index'])->name('candidats.index');
     Route::post('/promotions/{candidat}/appouver', [CandidatController::class, 'approuver'])->name('candidater.approuver');

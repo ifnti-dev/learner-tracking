@@ -85,7 +85,7 @@
                                 {{ __('Annuler') }}
                             </a>
                         </x-secondary-button>
-                        <x-primary-button type="submit">
+                        <x-primary-button>
                             {{ __('Enregistrer') }}
                         </x-primary-button>
                     </div>
