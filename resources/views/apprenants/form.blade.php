@@ -222,7 +222,34 @@
                         <x-input-error :messages="$errors->get('niveau_id')" class="mt-2" />
 
                     </div>
-                    <div class="col-span-12 lg:col-span-6">
+
+                    <div class="col-span-12 lg:col-span-2">
+                        <x-input-label for="prise_en_charge" :value="__('Prise en charge')" />
+
+                        <div
+                            x-data="{ selectedType: '{{ (string) old('prise_en_charge', isset($apprenant) && $apprenant->paiementFrais()->first() ? $apprenant->paiementFrais()->first()->prise_en_charge : '0') }}' }"
+                            class="relative z-0 bg-transparent flex items-center">
+
+                            <select
+                                name="prise_en_charge"
+                                id="prise_en_charge"
+                                x-model="selectedType"
+                                class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 pr-11 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90">
+
+                                <option value="0" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
+                                    Non
+                                </option>
+                                <option value="1" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
+                                    Oui
+                                </option>
+
+                            </select>
+                        </div>
+
+                        <x-input-error :messages="$errors->get('prise_en_charge')" class="mt-2" />
+                    </div>
+
+                    <div class="col-span-12 lg:col-span-4">
                         <x-input-label for="personne_reponsable_id" :value="__('Parents/Tuteur')" />
 
                         <div>
@@ -260,10 +287,13 @@
 
 
             </div>
-            <div class=" p-5  ">
+            <div class=" p-5 space-x-3 ">
                 <x-primary-button id="ajouter-bulletins" type="button">
                     Ajouter Bulletins
                 </x-primary-button>
+                <x-secondary-button id="aide_financier" type="button">
+                    aide financier
+                </x-secondary-button>
             </div>
             <div class="p-5 hidden" id="table_bulltins">
                 <x-fildset-group>
@@ -298,6 +328,46 @@
                         </table>
                     </div>
                 </x-fildset-group>
+
+
+
+            </div>
+
+
+            <div class="p-5 hidden" id="table_financement">
+                <x-fildset-group>
+                    <x-fildset-legend>Prise en charce de la scolarité</x-fildset-legend>
+
+                    <div class="w-full overflow-x-auto scrollbar-thin border border-gray-100 dark:border-gray-800 rounded-xl">
+                        <table class="w-full min-w-[800px] table-fixed divide-y divide-gray-100 dark:divide-gray-800">
+                            <thead>
+                                <tr id="" class="bg-gray-50/50 dark:bg-white/[0.01]">
+                                    <th class="w-1/4 px-5 py-3 text-left text-theme-xs font-medium text-gray-500 dark:text-gray-400">
+                                        Trimestre/Semestre
+                                    </th>
+                                    <th class="w-1/4 px-5 py-3 text-center text-theme-xs font-medium text-gray-500 dark:text-gray-400">
+                                        Montant
+                                    </th>
+                                    <th class="w-1/4 px-5 py-3 text-center text-theme-xs font-medium text-gray-500 dark:text-gray-400">
+                                        Justificatif
+                                    </th>
+                                    
+                                </tr>
+                            </thead>
+
+                            <tbody id="tbody" class="bg-white dark:bg-transparent">
+                                <tr>
+                                    <td colspan="4" class="px-5 py-8 text-center text-theme-sm text-gray-500 dark:text-gray-400">
+                                        Rien pour le moment
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </x-fildset-group>
+
+
+
             </div>
 
 

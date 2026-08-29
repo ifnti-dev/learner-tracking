@@ -15,6 +15,7 @@
         <div
             class="min-h-screen rounded-2xl border border-gray-200 bg-white px-5 py-7 dark:border-gray-800 dark:bg-white/[0.03] xl:px-10 xl:py-12">
             <div class="px-5 py-4 sm:px-6 sm:py-5 flex ">
+                <x-http-message-swal />
                 <h3
                     class="text-base font-medium text-gray-800 dark:text-white/90">
                     Candidature {{$promotion->nom}}

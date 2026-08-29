@@ -46,23 +46,11 @@ class NiveauSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now()
             ],
-            [
-                'nom' => '6ème semestriel',
-                'type_niveau' => TypeNiveau::SEMESTRIEL->value,
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
 
             // 5ème
             [
                 'nom' => '5ème trimestriel',
                 'type_niveau' => TypeNiveau::TRIMESTRIEL->value,
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'nom' => '5ème semestriel',
-                'type_niveau' => TypeNiveau::SEMESTRIEL->value,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
@@ -74,12 +62,7 @@ class NiveauSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now()
             ],
-            [
-                'nom' => '4ème semestriel',
-                'type_niveau' => TypeNiveau::SEMESTRIEL->value,
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
+            
 
             // 3ème
             [
@@ -88,13 +71,7 @@ class NiveauSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now()
             ],
-            [
-                'nom' => '3ème semestriel',
-                'type_niveau' => TypeNiveau::SEMESTRIEL->value,
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-
+            
             // Seconde
             [
                 'nom' => 'Seconde trimestriel',
