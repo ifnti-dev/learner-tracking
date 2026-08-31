@@ -9,7 +9,6 @@
 
     <form action="{{ route('seances.creer') }}" method="POST">
         @csrf
-
         <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
             <div class="grid grid-cols-12 gap-6 border-t border-gray-100 p-5 sm:p-6 dark:border-gray-800">
 
@@ -19,8 +18,6 @@
                     <x-text-input id="intitule" name="intitule" type="text" :value="old('intitule')" autofocus />
                     <x-input-error :messages="$errors->get('intitule')" class="mt-2" />
                 </div>
-
-              
                 <div class="col-span-4">
                     <x-input-label for="promotion_id" value="Promotion" />
                     <select name="promotion_id" id="promotion_id"

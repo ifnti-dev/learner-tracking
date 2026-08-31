@@ -35,7 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/seances/{seance}/demarrer', [SeanceController::class, 'demarrer'])->name('seances.demarrer');
     Route::patch('/seances/{seance}/annuler', [SeanceController::class, 'annuler'])->name('seances.annuler');
     Route::patch('/seances/{seance}/terminer', [SeanceController::class, 'terminer'])->name('seances.terminer');
-    Route::get('/seances/{seance}/absents/enregister', [SeanceController::class, 'enregisterAbsents'])->name('seances.enregisterAbsents');
+    Route::get('/seances/{seance}/absents/mentionner', [SeanceController::class, 'mentionnerAbsents'])->name('seances.mentionnerAbsents');
     Route::post('/seances/{seance}/absents', [SeanceController::class, 'enregistrerAbsents'])->name('seances.enregistrerAbsents');
     Route::get('/seances/{seance}/absents', [SeanceController::class, 'voirAbsents'])->name('seances.voirAbsents');
     //candidats

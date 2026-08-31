@@ -1,6 +1,5 @@
 <x-app-layout>
-    <div class="mx-auto max-w-(--breakpoint-2xl) p-4 md:p-6 bg-gray-50 dark:bg-gray-900">
-        <div class="min-h-screen rounded-2xl border border-gray-200 bg-white px-5 py-7 dark:border-gray-800 dark:bg-white/[0.03] xl:px-10 xl:py-12">
+    
 
             <div class="mb-6">
                 <x-input-label for="apprenant_id" :value="__('Apprenants disponibles')" />
@@ -103,6 +102,4 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 </x-app-layout>

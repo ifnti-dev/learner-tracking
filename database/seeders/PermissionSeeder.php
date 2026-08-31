@@ -30,12 +30,16 @@ class PermissionSeeder extends Seeder
             'rejeter.candidat',
             'candidater',
 
-            'create.promotion',
-            'view.promotion',
-            'update.promotion',
-            'destroy.promotion',
+            'promotion.create',
+            'promotion.view',
+            'promotion.update',
+            'promotion.destroy',
             
-            'planifier.seance',
+            'seance.planifier',
+            'seance.view',
+            'seance.gerer.absence',
+            'seance.update',
+
             
             
         ];

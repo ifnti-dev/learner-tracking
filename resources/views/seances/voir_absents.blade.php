@@ -11,7 +11,7 @@
             </p>
         </div>
         <div class="ml-auto">
-            <a href="{{ route('seances.enregisterAbsents', $seance->id) }}">
+            <a href="{{ route('seances.mentionnerAbsents', $seance->id) }}">
                 <x-primary-button>Éditer</x-primary-button>
             </a>
         </div>
@@ -30,9 +30,11 @@
                 <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
                     @forelse($absences as $absence)
                     <tr>
+                       
                         <td class="px-5 py-4">
-                            {{ $absence->apprenant->nom}} {{ $absence->apprenant->prenom}}
+                            {{ $absence->apprenant->nom}} {{ $absence->apprenant->prenom}} 
                         </td>
+                        
                         <td class="px-5 py-4">
                             {{ $absence->est_justifie ? 'Oui' : 'Non' }}
                         </td>

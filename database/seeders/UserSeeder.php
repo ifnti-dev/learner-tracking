@@ -28,7 +28,7 @@ class UserSeeder extends Seeder
                 "prenom" => "Yasmine",
                 "password" => Hash::make("123456789"),
                 "email" => "candidat@gmail.com",
-                "telepho.ne" => 90786260,
+                "telephone" => 90786260,
                 "sexe" => "M"
             ],
             [

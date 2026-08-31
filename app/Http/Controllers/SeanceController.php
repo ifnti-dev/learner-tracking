@@ -19,7 +19,10 @@ class SeanceController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('permission:planifier.seance', only: ['planifierSeance', 'creer']),
+            new Middleware('permission:seance.planifier', only: ['planifierSeance', 'creer']),
+            new Middleware('permission:seance.view', only: ['index', 'voirAbsents']),
+            new Middleware('permission:seance.gerer.absence', only: ['mentionnerAbsents', 'enregistrerAbsents']),
+            new Middleware('permission:seance.update', only: ['demarrer', 'annuler', 'terminer']),
         ];
     }
 
@@ -74,6 +77,7 @@ class SeanceController extends Controller implements HasMiddleware
             'lien_visio'   => $validated['type_seance'] === 'ENLIGNE' ? $validated['lien_visio'] : null,
             'description'  => $validated['description'] ?? null,
             'etat'         => 'PLANIFIER',
+            'user_id'      => Auth::user()->id
         ]);
         $message = Message::success('Séance planifiée avec succès');
         return to_route('seances.index')->with($message->toMap());
@@ -111,7 +115,6 @@ class SeanceController extends Controller implements HasMiddleware
             return back()->with($message->toMap());
         }
 
-
         $maintenant = Carbon::now();
         $dateHeureFin = Carbon::parse($seance->date . ' ' . $seance->heure_fin);
 
@@ -125,7 +128,7 @@ class SeanceController extends Controller implements HasMiddleware
         return back()->with($message->toMap());
     }
 
-    public function enregisterAbsents(Seance $seance)
+    public function mentionnerAbsents(Seance $seance)
     {
         if ($seance->etat !== 'TERMINER') {
             $message = Message::error('La séance doit être terminée avant de gérer les absents.');
@@ -134,15 +137,13 @@ class SeanceController extends Controller implements HasMiddleware
         $apprenants = $seance->promotion->apprenants;
         $absencesExistantes = Absence::where('seance_id', $seance->id)
             ->get();
-        return view('seances.enregister_absents', compact('seance', 'apprenants', 'absencesExistantes'));
+        return view('seances.mentionner_absents', compact('seance', 'apprenants', 'absencesExistantes'));
     }
-
-
 
     public function enregistrerAbsents(Request $request, Seance $seance)
     {
         if ($seance->etat !== 'TERMINER') {
-            $message = Message::error('La séance doit être terminée.');
+            $message = Message::error('La séance doit être terminée');
             return back()->with($message->toMap());
         }
 
@@ -150,14 +151,18 @@ class SeanceController extends Controller implements HasMiddleware
             'absents' => 'nullable|array',
             'absents.*.apprenant_id' => 'required|exists:apprenants,id',
             'absents.*.est_justifie' => 'nullable|boolean',
-            'absents.*.justification' => 'required_if:absents.*.absent,1|string|max:500',
+            'absents.*.justification' => 'nullable|required_if:absents.*.est_justifie,1|string|max:500',
+            'absents.*.absent'       => 'nullable|boolean',
         ]);
         Absence::where('seance_id', $seance->id)->delete();
         if (!empty($validated['absents'])) {
             foreach ($validated['absents'] as $absent) {
+                if (empty($absent['absent'])) {
+                    continue;
+                }
                 Absence::create([
-                    'seance_id'     => $seance->id,
-                    'etudiant_id'   => $absent['apprenant_id'],
+                    'seance_id' => $seance->id,
+                    'apprenant_id'   => $absent['apprenant_id'],
                     'est_justifie'  => $absent['est_justifie'] ?? false,
                     'justification' => $absent['justification'] ?? null,
                 ]);
@@ -166,6 +171,8 @@ class SeanceController extends Controller implements HasMiddleware
         $message = Message::success('Absences enregistrées avec succès.');
         return to_route('seances.index')->with($message->toMap());
     }
+
+
     public function voirAbsents(Seance $seance)
     {
         if ($seance->etat !== 'TERMINER') {
@@ -175,6 +182,7 @@ class SeanceController extends Controller implements HasMiddleware
         $absences = Absence::where('seance_id', $seance->id)
             ->with('apprenant')
             ->get();
+
         return view('seances.voir_absents', compact('seance', 'absences'));
     }
 }

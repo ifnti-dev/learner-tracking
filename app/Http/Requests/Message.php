@@ -29,7 +29,6 @@ class Message
             $this->type->name => $this->content,
         ];
     }
-
     public static function success(String $content): Message
     {
         return new Message(TypeMessage::SUCCESS, $content);

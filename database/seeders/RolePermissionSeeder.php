@@ -30,8 +30,8 @@ class RolePermissionSeeder extends Seeder
             Permission::where('name', 'candidater')->get()
         );
 
-         $enseignantRole->syncPermissions(
-            Permission::where('name', 'seance.planifier')->get()
+        $enseignantRole->syncPermissions(
+            Permission::whereIn('name', ['seance.planifier','seance.view'])->get()
         );
         
 

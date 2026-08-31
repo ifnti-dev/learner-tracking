@@ -3,7 +3,7 @@
 
     <div class="px-5 py-4 sm:px-6 sm:py-6">
         <h3 class="text-base font-medium text-gray-800 dark:text-white/90">
-            Gérer les absents – {{ $seance->intitule }}
+            Gérer les absents de la seance {{ $seance->intitule }}
         </h3>
         <p class="text-sm text-gray-500 mt-1">
             {{ $seance->date }} | {{ $seance->heure_debut }} - {{ $seance->heure_fin }} | {{ $seance->promotion->nom }}

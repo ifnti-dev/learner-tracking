@@ -19,6 +19,6 @@ class Absence extends Model
     }
      public function apprenant(): BelongsTo
     {
-        return $this->belongsTo(Apprenant::class);
+        return $this->belongsTo(Apprenant::class,'apprenant_id');
     }
 }

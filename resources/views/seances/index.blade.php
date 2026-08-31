@@ -6,13 +6,15 @@
             Liste des séances
         </h3>
         <div class="justify-end ml-auto">
-            @can("planifier.seance")
+          
+            @can("seance.planifier")
             <x-primary-button>
                 <a href="{{ route('seances.planifierSeance') }}">
                     {{ __('Planifier une séance') }}
                 </a>
             </x-primary-button>
             @endcan
+            
         </div>
     </div>
 
@@ -96,6 +98,7 @@
                             <td class="px-5 py-4 sm:px-6">
                                 <div class="flex items-center space-x-3">
                                     @if($seance->etat === 'PLANIFIER')
+                                    @can("seance.update")
                                     <form action="{{ route('seances.demarrer', $seance->id) }}" method="POST" class="inline">
                                         @csrf
                                         @method('PATCH')
@@ -103,6 +106,8 @@
                                             Démarrer
                                         </x-secondary-button>
                                     </form>
+                                    @endcan
+                                    @can("seance.update")
                                     <form action="{{ route('seances.annuler', $seance->id) }}" method="POST" class="inline"
                                         onclick="deleteDialogue('Souhaitez vous vraiment annuler cette seance ?', 'oui', 'annuler', this)">
                                         @csrf
@@ -111,9 +116,11 @@
                                             Annuler
                                         </x-danger-button>
                                     </form>
+                                    @endcan
                                     @endif
 
                                     @if($seance->etat === 'ENCOURS')
+                                    @can("seance.update")
                                     <form action="{{ route('seances.terminer', $seance->id) }}" method="POST" class="inline">
                                         @csrf
                                         @method('PATCH')
@@ -121,19 +128,24 @@
                                             Terminer
                                         </x-secondary-button>
                                     </form>
+                                    @endcan
                                     @endif
 
                                     @if($seance->etat === 'TERMINER')
-                                    <a href="{{ route('seances.enregisterAbsents', $seance->id) }}" class="inline">
+                                    @can("seance.gerer.absence")
+                                    <a href="{{ route('seances.mentionnerAbsents', $seance->id) }}" class="inline">
                                         <x-secondary-button>
                                             Enregistrer les absents
                                         </x-secondary-button>
                                     </a>
+                                    @endcan
+                                    @can("seance.view")
                                     <a href="{{ route('seances.voirAbsents', $seance->id) }}">
                                         <x-secondary-button >
                                             Voir absents
                                         </x-secondary-button>
                                     </a>
+                                    @endcan
                                     @endif
 
                                 </div>
