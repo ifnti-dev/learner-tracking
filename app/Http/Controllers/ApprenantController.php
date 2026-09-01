@@ -49,7 +49,8 @@ class ApprenantController extends Controller implements HasMiddleware
     {
 
         $personne_reponsables = PersonneResponsable::all();
-        $niveaux = Niveau::all();
+        $niveaux = Niveau::whereIn('nom',["6ème","Seconde","Terminale"])
+        ->get();
 
         return view('apprenants.form', compact('personne_reponsables', 'niveaux'));
     }
@@ -68,11 +69,10 @@ class ApprenantController extends Controller implements HasMiddleware
             'adresse' => 'required|string|max:255|min:3',
             'date_naissance' => 'required|date',
             'etablissement' => 'required|string|max:255|min:2',
-            'personne_reponsable_id' => 'nullable|exists:personne_responsables,id',
-            'bulletins' => 'nullable|array',
-            'bulletins.*' => 'nullable|array',
-            'bulletins.*.*' => 'nullable|mimes:jpg,png,pdf',
-            'prise_en_charge' => 'required|integer|in:0,1'
+            'personne_reponsable_id' => 'nullable|exists:personne_responsables,id',          
+            'prise_en_charge' => 'required|integer|in:0,1',
+            'nivau_de_base'  => 'required|integer|exists:niveaux,id',
+            
         ]);
 
         //bulletins
@@ -89,37 +89,7 @@ class ApprenantController extends Controller implements HasMiddleware
                     ]
                 );
 
-                if (isset($validated['bulletins'])) {
-                    $bulletins = $validated['bulletins'];
-                    $cles = array_keys($bulletins);
-                    $niveau_id = 0;
-                    foreach ($bulletins as $niveau) {
-                        $num_buletin = 1;
-                        $niveau_file_path = [];
-                        $niveau_bd;
-                        foreach ($niveau as $bulletin) {
-
-                            $niveau_bd = Niveau::find($cles[$niveau_id]);
-                            $file_name = $niveau_bd->nom . '-' . $num_buletin . '.' . $bulletin->extension();
-                            $bulletin_path = $bulletin->storeAs('bulettins/' . $validated['nom'] . '.' . $validated['prenom'] . '/' . $cles[$niveau_id], $file_name, 'public');
-                            $niveau_file_path[] = $bulletin_path;
-                            $num_buletin++;
-                        }
-
-                        $bulletin = Bulletin::create(
-                            [
-                                'bulletin1' => $niveau_file_path[0] ?? null,
-                                'bulletin2' => $niveau_file_path[1] ?? null,
-                                'bulletin3' => $niveau_file_path[2] ?? null,
-                                'bulletin4' => $niveau_file_path[3] ?? null,
-                                'bulletin5' => $niveau_file_path[4] ?? null,
-                                "niveau_id" => $niveau_bd->id,
-                                "apprenant_id" => $apprenant->id,
-                            ]
-                        );
-                        $niveau_id++;
-                    }
-                }
+               
             }
         );
 

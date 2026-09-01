@@ -20,7 +20,9 @@ class Bulletin extends Model
         'data4',
         'data5',
         "niveau_id",
-        "apprenant_id"
+        "apprenant_id",
+        "status",
+        'annee_scolaire'
     ];
     public function apprenant(): BelongsTo
     {

@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PersonneResponsableController;
 use App\Http\Controllers\ApprenantController;
+use App\Http\Controllers\BulletinController;
 use App\Http\Controllers\CandidatController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\SeanceController;
@@ -26,8 +27,18 @@ Route::middleware('auth')->group(function () {
             'personne-responsables' => PersonneResponsableController::class,
             'apprenants' => ApprenantController::class,
             'promotions' => PromotionController::class,
+            
         ]
     );
+    //custom index for bulletin
+    Route::get("bulletins/{apprenant}/",[BulletinController::class,'bulletins'])->name('bulletins');
+    Route::get("bulletins/{bulletin}/{apprenant}/edit",[BulletinController::class,'edit'])->name('bulletins.edit');
+    Route::put("bulletins/{bulletin}/{apprenant}/",[BulletinController::class,'update'])->name('bulletins.update');;
+    Route::get("bulletins/{apprenant}/create",[BulletinController::class,'create'])->name('bulletins.create');;
+    Route::post("bulletins/{apprenant}/",[BulletinController::class,'store'])->name('bulletins.store');;
+    Route::delete("bulletins/{bulletin}/",[BulletinController::class,'destroy'])->name('bulletins.destroy');;
+
+
     // routes seances et absences
     Route::get('/seances', [SeanceController::class, 'index'])->name('seances.index');
     Route::get('/seances/planifierSeance', [SeanceController::class, 'planifierSeance'])->name('seances.planifierSeance');

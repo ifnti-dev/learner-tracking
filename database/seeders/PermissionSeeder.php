@@ -25,6 +25,12 @@ class PermissionSeeder extends Seeder
             'update.apprenant',
             'delete.apprenant',
 
+            'create.bulletin',
+            'view.bulletin',
+            'update.bulletin',
+            'delete.bulletin',
+
+
             'appouver.candidat',
             'view.candidat',
             'rejeter.candidat',

@@ -42,7 +42,7 @@ class PersonneResponsableController extends Controller implements HasMiddleware
      */
     public function create()
     {
-        return view('personne-responsables.create');
+        return view('personne-responsables.form');
     }
 
     /**
@@ -75,7 +75,7 @@ class PersonneResponsableController extends Controller implements HasMiddleware
      */
     public function edit(PersonneResponsable $personneResponsable)
     {
-        return view('personne-responsables.edit', compact('personneResponsable'));
+        return view('personne-responsables.form', compact('personneResponsable'));
     }
 
     /**

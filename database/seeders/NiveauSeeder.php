@@ -22,43 +22,37 @@ class NiveauSeeder extends Seeder
             // Primaire
             [
                 'nom' => 'CE2',
-                'type_niveau' => TypeNiveau::TRIMESTRIEL->value,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'nom' => 'CM1',
-                'type_niveau' => TypeNiveau::TRIMESTRIEL->value,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'nom' => 'CM2',
-                'type_niveau' => TypeNiveau::TRIMESTRIEL->value,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
 
             // 6ème
             [
-                'nom' => '6ème trimestriel',
-                'type_niveau' => TypeNiveau::TRIMESTRIEL->value,
+                'nom' => '6ème',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
 
             // 5ème
             [
-                'nom' => '5ème trimestriel',
-                'type_niveau' => TypeNiveau::TRIMESTRIEL->value,
+                'nom' => '5ème',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
 
             // 4ème
             [
-                'nom' => '4ème trimestriel',
-                'type_niveau' => TypeNiveau::TRIMESTRIEL->value,
+                'nom' => '4ème',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
@@ -66,53 +60,34 @@ class NiveauSeeder extends Seeder
 
             // 3ème
             [
-                'nom' => '3ème trimestriel',
-                'type_niveau' => TypeNiveau::TRIMESTRIEL->value,
+                'nom' => '3ème',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             
             // Seconde
             [
-                'nom' => 'Seconde trimestriel',
-                'type_niveau' => TypeNiveau::TRIMESTRIEL->value,
+                'nom' => 'Seconde',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
-            [
-                'nom' => 'Seconde semestriel',
-                'type_niveau' => TypeNiveau::SEMESTRIEL->value,
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
+ 
 
             // Première
             [
-                'nom' => 'Première trimestriel',
-                'type_niveau' => TypeNiveau::TRIMESTRIEL->value,
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'nom' => 'Première semestriel',
-                'type_niveau' => TypeNiveau::SEMESTRIEL->value,
+                'nom' => 'Première',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
 
+
             // Terminale
             [
-                'nom' => 'Terminale trimestriel',
-                'type_niveau' => TypeNiveau::TRIMESTRIEL->value,
+                'nom' => 'Terminale',
                 'created_at' => now(),
                 'updated_at' => now()
-            ],
-            [
-                'nom' => 'Terminale semestriel',
-                'type_niveau' => TypeNiveau::SEMESTRIEL->value,
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
+            ]
+
         ]);
     }
 }

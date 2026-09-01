@@ -4,33 +4,26 @@
     $action = $is_edit ? route('apprenants.update', $apprenant) : route('apprenants.store');
     @endphp
     <x-http-message-swal />
-    @vite(['resources/js/apprenant-create.js'])
-    <template id="file-input-template">
-        <x-uploade-file type="file" name="bulletins[]" />
-    </template>
+
+   
 
     <div class="px-5 py-4 sm:px-6 sm:py-5 flex ">
         <h3
-            class="text-base font-medium text-gray-800 dark:text-white/90">
-            Apprenants
+            class=" font-medium text-gray-800 dark:text-white/90">
+            Ajouter un apprenant
         </h3>
 
 
     </div>
 
     <div
-        class="z-0 rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
+        class="z-0 rounded-2x">
         <form action="{{ $action }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method("PUT")
-            <div class="px-5 py-4 sm:px-6 sm:py-5">
-                <h3
-                    class="text-base font-medium text-gray-800 dark:text-white/90">
-                    Ajouter un apprenant
-                </h3>
-            </div>
+            
             <div
-                class="grid grid-cols-12 gap-4 border-t border-gray-100 p-5 sm:p-6 dark:border-gray-800">
+                class="grid grid-cols-12 gap-4  p-5 sm:p-6 dark:border-gray-800">
                 <!-- Elements -->
 
                 <div class="col-span-12 lg:col-span-6">
@@ -47,11 +40,11 @@
                     <x-input-error :messages="$errors->get('prenom')" class="mt-2" />
                 </div>
 
-                <div class="col-span-12 lg:col-span-2">
+                <div class="  col-span-12 lg:col-span-2">
                     <x-input-label for="sexe" :value="__('Sexe')" />
                     <div
                         x-data="{ selectedType: '{{ old('sexe', $apprenant->sexe ?? '') }}' }"
-                        class="relative z-0 bg-transparent flex items-center">
+                        class="  bg-transparent flex items-center">
 
                         <select
                             name="sexe"
@@ -78,11 +71,7 @@
                     <x-input-label for="date_naissance" :value="__('Date de naissance')" />
                     <div class="relative">
                         <input id="date_naissance" name="date_naissance" type="date" value="{{ old('date_naissance',$apprenant->date_naissance ?? '') }}" placeholder="Select date" class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 pr-11 pl-4 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30" onclick="this.showPicker()">
-                        <span class="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-gray-500 dark:text-gray-400">
-                            <svg class="fill-current" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M6.66659 1.5415C7.0808 1.5415 7.41658 1.87729 7.41658 2.2915V2.99984H12.5833V2.2915C12.5833 1.87729 12.919 1.5415 13.3333 1.5415C13.7475 1.5415 14.0833 1.87729 14.0833 2.2915V2.99984L15.4166 2.99984C16.5212 2.99984 17.4166 3.89527 17.4166 4.99984V7.49984V15.8332C17.4166 16.9377 16.5212 17.8332 15.4166 17.8332H4.58325C3.47868 17.8332 2.58325 16.9377 2.58325 15.8332V7.49984V4.99984C2.58325 3.89527 3.47868 2.99984 4.58325 2.99984L5.91659 2.99984V2.2915C5.91659 1.87729 6.25237 1.5415 6.66659 1.5415ZM6.66659 4.49984H4.58325C4.30711 4.49984 4.08325 4.7237 4.08325 4.99984V6.74984H15.9166V4.99984C15.9166 4.7237 15.6927 4.49984 15.4166 4.49984H13.3333H6.66659ZM15.9166 8.24984H4.08325V15.8332C4.08325 16.1093 4.30711 16.3332 4.58325 16.3332H15.4166C15.6927 16.3332 15.9166 16.1093 15.9166 15.8332V8.24984Z" fill=""></path>
-                            </svg>
-                        </span>
+                        
                     </div>
                     <x-input-error :messages="$errors->get('date_naissance')" class="mt-2" />
                 </div>
@@ -100,7 +89,7 @@
                             phoneNumber: ''
                         }">
                     <x-input-label for="telephone" :value="__('Téléphone')" />
-                    <div class="relative">
+                    <div class="">
                         <div class="absolute">
                             <select
                                 x-model="selectedCountry"
@@ -198,12 +187,12 @@
                 <x-fildset-group class="grid grid-cols-12 gap-4">
                     <x-fildset-legend>Informations personnelle</x-fildset-legend>
                     <div class="col-span-12 lg:col-span-2">
-                        <x-input-label for="niveau_id" :value="__('Niveau actuelle')" />
+                        <x-input-label for="niveau_de_base" :value="__('Niveau de base')" />
                         <div>
                             <div>
                                 <select
-                                    name="niveau_id"
-                                    id="niveau_id"
+                                    name="niveau_de_base"
+                                    id="niveau_de_base"
                                     class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 pr-11 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90">
 
                                     <option value="">Sélectionnez un niveau</option>
@@ -211,7 +200,7 @@
                                     @foreach ($niveaux as $niveau)
                                     <option
                                         value="{{ $niveau->id }}"
-                                        {{ (string) $niveau->id === (string) old('niveau_id', isset($apprenant) && $apprenant->niveaux()->first() ? $apprenant->niveaux()->first()->id : '') ? 'selected' : '' }}>
+                                        {{ (string) $niveau->id === (string) old('niveau_de_base', isset($apprenant) && $apprenant->niveaux()->first() ? $apprenant->niveaux()->first()->id : '') ? 'selected' : '' }}>
                                         {{ $niveau->nom }}
                                     </option>
                                     @endforeach
@@ -219,7 +208,7 @@
 
                             </div>
                         </div>
-                        <x-input-error :messages="$errors->get('niveau_id')" class="mt-2" />
+                        <x-input-error :messages="$errors->get('niveau_de_base')" class="mt-2" />
 
                     </div>
 
@@ -228,7 +217,7 @@
 
                         <div
                             x-data="{ selectedType: '{{ (string) old('prise_en_charge', isset($apprenant) && $apprenant->paiementFrais()->first() ? $apprenant->paiementFrais()->first()->prise_en_charge : '0') }}' }"
-                            class="relative z-0 bg-transparent flex items-center">
+                            class=" z-0 bg-transparent flex items-center">
 
                             <select
                                 name="prise_en_charge"
@@ -287,88 +276,10 @@
 
 
             </div>
-            <div class=" p-5 space-x-3 ">
-                <x-primary-button id="ajouter-bulletins" type="button">
-                    Ajouter Bulletins
-                </x-primary-button>
-                <x-secondary-button id="aide_financier" type="button">
-                    aide financier
-                </x-secondary-button>
-            </div>
-            <div class="p-5 hidden" id="table_bulltins">
-                <x-fildset-group>
-                    <x-fildset-legend>Bulletins</x-fildset-legend>
-
-                    <div class="w-full overflow-x-auto scrollbar-thin border border-gray-100 dark:border-gray-800 rounded-xl">
-                        <table class="w-full min-w-[800px] table-fixed divide-y divide-gray-100 dark:divide-gray-800">
-                            <thead>
-                                <tr id="thead_tr" class="bg-gray-50/50 dark:bg-white/[0.01]">
-                                    <th class="w-1/4 px-5 py-3 text-left text-theme-xs font-medium text-gray-500 dark:text-gray-400">
-                                        Trimestre/Semestre
-                                    </th>
-                                    <th class="w-1/4 px-5 py-3 text-center text-theme-xs font-medium text-gray-500 dark:text-gray-400">
-                                        Bulletin 01
-                                    </th>
-                                    <th class="w-1/4 px-5 py-3 text-center text-theme-xs font-medium text-gray-500 dark:text-gray-400">
-                                        Bulletin 02
-                                    </th>
-                                    <th class="w-1/4 px-5 py-3 text-center text-theme-xs font-medium text-gray-500 dark:text-gray-400">
-                                        Bulletin 03
-                                    </th>
-                                </tr>
-                            </thead>
-
-                            <tbody id="tbody" class="bg-white dark:bg-transparent">
-                                <tr>
-                                    <td colspan="4" class="px-5 py-8 text-center text-theme-sm text-gray-500 dark:text-gray-400">
-                                        Rien pour le moment
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </x-fildset-group>
+            
 
 
 
-            </div>
-
-
-            <div class="p-5 hidden" id="table_financement">
-                <x-fildset-group>
-                    <x-fildset-legend>Prise en charce de la scolarité</x-fildset-legend>
-
-                    <div class="w-full overflow-x-auto scrollbar-thin border border-gray-100 dark:border-gray-800 rounded-xl">
-                        <table class="w-full min-w-[800px] table-fixed divide-y divide-gray-100 dark:divide-gray-800">
-                            <thead>
-                                <tr id="" class="bg-gray-50/50 dark:bg-white/[0.01]">
-                                    <th class="w-1/4 px-5 py-3 text-left text-theme-xs font-medium text-gray-500 dark:text-gray-400">
-                                        Trimestre/Semestre
-                                    </th>
-                                    <th class="w-1/4 px-5 py-3 text-center text-theme-xs font-medium text-gray-500 dark:text-gray-400">
-                                        Montant
-                                    </th>
-                                    <th class="w-1/4 px-5 py-3 text-center text-theme-xs font-medium text-gray-500 dark:text-gray-400">
-                                        Justificatif
-                                    </th>
-                                    
-                                </tr>
-                            </thead>
-
-                            <tbody id="tbody" class="bg-white dark:bg-transparent">
-                                <tr>
-                                    <td colspan="4" class="px-5 py-8 text-center text-theme-sm text-gray-500 dark:text-gray-400">
-                                        Rien pour le moment
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </x-fildset-group>
-
-
-
-            </div>
 
 
 

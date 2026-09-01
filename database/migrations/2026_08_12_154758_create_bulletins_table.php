@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
+use App\Enums\TypeNiveau;
 return new class extends Migration
 {
     /**
@@ -18,7 +18,9 @@ return new class extends Migration
             $table->string('bulletin3')->nullable();
             $table->string('bulletin4')->nullable();
             $table->string('bulletin5')->nullable();
-
+            $table->enum('status',["complet","incomplet"])->default('complet');
+            $table->string('type_niveau')->default(TypeNiveau::TRIMESTRIEL->value);
+            $table->string('annee_scolaire');
             $table->json('data1')->nullable();
             $table->json('data2')->nullable();
             $table->json('data3')->nullable();

@@ -15,6 +15,7 @@ class ApprenantSeeder extends Seeder
     public function run(): void
     {
         $promotions_ids = DB::table("promotions")->pluck('id')->all();
+        $noveaux_ids = DB::table("niveaux")->pluck('id')->all();
         DB::table('candidats')->insert([
             [
                 'nom'            => 'Diallo',
@@ -28,6 +29,7 @@ class ApprenantSeeder extends Seeder
                 'created_at'     => now(),
                 'promotion_id'  => $promotions_ids[0],
                 'updated_at'     => now(),
+                'niveau_de_base'  => $noveaux_ids[4],
             ],
 
 
@@ -46,6 +48,7 @@ class ApprenantSeeder extends Seeder
                 'date_naissance' => '1997-08-15',
                 'etablissement' => 'Université de kara',
                 'promotion_id'  => $promotions_ids[0],
+                'niveau_de_base'  => $noveaux_ids[4],
                 'created_at'    => now(),
                 'updated_at'    => now(),
             ],
@@ -59,6 +62,7 @@ class ApprenantSeeder extends Seeder
                 'date_naissance' => '2000-02-20',
                 'etablissement' => 'École Supérieure Polytechnique',
                 'promotion_id'  => $promotions_ids[1],
+                'niveau_de_base'  => $noveaux_ids[4],
                 'created_at'    => now(),
                 'updated_at'    => now(),
             ],
@@ -72,6 +76,7 @@ class ApprenantSeeder extends Seeder
                 'date_naissance' => '1995-11-03',
                 'etablissement' => 'Institut Supérieur d’Informatique',
                 'promotion_id'  => $promotions_ids[2],
+                'niveau_de_base'  => $noveaux_ids[4],
                 'created_at'    => now(),
                 'updated_at'    => now(),
             ],
@@ -83,6 +88,7 @@ class ApprenantSeeder extends Seeder
                 'sexe'           => 'M',
                 'adresse'        => 'Thiès, Sénégal',
                 'date_naissance' => '1995-11-03',
+                'niveau_de_base'  => $noveaux_ids[4],
                 'etablissement' => 'Université Gaston Berger',
                 'promotion_id'  => $promotions_ids[0],
                 'created_at'    => now(),

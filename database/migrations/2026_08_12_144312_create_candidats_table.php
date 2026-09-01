@@ -22,6 +22,7 @@ return new class extends Migration
             $table->date("date_naissance");
             $table->string('etablissement');
             $table->string('promotion_id');
+            $table->string("niveau_de_base");
             $table->timestamps();
         });
     }

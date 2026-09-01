@@ -16,7 +16,8 @@ class Candidat extends Model
         'adresse',
         'date_naissance',
         'etablissement',
-        'promotion_id'
+        'promotion_id',
+       "niveau_de_base",
     ];
 
     public function apprenant(): HasOne

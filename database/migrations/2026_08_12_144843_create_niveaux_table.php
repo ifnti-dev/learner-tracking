@@ -15,7 +15,6 @@ return new class extends Migration
         Schema::create('niveaux', function (Blueprint $table) {
             $table->id();
             $table->string('nom');
-            $table->string('type_niveau')->default(TypeNiveau::TRIMESTRIEL->value);
             $table->timestamps();
         });
     }

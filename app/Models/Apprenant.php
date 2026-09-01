@@ -21,6 +21,7 @@ class Apprenant extends Model
         'etablissement'     ,
         'promotion_id'     ,
         'etablissement',
+        "niveau_de_base",
     ];
 
     public function promotion(): belongsTo
