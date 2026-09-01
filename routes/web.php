@@ -8,6 +8,7 @@ use App\Http\Controllers\BulletinController;
 use App\Http\Controllers\CandidatController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\SeanceController;
+use App\Http\Controllers\DocumentPedagogiqueController;
 
 Route::get('/', function () {
     return to_route('dashboard');
@@ -27,6 +28,7 @@ Route::middleware('auth')->group(function () {
             'personne-responsables' => PersonneResponsableController::class,
             'apprenants' => ApprenantController::class,
             'promotions' => PromotionController::class,
+             'document-pedagogiques'=>DocumentPedagogiqueController::class
             
         ]
     );

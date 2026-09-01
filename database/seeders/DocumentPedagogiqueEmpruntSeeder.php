@@ -17,7 +17,7 @@ class DocumentPedagogiqueEmpruntSeeder extends Seeder
         $emprunt_ids = DB::table("emprunts")->pluck('id')->all();
 
 
-        DB::table('document_pedagogique_emprunt')->insert([
+        DB::table('document_pedagogique_emprunts')->insert([
             [
                 'document_pedagogique_id' => $document_pedagogique_ids[0],
                 'emprunt_id'              => $emprunt_ids[0],

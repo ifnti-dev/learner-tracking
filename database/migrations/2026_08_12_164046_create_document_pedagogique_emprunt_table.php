@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('document_pedagogique_emprunt', function (Blueprint $table) {
+        Schema::create('document_pedagogique_emprunts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('document_pedagogique_id')->nullable()->constrained('document_pedagogiques')->onDelete('set null');
             $table->foreignId('emprunt_id')->nullable()->constrained('emprunts')->onDelete('set null');

@@ -171,8 +171,6 @@ class SeanceController extends Controller implements HasMiddleware
         $message = Message::success('Absences enregistrées avec succès.');
         return to_route('seances.index')->with($message->toMap());
     }
-
-
     public function voirAbsents(Seance $seance)
     {
         if ($seance->etat !== 'TERMINER') {
@@ -182,7 +180,9 @@ class SeanceController extends Controller implements HasMiddleware
         $absences = Absence::where('seance_id', $seance->id)
             ->with('apprenant')
             ->get();
+            
 
         return view('seances.voir_absents', compact('seance', 'absences'));
     }
 }
+
