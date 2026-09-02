@@ -22,18 +22,10 @@ class BulletinSeeder extends Seeder
                 'bulletin1' => "c'est dohi",
                 'bulletin2' => "c'est dohi",
                 'bulletin3' => "c'est dohi",
-                'bulletin4' => "c'est dohi",
-                'bulletin5' => "c'est dohi",
-  
-                "niveau_id" => $niveau_ids[5],
-                "apprenant_id" => $apprenant_ids[0],
-                'annee_scolaire' => "2020-2021",
-            ],[
-                'bulletin1' => "c'est dohi",
-                'bulletin2' => "c'est dohi",
-                'bulletin3' => "c'est dohi",
-                'bulletin4' => "c'est dohi",
-                'bulletin5' => "c'est dohi",
+                'releveCEPD' => "c'est dohi",
+                'releveBEPC' => "c'est dohi",
+                'releveBAC1' => "c'est dohi",
+                'releveBAC2' => "c'est dohi",
   
                 "niveau_id" => $niveau_ids[5],
                 "apprenant_id" => $apprenant_ids[1],
@@ -42,9 +34,11 @@ class BulletinSeeder extends Seeder
                 'bulletin1' => "c'est dohi",
                 'bulletin2' => "c'est dohi",
                 'bulletin3' => "c'est dohi",
-                'bulletin4' => "c'est dohi",
-                'bulletin5' => "c'est dohi",
-  
+                'releveCEPD' => "c'est dohi",
+                'releveBEPC' => "c'est dohi",
+                'releveBAC1' => "c'est dohi",
+                'releveBAC2' => "c'est dohi",
+
                 "niveau_id" => $niveau_ids[5],
                 "apprenant_id" => $apprenant_ids[1],
                 'annee_scolaire' => "2024-2025",
@@ -52,9 +46,11 @@ class BulletinSeeder extends Seeder
                 'bulletin1' => "c'est dohi",
                 'bulletin2' => "c'est dohi",
                 'bulletin3' => "c'est dohi",
-                'bulletin4' => "c'est dohi",
-                'bulletin5' => "c'est dohi",
-  
+                'releveCEPD' => "c'est dohi",
+                'releveBEPC' => "c'est dohi",
+                'releveBAC1' => "c'est dohi",
+                'releveBAC2' => "c'est dohi",
+
                 "niveau_id" => $niveau_ids[5],
                 "apprenant_id" => $apprenant_ids[1],
                 'annee_scolaire' => "2023-2024",
@@ -62,9 +58,11 @@ class BulletinSeeder extends Seeder
                 'bulletin1' => "c'est dohi",
                 'bulletin2' => "c'est dohi",
                 'bulletin3' => "c'est dohi",
-                'bulletin4' => "c'est dohi",
-                'bulletin5' => "c'est dohi",
-  
+                'releveCEPD' => "c'est dohi",
+                'releveBEPC' => "c'est dohi",
+                'releveBAC1' => "c'est dohi",
+                'releveBAC2' => "c'est dohi",
+
                 "niveau_id" => $niveau_ids[5],
                 "apprenant_id" => $apprenant_ids[0],
                 'annee_scolaire' => "2022-2023",

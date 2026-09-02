@@ -151,31 +151,54 @@
                                 </div>
                             </td>
                             <td class="px-5 py-4 sm:px-6">
-                                <div class="flex items-center">
-                                    @can('update.apprenant')
-                                    <x-secondary-button>
-                                        <a href="{{ route('apprenants.edit', $apprenant->id) }}">
-                                            {{ __('Modifier') }}
+                                <details class=" ">
+                                    <summary
+                                        class="cursor-pointer list-none rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 shadow-sm hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">
+                                        <span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                                fill="currentColor" class="size-5">
+                                                <path
+                                                    d="M10 3a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM10 8.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM11.5 15.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0Z" />
+                                            </svg>
+                                        </span>
+                                    </summary>
+                                    <div class="  absolute right-0 z-50 mt-1 w-48 origin-top-right rounded-lg border border-gray-200 bg-white py-1 shadow-lg dark:border-gray-700 dark:bg-gray-800">
+                                        @can('update.apprenant')
+
+                                        <a href="{{ route('apprenants.edit', $apprenant->id) }}"
+                                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700">
+                                            Modifier
                                         </a>
-                                    </x-secondary-button>
-                                    @endcan
-                                    @can('view.bulletin')
-                                    <x-secondary-button>
-                                        <a href="{{ route('bulletins', $apprenant) }}">
+
+                                        @endcan
+                                        @can('view.bulletin')
+                                        <a href="{{ route('bulletins', $apprenant) }}"
+                                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700">
                                             {{ __('Gerer bulletin') }}
                                         </a>
-                                    </x-secondary-button>
-                                    @endcan
-                                    @can('delete.apprenant')
-                                    <form action="{{ route('apprenants.destroy', $apprenant->id) }}" onclick="deleteDialogue('Souhaitez vous vraiem.....', 'oui', 'annuler', this)" method="POST" class="ml-2">
-                                        @csrf
-                                        @method('DELETE')
-                                        <x-danger-button type="submit">
-                                            {{ __('Supprimer') }}
-                                        </x-danger-button>
-                                    </form>
-                                    @endcan
-                                </div>
+                                        @endcan
+                                        @can('view.bulletin')
+                                        <a href="{{ route('bulletins', $apprenant) }}"
+                                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700">
+                                            {{ __('Aide financière') }}
+                                        </a>
+                                        @endcan
+                                        @can('delete.apprenant')
+
+                                        <form action="{{  route('apprenants.destroy', $apprenant->id)}}"
+                                            method="POST" class="block"
+                                            onclick="deleteDialogue('Souhaitez vous vraiment supprimer cet apprenant ?', 'oui', 'annuler', this)">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                class="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20">
+                                                Supprimer
+                                            </button>
+                                        </form>
+                                        @endcan
+                                    </div>
+                                </details>
+
                             </td>
                         </tr>
                         @empty
