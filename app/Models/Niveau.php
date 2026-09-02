@@ -20,5 +20,9 @@ class Niveau extends Model
     {
         return $this->hasMany(PaiementFrais::class);
     }
+
+    public function document_pedagogiques():HasMany{
+        return $this->hasMany(DocumentPedagogique::class);
+    }
     
 }

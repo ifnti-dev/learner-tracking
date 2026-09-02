@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\DocumentPedagogique;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\Message;
+use App\Models\Niveau;
 
 class DocumentPedagogiqueController extends Controller
 {
@@ -13,8 +15,8 @@ class DocumentPedagogiqueController extends Controller
      */
     public function index()
     {
-        $document_pedagogiques = DocumentPedagogique::all();
-        return view('document_pedagogiques.index',compact('document_pedagogiques'));
+        $document_pedagogiques = DocumentPedagogique::with('niveau')->get();
+        return view('document_pedagogiques.index', compact('document_pedagogiques'));
     }
 
     /**
@@ -22,15 +24,24 @@ class DocumentPedagogiqueController extends Controller
      */
     public function create()
     {
-        return view('document_pedagogiques.create');
+        $niveaux=Niveau::all();
+        return view('document_pedagogiques.create',compact('niveaux'));
     }
-
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-         dd("store action");
+        $validated = $request->validate([
+            'titre' => 'required|string',
+            'auteur' => 'required|string',
+            'quantite' => 'required|integer|min:1',
+            'description' => 'nullable',
+            'niveau_id' =>'required|exists:niveaux,id'
+        ]);
+        DocumentPedagogique::create($validated);
+        $message = Message::success('Le document pédagogique a été enregistré avec succès.');
+        return to_route('document-pedagogiques.index')->with($message->toMap());
     }
 
     /**
@@ -38,7 +49,7 @@ class DocumentPedagogiqueController extends Controller
      */
     public function show(DocumentPedagogique $documentPedagogique)
     {
-        dd("show action");
+       
     }
 
     /**
@@ -46,7 +57,8 @@ class DocumentPedagogiqueController extends Controller
      */
     public function edit(DocumentPedagogique $documentPedagogique)
     {
-        dd("edit action");
+         $niveaux=Niveau::all();
+         return view('document_pedagogiques.edit',compact('documentPedagogique','niveaux'));
     }
 
     /**
@@ -54,7 +66,16 @@ class DocumentPedagogiqueController extends Controller
      */
     public function update(Request $request, DocumentPedagogique $documentPedagogique)
     {
-        dd("update action");
+         $validated = $request->validate([
+            'titre' => 'required|string',
+            'auteur' => 'required|string',
+            'quantite' => 'required|integer|min:1',
+            'description' => 'nullable',
+            'niveau_id' =>'required|exists:niveaux,id'
+        ]);
+        $documentPedagogique->update($validated);
+        $message = Message::success('Le document pédagogique a été mis a jour avec succès.');
+        return to_route('document-pedagogiques.index')->with($message->toMap());
     }
 
     /**
@@ -62,6 +83,8 @@ class DocumentPedagogiqueController extends Controller
      */
     public function destroy(DocumentPedagogique $documentPedagogique)
     {
-        dd("destroy action");
+        $documentPedagogique->delete();
+        $message = Message::success("le document  a été retiré  avec succès ");
+        return to_route('document-pedagogiques.index')->with($message->toMap());
     }
 }

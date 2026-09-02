@@ -31,8 +31,6 @@
                     </select>
                     <x-input-error :messages="$errors->get('promotion_id')" class="mt-2" />
                 </div>
-
-                
                 <div class="col-span-3">
                     <x-input-label for="type_seance" value="Type de séance" />
                     <select name="type_seance" id="type_seance"

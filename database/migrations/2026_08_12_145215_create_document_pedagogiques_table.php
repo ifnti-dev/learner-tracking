@@ -18,7 +18,9 @@ return new class extends Migration
             $table->string('auteur');
             $table->unsignedInteger('quantite');
             $table->timestamps();
+            $table->foreignId('niveau_id')->nullable()->constrained('niveaux')->onDelete('set null');
         });
+
     }
 
     /**

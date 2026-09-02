@@ -42,7 +42,7 @@
                                     onchange="this.closest('tr').querySelectorAll('.justifie-fields').forEach(el => el.style.display = this.checked ? 'table-cell' : 'none')">
                                 <x-input-error :messages="$errors->get('absents.' . $loop->index . '.absent')"
                                     </td>
-                            <td class="px-5 py-4 justifie-fields">
+                            <td class="px-5 py-4 justifie-fields "  >
                                 <input type="checkbox"
                                     name="absents[{{ $loop->index }}][est_justifie]"
                                     value="1"

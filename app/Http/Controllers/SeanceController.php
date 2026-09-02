@@ -179,7 +179,8 @@ class SeanceController extends Controller implements HasMiddleware
         }
         $absences = Absence::where('seance_id', $seance->id)
             ->with('apprenant')
-            ->get();
+            ->get()
+            ->keyBy('apprenant_id');
             
 
         return view('seances.voir_absents', compact('seance', 'absences'));
