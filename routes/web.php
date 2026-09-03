@@ -9,12 +9,9 @@ use App\Http\Controllers\CandidatController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\SeanceController;
 use App\Http\Controllers\DocumentPedagogiqueController;
-<<<<<<< HEAD
-use App\Http\Controllers\EmpruntController;
-=======
 use App\Http\Controllers\PaiementFraisController;
+use App\Http\Controllers\EmpruntController;
 
->>>>>>> 2af1408e7fa7bc375af61f7ec5968a53572e152a
 Route::get('/', function () {
     return to_route('dashboard');
 });
