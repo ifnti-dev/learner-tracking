@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
                 RoleSeeder::class,
                 PermissionSeeder::class,
                 RolePermissionSeeder::class,
+
+                AnneeSeeder::class,
                 PromotionSeeder::class,
                 NiveauSeeder::class,
                 PersonneResponsableSeeder::class,
@@ -26,6 +28,7 @@ class DatabaseSeeder extends Seeder
                 UserSeeder::class,
                 SeanceSeeder::class,
                 ApprenantSeeder::class,
+                ApprenantNiveauSeeder::class,
                 EmpruntSeeder::class,
                 AbsenceSeeder::class,
                 BulletinSeeder::class,

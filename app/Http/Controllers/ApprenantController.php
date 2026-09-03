@@ -49,8 +49,7 @@ class ApprenantController extends Controller implements HasMiddleware
     {
 
         $personne_reponsables = PersonneResponsable::all();
-        $niveaux = Niveau::whereIn('nom',["6ème","Seconde","Terminale"])
-        ->get();
+        $niveaux = Niveau::all();
 
         return view('apprenants.form', compact('personne_reponsables', 'niveaux'));
     }
@@ -81,7 +80,14 @@ class ApprenantController extends Controller implements HasMiddleware
 
         DB::transaction(
             function () use ($validated, $request) {
+                $validated['niveau_actuel'] = $validated['nivau_de_base'];
+
+                $cycle_de_base = Niveau::find($validated['nivau_de_base'])->cycle;
+                $validated['cycle_de_base'] = $cycle_de_base;
+
                 $apprenant = Apprenant::create($validated);
+
+                dd($apprenant);
                 ApprenantPersonneResponsable::create(
                     [
                         'personne_responsable_id' => $validated['personne_reponsable_id'],

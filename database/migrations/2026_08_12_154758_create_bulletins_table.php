@@ -20,9 +20,8 @@ return new class extends Migration
             $table->string('releveBEPC')->nullable();
             $table->string('releveBAC1')->nullable();
             $table->string('releveBAC2')->nullable();
-            $table->enum('status',["complet","incomplet"])->default('complet');
-            $table->string('type_niveau')->default(TypeNiveau::TRIMESTRIEL->value);
-            $table->string('annee_scolaire');
+            $table->enum('status',["complet","incomplet"])->default('incomplet');
+
             $table->json('data1')->nullable();
             $table->json('data2')->nullable();
             $table->json('data3')->nullable();
@@ -32,7 +31,7 @@ return new class extends Migration
             $table->json('dataBAC2')->nullable();
 
             $table->foreignId('apprenant_niveau_id')->nullable()->constrained('apprenant_niveaux')->onDelete('set null');
-            
+
 
 
             $table->timestamps();

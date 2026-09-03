@@ -13,9 +13,10 @@ class BulletinSeeder extends Seeder
      */
     public function run(): void
     {
-        $apprenant_ids = DB::table("apprenants")->pluck('id')->all();
-        $niveau_ids = DB::table("niveaux")->pluck('id')->all();
-
+        $niveau_apprenant = DB::table('apprenant_niveaux')
+            
+            ->get();                    
+        
 
         DB::table('bulletins')->insert([
             [
@@ -26,10 +27,8 @@ class BulletinSeeder extends Seeder
                 'releveBEPC' => "c'est dohi",
                 'releveBAC1' => "c'est dohi",
                 'releveBAC2' => "c'est dohi",
-  
-                "niveau_id" => $niveau_ids[5],
-                "apprenant_id" => $apprenant_ids[1],
-                'annee_scolaire' => "2021-2022",
+                'apprenant_niveau_id' => $niveau_apprenant[0]->id,
+                
             ],[
                 'bulletin1' => "c'est dohi",
                 'bulletin2' => "c'est dohi",
@@ -39,9 +38,7 @@ class BulletinSeeder extends Seeder
                 'releveBAC1' => "c'est dohi",
                 'releveBAC2' => "c'est dohi",
 
-                "niveau_id" => $niveau_ids[5],
-                "apprenant_id" => $apprenant_ids[1],
-                'annee_scolaire' => "2024-2025",
+                'apprenant_niveau_id' => $niveau_apprenant[0]->id,
             ],[
                 'bulletin1' => "c'est dohi",
                 'bulletin2' => "c'est dohi",
@@ -51,9 +48,7 @@ class BulletinSeeder extends Seeder
                 'releveBAC1' => "c'est dohi",
                 'releveBAC2' => "c'est dohi",
 
-                "niveau_id" => $niveau_ids[5],
-                "apprenant_id" => $apprenant_ids[1],
-                'annee_scolaire' => "2023-2024",
+                'apprenant_niveau_id' => $niveau_apprenant[0]->id,
             ],[
                 'bulletin1' => "c'est dohi",
                 'bulletin2' => "c'est dohi",
@@ -62,10 +57,7 @@ class BulletinSeeder extends Seeder
                 'releveBEPC' => "c'est dohi",
                 'releveBAC1' => "c'est dohi",
                 'releveBAC2' => "c'est dohi",
-
-                "niveau_id" => $niveau_ids[5],
-                "apprenant_id" => $apprenant_ids[0],
-                'annee_scolaire' => "2022-2023",
+                'apprenant_niveau_id' => $niveau_apprenant[0]->id,
             ]
 
         ]);

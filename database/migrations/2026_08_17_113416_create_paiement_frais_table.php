@@ -18,7 +18,6 @@ return new class extends Migration
             $table->decimal('montant')->default(0);
             $table->boolean('verse')->default(false);
             $table->string('piece_justificatif')->nullable();
-            $table->string('annee_scolaire');
             $table->json('data')->nullable();
             $table->timestamps();
         });
