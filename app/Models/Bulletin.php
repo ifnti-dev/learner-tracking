@@ -9,6 +9,7 @@ class Bulletin extends Model
 
 {
     protected $fillable = [
+        'apprenant_niveau_id',
         'bulletin1',
         'bulletin2',
         'bulletin3',
@@ -20,17 +21,14 @@ class Bulletin extends Model
         'dataBEPC',
         'dataBAC1',
         'dataBAC2',
-        "niveau_id",
-        "apprenant_id",
+
         "status",
-        'annee_scolaire'
+
     ];
-    public function apprenant(): BelongsTo
+    public function apprenantNiveau(): BelongsTo
     {
-        return $this->belongsTo(Apprenant::class);
+        return $this->belongsTo(ApprenantNiveau::class);
     }
-    public function niveau(): BelongsTo
-    {
-        return $this->belongsTo(Niveau::class);
-    }
+
+
 }

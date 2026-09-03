@@ -9,21 +9,18 @@ class PaiementFrais extends Model
 {
 
     protected $fillable = [
-        'apprenant_id',
-        'niveau_id',
+        'apprenant_niveau_id',
         'prise_en_charge',
         'montant',
         'verse',
         'piece_justificatif',
         'data',
+
     ];
 
-    public function apprenant(): BelongsTo
+    public function apprenantNiveau(): BelongsTo
     {
-        return $this->belongsTo(Apprenant::class);
+        return $this->belongsTo(ApprenantNiveau::class);
     }
-    public function niveau(): BelongsTo
-    {
-        return $this->belongsTo(Niveau::class);
-    }
+    
 }

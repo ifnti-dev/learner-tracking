@@ -9,7 +9,12 @@ use App\Http\Controllers\CandidatController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\SeanceController;
 use App\Http\Controllers\DocumentPedagogiqueController;
+<<<<<<< HEAD
 use App\Http\Controllers\EmpruntController;
+=======
+use App\Http\Controllers\PaiementFraisController;
+
+>>>>>>> 2af1408e7fa7bc375af61f7ec5968a53572e152a
 Route::get('/', function () {
     return to_route('dashboard');
 });
@@ -40,7 +45,13 @@ Route::middleware('auth')->group(function () {
     Route::get("bulletins/{apprenant}/create",[BulletinController::class,'create'])->name('bulletins.create');;
     Route::post("bulletins/{apprenant}/",[BulletinController::class,'store'])->name('bulletins.store');;
     Route::delete("bulletins/{bulletin}/",[BulletinController::class,'destroy'])->name('bulletins.destroy');;
-
+    //custom index for paiement frais
+    Route::get("paiement_frais/{apprenant}/",[PaiementFraisController::class,'index'])->name('paiement_frais');
+    Route::get("paiement_frais/{paiementFrais}/{apprenant}/edit",[PaiementFraisController::class,'edit'])->name('paiement_frais.edit');
+    Route::put("paiement_frais/{paiementFrais}/{apprenant}/",[PaiementFraisController::class,'update'])->name('paiement_frais.update');;
+    Route::get("paiement_frais/{apprenant}/create",[PaiementFraisController::class,'create'])->name('paiement_frais.create');;
+    Route::post("paiement_frais/{apprenant}/",[PaiementFraisController::class,'store'])->name('paiement_frais.store');; 
+    Route::delete("paiement_frais/{paiementFrais}/",[PaiementFraisController::class,'destroy'])->name('paiement_frais.destroy');;
 
     // routes seances et absences
     Route::get('/seances', [SeanceController::class, 'index'])->name('seances.index');

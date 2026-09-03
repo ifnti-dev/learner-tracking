@@ -31,8 +31,8 @@ return new class extends Migration
             $table->json('dataBAC1')->nullable();
             $table->json('dataBAC2')->nullable();
 
-            $table->foreignId('niveau_id')->nullable()->constrained('niveaux')->onDelete('set null');
-            $table->foreignId('apprenant_id')->nullable()->constrained('apprenants')->onDelete('set null');
+            $table->foreignId('apprenant_niveau_id')->nullable()->constrained('apprenant_niveaux')->onDelete('set null');
+            
 
 
             $table->timestamps();
