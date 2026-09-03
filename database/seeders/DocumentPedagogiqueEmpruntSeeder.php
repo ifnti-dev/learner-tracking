@@ -38,7 +38,7 @@ class DocumentPedagogiqueEmpruntSeeder extends Seeder
             ],
             [
                 'document_pedagogique_id' => $document_pedagogique_ids[0],
-                'emprunt_id'              => $emprunt_ids[2],
+                'emprunt_id'              => $emprunt_ids[3],
                 'created_at'              => now(),
                 'updated_at'              => now(),
             ],

@@ -14,11 +14,10 @@ class Emprunt extends Model
     {
         return $this->belongsTo(Apprenant::class);
     }
-    public function documentPedagogiques(): BelongsToMany
+    public function document_pedagogiques(): BelongsToMany
     {
-        return $this->belongsToMany(DocumentPedagogique::class);
+    return $this->belongsToMany(DocumentPedagogique::class, 'document_pedagogique_emprunts');
     }
-
     public function document_pedagogique_emprunts():HasMany{
         return $this->hasMany(DocumentPedagogiqueEmprunt::class);
     }

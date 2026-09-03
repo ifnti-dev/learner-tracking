@@ -138,6 +138,14 @@
                             </span>
                         </a>
                     </li>
+                         <a
+                            href=" {{ route('emprunts.index')}}" class="flex space-x-2 *:items-center rounded-lg px-4 py-3 text-gray-800 transition hover:bg-gray-100 dark:text-white/90 dark:hover:bg-white/[0.03] selected:bg-blue-200 selected:dark:bg-white/[0.03]">
+                            
+                            <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
+                                Emprunts
+                            </span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </nav>

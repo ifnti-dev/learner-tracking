@@ -86,7 +86,7 @@
                             </td>
                             <td class="px-5 py-4 sm:px-6">
                                 <details class=" ">
-                                    <summary
+                                     <summary
                                         class="cursor-pointer list-none rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 shadow-sm hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">
                                         <span>
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
@@ -96,7 +96,6 @@
                                             </svg>
                                         </span>
                                     </summary>
-
                                     <div
                                         class="absolute right-0 z-50 mt-1 w-48 origin-top-right rounded-lg border border-gray-200 bg-white py-1 shadow-lg dark:border-gray-700 dark:bg-gray-800">
                                         @can("promotion.update")

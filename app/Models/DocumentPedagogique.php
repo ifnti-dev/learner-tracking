@@ -19,7 +19,7 @@ class DocumentPedagogique extends Model
     ];
     public function emprunts(): BelongsToMany
     {
-        return $this->belongsToMany(Emprunt::class);
+        return $this->belongsToMany(Emprunt::class,'document_pedagogique_emprunts');
     }
     public function document_pedagogique_emprunts(): HasMany
     {
