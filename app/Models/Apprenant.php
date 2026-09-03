@@ -32,10 +32,7 @@ class Apprenant extends Model
     {
         return $this->hasMany(Emprunt::class);
     }
-    public function bulletins(): HasMany
-    {
-        return $this->hasMany(Bulletin::class);
-    }
+
 
     public function absences(): HasMany
     {
@@ -52,10 +49,7 @@ class Apprenant extends Model
     }
     public function niveaux(): BelongsToMany
     {
-        return $this->belongsToMany(Niveau::class,'bulletins');
+        return $this->belongsToMany(Niveau::class,'apprenant_niveaux');
     }
-    public function paiementFrais(): HasMany
-    {
-        return $this->hasMany(PaiementFrais::class);
-    }
+
 }

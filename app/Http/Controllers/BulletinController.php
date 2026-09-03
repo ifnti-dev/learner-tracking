@@ -59,13 +59,13 @@ class BulletinController extends Controller
     {
 
         $validated = $request->validate([
-            'bulletin1' => 'nullable|file|mimes:pdf,jpg,jpeg,png',
-            'bulletin2' => 'nullable|file|mimes:pdf,jpg,jpeg,png',
-            'bulletin3' => 'nullable|file|mimes:pdf,jpg,jpeg,png',
-            'releveCEPD' => 'nullable|file|mimes:pdf,jpg,jpeg,png',
-            'releveBEPC' => 'nullable|file|mimes:pdf,jpg,jpeg,png',
-            'releveBAC1' => 'nullable|file|mimes:pdf,jpg,jpeg,png',
-            'releveBAC2' => 'nullable|file|mimes:pdf,jpg,jpeg,png',
+            'bulletin1' => 'nullable|file|mimes:pdf',
+            'bulletin2' => 'nullable|file|mimes:pdf',
+            'bulletin3' => 'nullable|file|mimes:pdf',
+            'releveCEPD' => 'nullable|file|mimes:pdf',
+            'releveBEPC' => 'nullable|file|mimes:pdf',
+            'releveBAC1' => 'nullable|file|mimes:pdf',
+            'releveBAC2' => 'nullable|file|mimes:pdf',
             "niveau_id" => "required|exists:niveaux,id",
             "annee_scolaire" => "required",
         ]);
@@ -204,13 +204,13 @@ class BulletinController extends Controller
     public function update(Request $request, Bulletin $bulletin,Apprenant $apprenant)
     {
         $validated = $request->validate([
-            'bulletin1' => 'nullable|file|mimes:pdf,jpg,jpeg,png',
-            'bulletin2' => 'nullable|file|mimes:pdf,jpg,jpeg,png',
-            'bulletin3' => 'nullable|file|mimes:pdf,jpg,jpeg,png',
-            'releveCEPD' => 'nullable|file|mimes:pdf,jpg,jpeg,png',
-            'releveBEPC' => 'nullable|file|mimes:pdf,jpg,jpeg,png',
-            'releveBAC1' => 'nullable|file|mimes:pdf,jpg,jpeg,png',
-            'releveBAC2' => 'nullable|file|mimes:pdf,jpg,jpeg,png',
+            'bulletin1' => 'nullable|file|mimes:pdf',
+            'bulletin2' => 'nullable|file|mimes:pdf',
+            'bulletin3' => 'nullable|file|mimes:pdf',
+            'releveCEPD' => 'nullable|file|mimes:pdf',
+            'releveBEPC' => 'nullable|file|mimes:pdf',
+            'releveBAC1' => 'nullable|file|mimes:pdf',
+            'releveBAC2' => 'nullable|file|mimes:pdf',
             "niveau_id" => "required|exists:niveaux,id",
             "annee_scolaire" => "required",
         ]);

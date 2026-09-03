@@ -76,7 +76,7 @@
                 <div class="col-span-12 lg:col-span-12"></div>
                 <div class="col-span-12 lg:col-span-4">
                     @if ( isset($bulletin) && $bulletin->bulletin1 != null)
-                    <div class="flex">
+                    <div class="flex space-x-2">
                         <x-input-label for="bulletin1" :value="__('Bulletin 1 ')" />
                         <x-input-label><a class='text-blue-500' href="{{ asset('storage/' . $bulletin->bulletin1) }}">Voir le bulletin 1</a>
                         </x-input-label>
@@ -92,10 +92,10 @@
                 </div>
                 <div class="col-span-12 lg:col-span-4">
                     @if ( isset($bulletin) && $bulletin->bulletin2 != null)
-                    <div class="flex">
+                    <div class="flex space-x-2">
                         <x-input-label for="bulletin2" :value="__('Bulletin 2 ')" />
                         <x-input-label><a class='text-blue-500' href="{{ asset('storage/' . $bulletin->bulletin2) }}">Voir le bulletin 2</a>
-                        </x-input-label>
+                        </x-input-label> 
 
                     </div>
                     @else
@@ -106,14 +106,14 @@
                 </div>
                 <div class="col-span-12 lg:col-span-4">
                     @if ( isset($bulletin) && $bulletin->bulletin3 != null)
-                    <div class="flex">
+                    <div class="flex space-x-2">
                         <x-input-label for="bulletin3" :value="__('Bulletin 3 ')" />
                         <x-input-label><a class='text-blue-500' href="{{ asset('storage/' . $bulletin->bulletin3) }}">Voir le bulletin 3</a>
                         </x-input-label>
 
                     </div>
                     @else
-                    <div class="flex "><x-input-label for="bulletin3" :value="__('Bulletin 3   ')" /><x-input-label class="text-red-500" for="bulletin3" :value="__('(si timestrielle)')" /> </div>
+                    <div class="flex space-x-2"><x-input-label for="bulletin3" :value="__('Bulletin 3   ')" /><x-input-label class="text-green-500" for="bulletin3" :value="__('(si timestrielle)')" /> </div>
                     @endif
                     <x-uploade-file type="file" name="bulletin3" />
                     <x-input-error :messages="$errors->get('bulletin3')" class="mt-2" />
@@ -122,54 +122,54 @@
                 <div class="col-span-12 lg:col-span-12"></div>
                 <div class="col-span-12 lg:col-span-3">
                     @if ( isset($bulletin) && $bulletin->releveCEPD != null)
-                    <div class="flex">
+                    <div class="flex space-x-2">
                         <x-input-label for="releveCEPD" :value="__('CEPD ')" />
                         <x-input-label><a class='text-blue-500' href="{{ asset('storage/' . $bulletin->releveCEPD) }}">Voir le CEPD</a>
                         </x-input-label>
 
                     </div>
                     @else
-                    <div class="flex "><x-input-label for="releveCEPD" :value="__('CEPD ')" /><x-input-label class="text-red-500" for="releveCEPD" :value="__('(si 6eme)')" /> </div>
+                    <div class="flex space-x-2"><x-input-label for="releveCEPD" :value="__('CEPD ')" /><x-input-label class="text-green-500" for="releveCEPD" :value="__('(si 6eme)')" /> </div>
                     @endif
                     <x-uploade-file type="file" name="releveCEPD" />
                     <x-input-error :messages="$errors->get('releveCEPD')" class="mt-2" />
                 </div>
                 <div class="col-span-12 lg:col-span-3">
                     @if ( isset($bulletin) && $bulletin->releveBEPC != null)
-                    <div class="flex">
+                    <div class="flex space-x-2">
                         <x-input-label for="releveBEPC" :value="__('BEPC ')" />
                         <x-input-label><a class='text-blue-500' href="{{ asset('storage/' . $bulletin->releveBEPC) }}">Voir le BEPC</a>
                         </x-input-label>
 
                     </div>
                     @else
-                    <div class="flex "><x-input-label for="releveBEPC" :value="__('BEPC ')" /><x-input-label class="text-red-500" for="releveBEPC" :value="__('(si Seconde)')" /> </div>
+                    <div class="flex space-x-2"><x-input-label for="releveBEPC" :value="__('BEPC ')" /><x-input-label class="text-green-500" for="releveBEPC" :value="__('(si Seconde)')" /> </div>
                     @endif
                     <x-uploade-file type="file" name="releveBEPC" />
                     <x-input-error :messages="$errors->get('releveBEPC')" class="mt-2" />
                 </div>
                 <div class="col-span-12 lg:col-span-3">
                     @if ( isset($bulletin) && $bulletin->releveBAC1 != null)
-                    <div class="flex">
+                    <div class="flex space-x-2">
                         <x-input-label for="releveBAC1" :value="__('BAC1 ')" />
                         <x-input-label><a class='text-blue-500' href="{{ asset('storage/' . $bulletin->releveBAC1) }}">Voir le BAC1</a>
                         </x-input-label>
                     </div>
                     @else
-                    <div class="flex "><x-input-label for="releveBAC1" :value="__('BAC1')" /><x-input-label class="text-red-500" for="releveBAC1" :value="__('(si Terminale)')" /> </div>
+                    <div class="flex space-x-2"><x-input-label for="releveBAC1" :value="__('BAC1')" /><x-input-label class="text-green-500" for="releveBAC1" :value="__('(si Terminale)')" /> </div>
                     @endif
                     <x-uploade-file type="file" name="releveBAC1" />
                     <x-input-error :messages="$errors->get('releveBAC1')" class="mt-2" />
                 </div>
                 <div class="col-span-12 lg:col-span-3">
                     @if ( isset($bulletin) && $bulletin->releveBAC2 != null)
-                    <div class="flex">
+                    <div class="flex space-x-2">
                         <x-input-label for="releveBAC2" :value="__('BAC2 ')" />
                         <x-input-label><a class='text-blue-500' href="{{ asset('storage/' . $bulletin->releveBAC2) }}">Voir le BAC2</a>
                         </x-input-label>
                     </div>
                     @else
-                    <div class="flex "><x-input-label for="releveBAC2" :value="__('BAC2')" /><x-input-label class="text-red-500" for="releveBAC2" :value="__('(si Terminale)')" /> </div>
+                    <div class="flex space-x-2"><x-input-label for="releveBAC2" :value="__('BAC2')" /><x-input-label class="text-green-500" for="releveBAC2" :value="__('(si Terminale)')" /> </div>
                     @endif
                     <x-uploade-file type="file" name="releveBAC2" />
                     <x-input-error :messages="$errors->get('releveBAC2')" class="mt-2" />

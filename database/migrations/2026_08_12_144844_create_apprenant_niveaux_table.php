@@ -1,10 +1,8 @@
 <?php
 
-use App\Enums\TypeNiveau;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
 
 return new class extends Migration
 {
@@ -13,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('niveaux', function (Blueprint $table) {
+        Schema::create('apprenant_niveaux', function (Blueprint $table) {
             $table->id();
-            $table->string('code')->unique();
-            $table->string('nom');
-            $table->enum('cycle', ['01', '02', '03']);
             $table->timestamps();
+            $table->foreignId('apprenant_id')->constrained('apprenants')->onDelete('set null');
+            $table->foreignId('niveau_id')->constrained('niveaux')->onDelete('set null');
+            $table->foreignId('annee_id')->constrained('annees')->onDelete('set null');
         });
     }
 
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('niveaux');
+        Schema::dropIfExists('apprenant_niveaux');
     }
 };

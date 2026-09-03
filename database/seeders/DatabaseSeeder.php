@@ -29,10 +29,9 @@ class DatabaseSeeder extends Seeder
                 EmpruntSeeder::class,
                 AbsenceSeeder::class,
                 BulletinSeeder::class,
-                ApprenantNiveauSeeder::class,
                 ApprenantPersonneResponsableSeeder::class,
                 DocumentPedagogiqueEmpruntSeeder::class,
-
+                PaiementFraisSeeder::class,
         ]);
 
     }

@@ -20,7 +20,9 @@ return new class extends Migration
             $table->enum('sexe',['M','F']);
             $table->string("adresse");
             $table->date("date_naissance");
+            $table->string("niveau_actuel");
             $table->string("etablissement");
+            $table->string("cycle_de_base");
             $table->string("niveau_de_base");
             $table->foreignId('promotion_id')->nullable()->constrained('promotions')->onDelete('set null');
             $table->foreignId('candidat_id')->nullable()->constrained('candidats')->onDelete('set null');
