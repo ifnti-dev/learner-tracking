@@ -7,7 +7,11 @@ use App\Models\Bulletin;
 use Illuminate\Http\Request;
 use App\Models\Apprenant;
 use App\Models\Niveau;
+use App\Models\Annee;
+use Illuminate\Support\Facades\DB;
+use App\Models\ApprenantNiveau;
 use Illuminate\Support\Facades\Storage;
+
 class BulletinController extends Controller
 {
     /**
@@ -19,12 +23,14 @@ class BulletinController extends Controller
         //
     }
     public function bulletins(Apprenant $apprenant)
-
     {
 
-        $bulletins = Bulletin::where("apprenant_id", $apprenant->id)
-        ->orderBy('annee_scolaire', 'desc')
-        ->get();
+        $bulletins = Bulletin::whereIn('apprenant_niveau_id', $apprenant->apprenantNiveaux()->pluck('id'))
+            ->with('apprenantNiveau')
+            ->get();
+
+
+
         return view('bulletins.index', compact('bulletins', 'apprenant'));
     }
 
@@ -33,24 +39,31 @@ class BulletinController extends Controller
      */
     public function create(Apprenant $apprenant)
     {
-        //si une annee scolaire a un buletin de status incomplet alors return error
-        $incomplet_bulletin = Bulletin::where("apprenant_id", $apprenant->id)->where("status", "incomplet")->first();
+        $annee_scolaires = Annee::all();
+
+        $incomplet_bulletin = Bulletin::whereIn('apprenant_niveau_id', $apprenant->apprenantNiveaux->pluck('id'))
+            ->where('status', 'incomplet')
+            ->with('apprenantNiveau.annee')
+            ->first();
+
         if ($incomplet_bulletin) {
-            $messages = Message::info("Bulletin pour l'année scolaire " . $incomplet_bulletin->annee_scolaire . " est incomplet. Veuillez le compléter avant d'ajouter un nouveau bulletin.");
+            $anneeScolaireNom = $incomplet_bulletin->apprenantNiveau->annee->annee_scolaire;
+
+            $messages = Message::info("Le bulletin pour l'année scolaire {$anneeScolaireNom} est incomplet. Veuillez le compléter avant d'ajouter un nouveau bulletin.");
+
             return redirect()->back()->with($messages->toMap());
         }
-        //determination de l'annee scolaire
-        $fin  = (int)date('Y') + 1;
-        $debut = $fin - 7;
-        $compteur = $fin - $debut;
-        $annee_scolaires  = [];
-        for ($i = 0; $i < $compteur; $i++) {
-            $annee_scolaires[] = ($debut + $i) . '-' . ($debut + $i + 1);
-        }
-        $annee_scolaires = array_reverse($annee_scolaires);
-        $niveaux = Niveau::all();
+
+        $niveauActuel = Niveau::find($apprenant->niveau_actuel);
+
+        $niveaux = $niveauActuel
+            ? $apprenant->niveaux()->where('code', '<=', $niveauActuel->code)->distinct()->get()
+            : collect();
+
+
         return view('bulletins.form', compact('apprenant', 'annee_scolaires', 'niveaux'));
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -67,14 +80,19 @@ class BulletinController extends Controller
             'releveBAC1' => 'nullable|file|mimes:pdf',
             'releveBAC2' => 'nullable|file|mimes:pdf',
             "niveau_id" => "required|exists:niveaux,id",
-            "annee_scolaire" => "required",
+            'annee_scolaire'  => 'required|exists:annees,id'
         ]);
-        $bulletin_apprenant = $apprenant->bulletins()->where('annee_scolaire', $request->annee_scolaire)->first();
+        $appNiveaux = ApprenantNiveau::where('apprenant_id', $apprenant->id)
+            ->where('annee_id', $validated["annee_scolaire"])->first();
 
-        if ($bulletin_apprenant) {
-            $messages = Message::error('Un ou des bulletin(s) pour cette année scolaire existe déjà pour cet apprenant.');
-            return redirect()->back()->with($messages->toMap());
+        if ($appNiveaux) {
+
+            $messages = Message::error('Un bulletin pour cette année scolaire  existe déjà pour cet apprenant.');
+
+            return redirect()->back()->withInput()->with($messages->toMap());
         }
+
+
 
         $store_path = 'bulletins/' . $apprenant->id . '/' . $validated["niveau_id"] . '/' . $validated["annee_scolaire"];
         $files_path = [];
@@ -152,23 +170,42 @@ class BulletinController extends Controller
             $validated['status'] = 'incomplet';
         }
 
-        Bulletin::create([
-            'bulletin1' => $files_path['bulletin1'] ?? null,
-            'bulletin2' => $files_path['bulletin2'] ?? null,
-            'bulletin3' => $files_path['bulletin3'] ?? null,
-            'releveCEPD' => $files_path['releveCEPD'] ?? null,
-            'releveBEPC' => $files_path['releveBEPC'] ?? null,
-            'releveBAC1' => $files_path['releveBAC1'] ?? null,
-            'releveBAC2' => $files_path['releveBAC2'] ?? null,
-            "niveau_id" => $validated["niveau_id"],
-            "apprenant_id" => $apprenant->id,
-            "status" => $validated["status"],
-            'annee_scolaire' => $validated["annee_scolaire"],
-        ]);
+
+        DB::transaction(function () use ($validated, $files_path, $apprenant) {
+
+            $appNiveaux = ApprenantNiveau::where("apprenant_id", $apprenant->id)->where('annee_id', $validated["annee_scolaire"]);
+
+            if (!$appNiveaux) {
+                $appNiveaux = ApprenantNiveau::create(
+                    [
+                        "niveau_id" => $validated["niveau_id"],
+                        "apprenant_id" => $apprenant->id,
+                        'annee_id' => $validated["annee_scolaire"],
+                    ]
+                );
+            }
+
+
+
+            Bulletin::create([
+                'bulletin1' => $files_path['bulletin1'] ?? null,
+                'bulletin2' => $files_path['bulletin2'] ?? null,
+                'bulletin3' => $files_path['bulletin3'] ?? null,
+                'releveCEPD' => $files_path['releveCEPD'] ?? null,
+                'releveBEPC' => $files_path['releveBEPC'] ?? null,
+                'releveBAC1' => $files_path['releveBAC1'] ?? null,
+                'releveBAC2' => $files_path['releveBAC2'] ?? null,
+
+                "status" => $validated["status"],
+                'apprenant_niveau_id' => $appNiveaux->id,
+
+            ]);
+        });
 
 
 
         $messages = Message::success('Bulletins ajouté avec succès');
+
 
         return to_route('bulletins', $apprenant)->with($messages->toMap());
     }
@@ -186,22 +223,18 @@ class BulletinController extends Controller
      */
     public function edit(Bulletin $bulletin, Apprenant $apprenant)
     {
-        $fin  = (int)date('Y') + 1;
-        $debut = $fin - 7;
-        $compteur = $fin - $debut;
-        $annee_scolaires  = [];
-        for ($i = 0; $i < $compteur; $i++) {
-            $annee_scolaires[] = ($debut + $i) . '-' . ($debut + $i + 1);
-        }
-        $annee_scolaires = array_reverse($annee_scolaires);
-        $niveaux = Niveau::all();
+        $annee_scolaires = Annee::all();
+
+
+        $niveaux = $apprenant->niveaux()->distinct()->get();
+
         return view('bulletins.form', compact('apprenant', 'annee_scolaires', 'niveaux', 'bulletin'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Bulletin $bulletin,Apprenant $apprenant)
+    public function update(Request $request, Bulletin $bulletin, Apprenant $apprenant)
     {
         $validated = $request->validate([
             'bulletin1' => 'nullable|file|mimes:pdf',
@@ -212,23 +245,28 @@ class BulletinController extends Controller
             'releveBAC1' => 'nullable|file|mimes:pdf',
             'releveBAC2' => 'nullable|file|mimes:pdf',
             "niveau_id" => "required|exists:niveaux,id",
-            "annee_scolaire" => "required",
+
+            'annee_scolaire'  => 'required|exists:annees,id'
         ]);
 
-        
-        $duplicate_bulletin = $apprenant->bulletins()
-            ->where('annee_scolaire', $validated['annee_scolaire'])
-            ->where('id', '!=', $bulletin->id)
-            ->first();
+        if ($bulletin->apprenantNiveau()->first()->annee()->first()->id != $validated['annee_scolaire']) {
+            $appNiveaux = ApprenantNiveau::where('apprenant_id', $apprenant->id)
+                ->where('annee_id', $validated["annee_scolaire"])->first();
 
-        if ($duplicate_bulletin) {
-            $messages = Message::error('Un ou des bulletin(s) pour cette année scolaire existe déjà pour cet apprenant.');
-            return redirect()->back()->with($messages->toMap());
+            if ($appNiveaux) {
+                $messages = Message::error('Un bulletin pour cette année scolaire  existe déjà pour cet apprenant.');
+
+                return redirect()->back()->withInput()->with($messages->toMap());
+            }
         }
+
+
+
+
 
         $store_path = 'bulletins/' . $apprenant->id . '/' . $validated["niveau_id"] . '/' . $validated["annee_scolaire"];
 
-       
+
         $files_path = [
             'bulletin1' => $bulletin->bulletin1,
             'bulletin2' => $bulletin->bulletin2,
@@ -241,7 +279,7 @@ class BulletinController extends Controller
 
         $niveau_nom = Niveau::where('id', $validated['niveau_id'])->first()->nom;
 
-        
+
         for ($i = 1; $i <= 3; $i++) {
             $key = "bulletin{$i}";
             if ($request->hasFile($key)) {
@@ -253,7 +291,7 @@ class BulletinController extends Controller
             }
         }
 
-        
+
         $conditional_documents = [
             'releveCEPD' => '6ème',
             'releveBEPC' => 'Seconde',
@@ -295,19 +333,39 @@ class BulletinController extends Controller
 
         $validated['status'] = ($nbr_bulletins >= $required_count) ? 'complet' : 'incomplet';
 
-        
-        $bulletin->update([
-            'bulletin1' => $files_path['bulletin1'],
-            'bulletin2' => $files_path['bulletin2'],
-            'bulletin3' => $files_path['bulletin3'],
-            'releveCEPD' => $files_path['releveCEPD'],
-            'releveBEPC' => $files_path['releveBEPC'],
-            'releveBAC1' => $files_path['releveBAC1'],
-            'releveBAC2' => $files_path['releveBAC2'],
-            "niveau_id" => $validated["niveau_id"],
-            "status" => $validated["status"],
-            'annee_scolaire' => $validated["annee_scolaire"],
-        ]);
+        DB::transaction(function () use ($validated, $files_path, $apprenant, $bulletin) {
+
+
+
+
+
+            $appNiveaux = ApprenantNiveau::firstOrCreate(
+                [
+                    "niveau_id" => $validated["niveau_id"],
+                    "apprenant_id" => $apprenant->id,
+                    'annee_id' => $validated["annee_scolaire"],
+                ]
+            );
+
+
+
+
+            $bulletin->update([
+                'bulletin1' => $files_path['bulletin1'],
+                'bulletin2' => $files_path['bulletin2'],
+                'bulletin3' => $files_path['bulletin3'],
+                'releveCEPD' => $files_path['releveCEPD'],
+                'releveBEPC' => $files_path['releveBEPC'],
+                'releveBAC1' => $files_path['releveBAC1'],
+                'releveBAC2' => $files_path['releveBAC2'],
+
+                "status" => $validated["status"],
+
+                'apprenant_niveau_id' => $appNiveaux->id,
+            ]);
+        });
+
+
 
         $messages = Message::success('Bulletins mis à jour avec succès');
 
@@ -320,6 +378,12 @@ class BulletinController extends Controller
     public function destroy(Bulletin $bulletin)
     {
         $bulletin->delete();
+        $appNiveaux = $bulletin->apprenantNiveau()->first();
+
+        if ($appNiveaux->paiementFrai()->first() == null) {
+
+            $appNiveaux->delete();
+        }
         $messages = Message::success('Bulletins supprimé avec succès');
         return redirect()->back()->with($messages->toMap());
     }

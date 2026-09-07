@@ -16,7 +16,7 @@ return new class extends Migration
             $table->timestamps();
             $table->foreignId('apprenant_id')->constrained('apprenants')->onDelete('set null');
             $table->foreignId('niveau_id')->constrained('niveaux')->onDelete('set null');
-            $table->foreignId('annee_id')->constrained('annees')->onDelete('set null');
+            $table->foreignId('annee_id')->nullable()->constrained('annees')->onDelete('set null');
         });
     }
 

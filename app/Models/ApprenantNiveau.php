@@ -27,11 +27,11 @@ class ApprenantNiveau extends Model
         return $this->belongsTo(Annee::class);
     }
 
-    public function bulletins()
+    public function bulletin()
     {
         return $this->hasOne(Bulletin::class);
     }
-    public function paiementFrais()
+    public function paiementFrai()
     {
         return $this->hasOne(PaiementFrais::class);
     }

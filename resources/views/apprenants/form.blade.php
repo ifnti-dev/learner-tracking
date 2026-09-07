@@ -20,7 +20,7 @@
         class="z-0 rounded-2x">
         <form action="{{ $action }}" method="POST" enctype="multipart/form-data">
             @csrf
-            @method("PUT")
+            @method( $is_edit ? "PUT" : "POST" )
             
             <div
                 class="grid grid-cols-12 gap-4  p-5 sm:p-6 dark:border-gray-800">
@@ -63,6 +63,8 @@
 
 
                     </div>
+                    <x-input-error :messages="$errors->get('sexe')" class="mt-2" />
+
                 </div>
 
 
@@ -200,7 +202,7 @@
                                     @foreach ($niveaux as $niveau)
                                     <option
                                         value="{{ $niveau->id }}"
-                                        {{ (string) $niveau->id === (string) old('niveau_de_base', isset($apprenant) && $apprenant->niveaux()->first() ? $apprenant->niveaux()->first()->id : '') ? 'selected' : '' }}>
+                                        {{ (string) $niveau->id === (string) old('niveau_de_base', isset($apprenant) && $apprenant->niveau_actuel ? $apprenant->niveau_actuel : '') ? 'selected' : '' }}>
                                         {{ $niveau->nom }}
                                     </option>
                                     @endforeach
@@ -212,31 +214,7 @@
 
                     </div>
 
-                    <div class="col-span-12 lg:col-span-2">
-                        <x-input-label for="prise_en_charge" :value="__('Prise en charge')" />
-
-                        <div
-                            x-data="{ selectedType: '{{ (string) old('prise_en_charge', isset($apprenant) && $apprenant->paiementFrais()->first() ? $apprenant->paiementFrais()->first()->prise_en_charge : '0') }}' }"
-                            class=" z-0 bg-transparent flex items-center">
-
-                            <select
-                                name="prise_en_charge"
-                                id="prise_en_charge"
-                                x-model="selectedType"
-                                class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 pr-11 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90">
-
-                                <option value="0" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
-                                    Non
-                                </option>
-                                <option value="1" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
-                                    Oui
-                                </option>
-
-                            </select>
-                        </div>
-
-                        <x-input-error :messages="$errors->get('prise_en_charge')" class="mt-2" />
-                    </div>
+                    
 
                     <div class="col-span-12 lg:col-span-4">
                         <x-input-label for="personne_reponsable_id" :value="__('Parents/Tuteur')" />

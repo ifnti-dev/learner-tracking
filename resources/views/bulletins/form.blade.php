@@ -22,10 +22,6 @@
 
             <div
                 class="grid grid-cols-12 gap-4  p-5 sm:p-6 dark:border-gray-800">
-
-
-
-
                 <div class="  col-span-12 lg:col-span-2">
                     <x-input-label for="annee_scolaire" :value="__('Année Scolaire')" />
                     <div
@@ -38,41 +34,45 @@
                             x-model="selectedType"
                             class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 pr-11 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90">
                             @foreach($annee_scolaires as $annee)
-                            <option value="{{ $annee }}" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
-                                {{ $annee }}
+                            <option value="{{ $annee->id }}" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
+                                {{ $annee->annee_scolaire }}
                             </option>
                             @endforeach
 
 
                         </select>
-                        <x-input-error :messages="$errors->get('annee_scolaire')" class="mt-2" />
 
 
                     </div>
+                    <x-input-error :messages="$errors->get('annee_scolaire')" class="mt-2" />
+
                 </div>
 
                 <div class="col-span-12 lg:col-span-2">
-                    <x-input-label for="niveau_id" :value="__('Niveau ')" />
-                    <div>
-                        <div>
-                            <select
-                                name="niveau_id"
-                                id="niveau_id"
-                                class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 pr-11 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90">
+                    <x-input-label for="niveau_id" :value="__('Niveau')" />
+                    <div class="relative">
+                        <select
+                            name="niveau_id"
+                            id="niveau_id"
+                            class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 pr-11 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90">
 
-                                @foreach ($niveaux as $niveau)
-                                <option
-                                    :value="String('{{ $niveau->id }}')"
-                                    {{ (string) $niveau->id === (string) old('niveau_id', isset($bulletin) && $bulletin->niveau()->first() ? $bulletin->niveau()->first()->id : '') ? 'selected' : '' }}>
-                                    {{ $niveau->nom }}
-                                </option>
-                                @endforeach
-                            </select>
-                        </div>
+                            <option value="">{{ __('Sélectionnez un niveau') }}</option>
+
+                            @foreach ($niveaux as $niveau)
+                            @php
+                            $selectedId = old('niveau_id', isset($bulletin) ? $bulletin->apprenantNiveau->niveau_id : '');
+                            @endphp
+                            <option
+                                value="{{ $niveau->id }}"
+                                {{ (string) $niveau->id === (string) $selectedId ? 'selected' : '' }}>
+                                {{ $niveau->nom }}
+                            </option>
+                            @endforeach
+                        </select>
                     </div>
                     <x-input-error :messages="$errors->get('niveau_id')" class="mt-2" />
-
                 </div>
+
                 <div class="col-span-12 lg:col-span-12"></div>
                 <div class="col-span-12 lg:col-span-4">
                     @if ( isset($bulletin) && $bulletin->bulletin1 != null)
@@ -95,7 +95,7 @@
                     <div class="flex space-x-2">
                         <x-input-label for="bulletin2" :value="__('Bulletin 2 ')" />
                         <x-input-label><a class='text-blue-500' href="{{ asset('storage/' . $bulletin->bulletin2) }}">Voir le bulletin 2</a>
-                        </x-input-label> 
+                        </x-input-label>
 
                     </div>
                     @else

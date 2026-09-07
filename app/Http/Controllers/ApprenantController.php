@@ -13,6 +13,7 @@ use App\Models\PersonneResponsable;
 use Illuminate\Validation\Rule;
 use App\Models\Bulletin;
 use Illuminate\Support\Facades\Storage;
+use App\Models\ApprenantNiveau;
 
 
 use Illuminate\Routing\Controllers\HasMiddleware;
@@ -29,10 +30,10 @@ class ApprenantController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('permission:view.apprenant',only:['index','show']),
-            new Middleware('permission:create.apprenant',only:['create','store']),
-            new Middleware('permission:update.apprenant',only:['edit','update']),
-            new Middleware('permission:delete.apprenant',only:['destroy']),
+            new Middleware('permission:view.apprenant', only: ['index', 'show']),
+            new Middleware('permission:create.apprenant', only: ['create', 'store']),
+            new Middleware('permission:update.apprenant', only: ['edit', 'update']),
+            new Middleware('permission:delete.apprenant', only: ['destroy']),
         ];
     }
 
@@ -62,40 +63,49 @@ class ApprenantController extends Controller implements HasMiddleware
         $validated = $request->validate([
             'nom' => 'required|string|max:255|min:3',
             'prenom' => 'required|string|max:255|min:3',
-            'telephone' => 'required|min:4|string|max:20|unique:candidats,telephone',
+            'telephone' => 'required|min:4|string|max:20|unique:apprenants,telephone',
             'email' => 'required|email|max:255|unique:apprenants,email',
             'sexe' => 'required|in:M,F',
             'adresse' => 'required|string|max:255|min:3',
             'date_naissance' => 'required|date',
             'etablissement' => 'required|string|max:255|min:2',
-            'personne_reponsable_id' => 'nullable|exists:personne_responsables,id',          
-            'prise_en_charge' => 'required|integer|in:0,1',
-            'nivau_de_base'  => 'required|integer|exists:niveaux,id',
-            
+            'personne_reponsable_id' => 'nullable|exists:personne_responsables,id',
+            'niveau_de_base'  => 'required|integer|exists:niveaux,id',
+
         ]);
 
         //bulletins
-
         //dd($request->all());
+
+
 
         DB::transaction(
             function () use ($validated, $request) {
-                $validated['niveau_actuel'] = $validated['nivau_de_base'];
+                $validated['niveau_actuel'] = $validated['niveau_de_base'];
 
-                $cycle_de_base = Niveau::find($validated['nivau_de_base'])->cycle;
+                $cycle_de_base = Niveau::find($validated['niveau_de_base'])->cycle;
                 $validated['cycle_de_base'] = $cycle_de_base;
 
                 $apprenant = Apprenant::create($validated);
 
-                dd($apprenant);
+                $niveaux_ids = Niveau::where('cycle', $cycle_de_base)->pluck('id')->toArray();
+
+                foreach ($niveaux_ids as $niveau_id) {
+                    $u = ApprenantNiveau::create([
+                        'apprenant_id' => $apprenant->id,
+                        'niveau_id' => $niveau_id,
+
+                    ]);
+                }
+
+
+
                 ApprenantPersonneResponsable::create(
                     [
                         'personne_responsable_id' => $validated['personne_reponsable_id'],
                         'apprenant_id' => $apprenant->id,
                     ]
                 );
-
-               
             }
         );
 
@@ -157,64 +167,55 @@ class ApprenantController extends Controller implements HasMiddleware
             'date_naissance' => 'required|date',
             'etablissement' => 'required|string|max:255|min:2',
             'personne_reponsable_id' => 'nullable|exists:personne_responsables,id',
-            'bulletins' => 'nullable|array',
-            'bulletins.*' => 'nullable|array',
-            'bulletins.*.*' => 'nullable|mimes:jpg,png,pdf',
-            'prise_en_charge' => 'required|integer|in:0,1',
+            'niveau_de_base'  => 'required|integer|exists:niveaux,id',
         ]);
 
         DB::transaction(
             function () use ($validated, $request, $apprenant) {
 
+                if ($validated['niveau_de_base'] != $apprenant->niveau_de_base) {
+                    $apprenant_niveaux = ApprenantNiveau::where('apprenant_id', $apprenant->id)->get();
+                    foreach ($apprenant_niveaux as $apprenant_niveau) {
+                        $bulletin = $apprenant_niveau->bulletin()->first();
+                        $paiement = $apprenant_niveau->paiementFrais()->first();
+
+                        if ($bulletin || $paiement) {
+                            $message = Message::error('Impossible de changer le nivaux . Ce apprenant a deja des bulletins et/ou des paiements de frais de scolarité pour ce niveau!');
+                            return to_route('apprenants.index')->with($message->toMap());
+                        }
+                    }
+                }
+
+                $validated['niveau_actuel'] = $validated['niveau_de_base'];
+
+                $cycle_de_base = Niveau::find($validated['niveau_de_base'])->cycle;
+                $validated['cycle_de_base'] = $cycle_de_base;
+
+
                 $apprenant->update($validated);
+                $niveaux_ids = Niveau::where('cycle', $cycle_de_base)->pluck('id')->toArray();
+
+                $apprenant_niveaux = ApprenantNiveau::where('apprenant_id', $apprenant->id)->get();
+                foreach ($apprenant_niveaux as $apprenant_niveau) {
+                    $apprenant_niveau->delete();
+                }
+
+
+                foreach ($niveaux_ids as $niveau_id) {
+                    $u = ApprenantNiveau::create([
+                        'apprenant_id' => $apprenant->id,
+                        'niveau_id' => $niveau_id,
+                    ]);
+                }
+
+
+
+
 
                 ApprenantPersonneResponsable::firstOrCreate([
                     'apprenant_id' => $apprenant->id,
                     'personne_responsable_id' => $validated['personne_reponsable_id']
                 ]);
-
-             
-
-
-                if (isset($validated['bulletins'])) {
-                    $bulletins = $validated['bulletins'];
-
-                    foreach ($bulletins as $niveau_id => $bulletin_files) {
-                        $niveau_bd = Niveau::find($niveau_id);
-                        if (!$niveau_bd) continue;
-
-                        $bulletinModel = Bulletin::firstOrNew([
-                            'niveau_id' => $niveau_bd->id,
-                            'apprenant_id' => $apprenant->id,
-                        ]);
-
-                        $bulletins_limites = array_slice($bulletin_files, 0, 5);
-
-                        $num_bulletin = 1;
-                        foreach ($bulletins_limites as $bulletin_file) {
-                            $champ_bulletin = 'bulletin' . $num_bulletin;
-
-                            if (!empty($bulletinModel->$champ_bulletin)) {
-                                if (Storage::disk('public')->exists($bulletinModel->$champ_bulletin)) {
-                                    Storage::disk('public')->delete($bulletinModel->$champ_bulletin);
-                                }
-                            }
-
-                            $file_name = $niveau_bd->nom . '-' . $num_bulletin . '.' . $bulletin_file->extension();
-                            $bulletin_path = $bulletin_file->storeAs(
-                                'bulettins/' . $validated['nom'] . '.' . $validated['prenom'] . '/' . $niveau_id,
-                                $file_name,
-                                'public'
-                            );
-
-                            $bulletinModel->$champ_bulletin = $bulletin_path;
-
-                            $num_bulletin++;
-                        }
-
-                        $bulletinModel->save();
-                    }
-                }
             }
         );
 

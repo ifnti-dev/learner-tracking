@@ -13,6 +13,10 @@ class Niveau extends Model
         return $this->belongsToMany(Apprenant::class,"apprenant_niveaux");
     }
 
+    public function apprenantNiveaux(): HasMany
+    {
+        return $this->hasMany(ApprenantNiveau::class);
+    }
 
     public function document_pedagogiques():HasMany{
         return $this->hasMany(DocumentPedagogique::class);

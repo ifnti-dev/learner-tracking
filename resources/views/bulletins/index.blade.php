@@ -71,7 +71,7 @@
 
                                         <div>
                                             <span class="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
-                                                {{ $bulletin->annee_scolaire }}
+                                                {{ $bulletin->apprenantNiveau()->first()->annee()->first()->annee_scolaire }}
                                             </span>
 
                                         </div>
@@ -81,7 +81,7 @@
                             <td class="px-5 py-4 sm:px-6">
                                 <div class="flex items-center">
                                     <p class="text-gray-500 text-theme-sm dark:text-gray-400">
-                                        {{ $bulletin->niveau()->first()->nom }}
+                                        {{ $bulletin->apprenantNiveau()->first()->niveau()->first()->nom }}
                                     </p>
                                 </div>
                             </td>
@@ -119,7 +119,7 @@
                             <td colspan="5" class="px-5 py-4 sm:px-6">
                                 <div class="flex items-center justify-center">
                                     <p class="text-gray-500 text-theme-sm dark:text-gray-400">
-                                        Aucun personne responsable trouvé.
+                                        Aucun bulletins trouvé.
                                     </p>
                                 </div>
                             </td>

@@ -24,27 +24,27 @@ class ApprenantNiveauSeeder extends Seeder
         [
             'apprenant_id' => 2,
             'niveau_id' => 2,
-            'annee_id' => $annees_id[0]->id,
+            'annee_id' => $annees_id[2]->id,
         ],
         [
             'apprenant_id' => 3,
             'niveau_id' => 3,
-            'annee_id' => $annees_id[0]->id,
+            'annee_id' => $annees_id[3]->id,
         ],
         [
             'apprenant_id' => 4,
             'niveau_id' => 4,
-            'annee_id' => $annees_id[0]->id,
+            'annee_id' => $annees_id[4]->id,
         ],
         [
             'apprenant_id' => 5,
             'niveau_id' => 5,
-            'annee_id' => $annees_id[0]->id,
+            'annee_id' => $annees_id[5]->id,
         ],
         [
             'apprenant_id' => 6,
             'niveau_id' => 6,
-            'annee_id' => $annees_id[0]->id,
+            'annee_id' => $annees_id[6]->id,
         ]);
     }
 }

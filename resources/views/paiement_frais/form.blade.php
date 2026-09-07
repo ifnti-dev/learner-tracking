@@ -37,19 +37,20 @@
                             id="annee_scolaire"
                             x-model="selectedType"
                             class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 pr-11 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90">
-                            @foreach($niveaux as $niveau)
-                                <option value="{{ $niveau->annee_scolaire }}" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
+                            @foreach($annee_scolaires as $annee)
+                            <option value="{{ $annee->id }}" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
 
-                                    {{ $niveau->annee_scolaire }}
-                                </option>
+                                {{ $annee->annee_scolaire }}
+                            </option>
                             @endforeach
 
 
                         </select>
-                        <x-input-error :messages="$errors->get('annee_scolaire')" class="mt-2" />
 
 
                     </div>
+                    <x-input-error :messages="$errors->get('annee_scolaire')" class="mt-2" />
+
                 </div>
 
                 <div class="col-span-12 lg:col-span-2">

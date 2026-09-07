@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Apprenant;
 use App\Http\Requests\Message;
+use App\Models\Annee;
 
 
 class PaiementFraisController extends Controller
@@ -18,7 +19,8 @@ class PaiementFraisController extends Controller
      */
     public function index(Apprenant $apprenant)
     {
-        $paiementFrais = PaiementFrais::where('apprenant_id', $apprenant->id)
+        $paiementFrais = PaiementFrais::whereIn('apprenant_niveau_id', $apprenant->apprenantNiveaux()->pluck('id'))
+            ->with('apprenantNiveau')
             ->get();
         return view('paiement_frais.index', compact('paiementFrais', 'apprenant'));
     }
@@ -31,12 +33,12 @@ class PaiementFraisController extends Controller
         //determination de l'annee scolaire
 
 
-        $niveaux = Niveau::join("bulletins", "niveaux.id", "=", "bulletins.niveau_id")
-            ->where("bulletins.apprenant_id", $apprenant->id)
-            ->select("niveaux.*", "bulletins.annee_scolaire")
-            ->distinct()
-            ->get();
-        return view('paiement_frais.form', compact('apprenant', 'niveaux'));
+        $annee_scolaires = Annee::select('annee_scolaire')->get();
+
+        $niveaux = $apprenant->niveaux()->where('code','<=',Niveau::where('id',$apprenant->niveau_actuel)->first()->code)->get();
+
+        
+        return view('paiement_frais.form', compact('apprenant','annee_scolaires', 'niveaux'));
     }
 
     /**
@@ -125,7 +127,13 @@ class PaiementFraisController extends Controller
         if ($paiementFrais->piece_justificatif) {
             Storage::delete('public/' . $paiementFrais->piece_justificatif);
         }
+        
+        $appNiveaux = $paiementFrais->apprenantNiveau()->first();
         $paiementFrais->delete();
+        if ($appNiveaux->bulletin()->first() == null) {
+
+            $appNiveaux->delete();
+        }
         $messages = Message::success('Paiement de frais de scolarité supprimé avec succès.');
         return redirect()->back()->with($messages->toMap());
     }

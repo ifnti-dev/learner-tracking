@@ -22,6 +22,8 @@ class Apprenant extends Model
         'promotion_id'     ,
         'etablissement',
         "niveau_de_base",
+        'cycle_de_base',
+        'niveau_actuel',
     ];
 
     public function promotion(): belongsTo
@@ -50,6 +52,11 @@ class Apprenant extends Model
     public function niveaux(): BelongsToMany
     {
         return $this->belongsToMany(Niveau::class,'apprenant_niveaux');
+    }
+
+    public function apprenantNiveaux(): HasMany
+    {
+        return $this->hasMany(ApprenantNiveau::class);
     }
 
 }
