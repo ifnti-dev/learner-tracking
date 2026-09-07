@@ -195,6 +195,31 @@
                             <x-input-error :messages="$errors->get('etablissement')" class="mt-2" />
                         </div>
                         <!-- Elements -->
+                        <div class="col-span-12 lg:col-span-2">
+                            <x-input-label for="niveau_de_base" :value="__('Niveau Actuel')" />
+                            <div>
+                                <div>
+                                    <select
+                                        name="niveau_de_base"
+                                        id="niveau_de_base"
+                                        class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 pr-11 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90">
+
+                                        <option value="">Sélectionnez un niveau</option>
+
+                                        @foreach ($niveaux as $niveau)
+                                        <option
+                                            value="{{ $niveau->id }}"
+                                            {{ (string) $niveau->id === (string) old('niveau_de_base', isset($apprenant) && $apprenant->niveau_actuel ? $apprenant->niveau_actuel : '') ? 'selected' : '' }}>
+                                            {{ $niveau->nom }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+
+                                </div>
+                            </div>
+                            <x-input-error :messages="$errors->get('niveau_de_base')" class="mt-2" />
+
+                        </div>
                     </div>
                 </div>
                 <div class="px-5 py-4 sm:px-6 sm:py-5 flex ">

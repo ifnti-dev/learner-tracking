@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('etablissement');
             $table->string('promotion_id');
             $table->string("niveau_de_base");
+            $table->string("niveau_actuel");
+            $table->string("cycle_de_base");
             $table->timestamps();
         });
     }

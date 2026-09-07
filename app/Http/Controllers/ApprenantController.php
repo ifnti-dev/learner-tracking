@@ -39,7 +39,7 @@ class ApprenantController extends Controller implements HasMiddleware
 
     public function index()
     {
-        $apprenants = Apprenant::all();
+        $apprenants = Apprenant::latest()->get();
         return view('apprenants.index', compact('apprenants'));
     }
 

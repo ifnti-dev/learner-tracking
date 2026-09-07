@@ -24,6 +24,7 @@
 
         <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
             <div class="max-w-full overflow-x-auto">
+                
                 <table class="min-w-full">
                     <!-- table header start -->
                     <thead>
@@ -82,7 +83,7 @@
 
                                         <div>
                                             <span class="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
-                                                {{ $paiementFrais->annee_scolaire }}
+                                                {{ $paiementFrais->apprenantNiveau()->first()->annee()->first()->annee_scolaire }}
                                             </span>
 
                                         </div>
@@ -92,7 +93,7 @@
                             <td class="px-5 py-4 sm:px-6">
                                 <div class="flex items-center">
                                     <p class="text-gray-500 text-theme-sm dark:text-gray-400">
-                                        {{ $paiementFrais->niveau()->first()->nom }}
+                                        {{ $paiementFrais->apprenantNiveau()->first()->niveau()->first()->nom }}
                                     </p>
                                 </div>
                             </td>
@@ -121,7 +122,7 @@
                                     </x-secondary-button>
                                     @endcan
                                     @can('delete.bulletin')
-                                    <form action="{{ route('paiement_frais.destroy', [ $paiementFrais->id,$apprenant]) }}" onclick="deleteDialogue('Souhaitez vous vraiem.....', 'oui', 'annuler', this)" method="POST" class="ml-2">
+                                    <form action="{{ route('paiement_frais.destroy', [ $paiementFrais->id,$apprenant]) }}" onclick="deleteDialogue('Souhaitez vous vraiement supprimer ce paiement de frais de scolarité', 'oui', 'annuler', this)" method="POST" class="ml-2">
                                         @csrf
                                         @method('DELETE')
                                         <x-danger-button type="submit">

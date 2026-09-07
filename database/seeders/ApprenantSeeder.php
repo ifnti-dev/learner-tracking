@@ -26,9 +26,11 @@ class ApprenantSeeder extends Seeder
                 'sexe'           => 'F',
                 'adresse'        => 'Dakar, Sénégal',
                 'date_naissance' => '1998-05-12',
+                'niveau_actuel' => $noveaux_ids[4],
+                'cycle_de_base' => '02',
                 'created_at'     => now(),
                 'promotion_id'  => $promotions_ids[0],
-                'updated_at'     => now(),
+                'updated_atzebfzbu'     => now(),
                 'niveau_de_base'  => $noveaux_ids[4],
             ],
 

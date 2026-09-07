@@ -20,7 +20,7 @@ class BulletinController extends Controller
     public function index(Apprenant $apprenant)
 
     {
-        //
+        //  
     }
     public function bulletins(Apprenant $apprenant)
     {
@@ -82,14 +82,16 @@ class BulletinController extends Controller
             "niveau_id" => "required|exists:niveaux,id",
             'annee_scolaire'  => 'required|exists:annees,id'
         ]);
+
         $appNiveaux = ApprenantNiveau::where('apprenant_id', $apprenant->id)
             ->where('annee_id', $validated["annee_scolaire"])->first();
 
         if ($appNiveaux) {
+            if ($appNiveaux->bulletin()->first()) {
+                $messages = Message::error('Un bulletin pour cette année scolaire  existe déjà pour cet apprenant.');
 
-            $messages = Message::error('Un bulletin pour cette année scolaire  existe déjà pour cet apprenant.');
-
-            return redirect()->back()->withInput()->with($messages->toMap());
+                return redirect()->back()->withInput()->with($messages->toMap());
+            }
         }
 
 
@@ -173,17 +175,15 @@ class BulletinController extends Controller
 
         DB::transaction(function () use ($validated, $files_path, $apprenant) {
 
-            $appNiveaux = ApprenantNiveau::where("apprenant_id", $apprenant->id)->where('annee_id', $validated["annee_scolaire"]);
-
-            if (!$appNiveaux) {
-                $appNiveaux = ApprenantNiveau::create(
-                    [
-                        "niveau_id" => $validated["niveau_id"],
-                        "apprenant_id" => $apprenant->id,
-                        'annee_id' => $validated["annee_scolaire"],
-                    ]
-                );
-            }
+            $appNiveau = ApprenantNiveau::firstOrCreate(
+                [
+                    'apprenant_id' => $apprenant->id,
+                    'annee_id' => $validated["annee_scolaire"],
+                ],
+                [
+                    'niveau_id' => $validated["niveau_id"],
+                ]
+            );
 
 
 
@@ -197,7 +197,7 @@ class BulletinController extends Controller
                 'releveBAC2' => $files_path['releveBAC2'] ?? null,
 
                 "status" => $validated["status"],
-                'apprenant_niveau_id' => $appNiveaux->id,
+                'apprenant_niveau_id' => $appNiveau->id,
 
             ]);
         });
@@ -225,8 +225,11 @@ class BulletinController extends Controller
     {
         $annee_scolaires = Annee::all();
 
+        $niveauActuel = Niveau::find($apprenant->niveau_actuel);
 
-        $niveaux = $apprenant->niveaux()->distinct()->get();
+        $niveaux = $niveauActuel
+            ? $apprenant->niveaux()->where('code', '<=', $niveauActuel->code)->distinct()->get()
+            : collect();
 
         return view('bulletins.form', compact('apprenant', 'annee_scolaires', 'niveaux', 'bulletin'));
     }
@@ -339,11 +342,13 @@ class BulletinController extends Controller
 
 
 
-            $appNiveaux = ApprenantNiveau::firstOrCreate(
+            $appNiveau = ApprenantNiveau::firstOrCreate(
                 [
-                    "niveau_id" => $validated["niveau_id"],
-                    "apprenant_id" => $apprenant->id,
+                    'apprenant_id' => $apprenant->id,
                     'annee_id' => $validated["annee_scolaire"],
+                ],
+                [
+                    'niveau_id' => $validated["niveau_id"],
                 ]
             );
 
@@ -361,7 +366,7 @@ class BulletinController extends Controller
 
                 "status" => $validated["status"],
 
-                'apprenant_niveau_id' => $appNiveaux->id,
+                'apprenant_niveau_id' => $appNiveau->id,
             ]);
         });
 
@@ -377,9 +382,30 @@ class BulletinController extends Controller
      */
     public function destroy(Bulletin $bulletin)
     {
-        $bulletin->delete();
-        $appNiveaux = $bulletin->apprenantNiveau()->first();
+        if ($bulletin->bulletin1) {
+            Storage::delete('public/' . $bulletin->bulletin1);
+        }
+        if ($bulletin->bulletin2) {
+            Storage::delete('public/' . $bulletin->bulletin2);
+        }
+        if ($bulletin->bulletin3) {
+            Storage::delete('public/' . $bulletin->bulletin3);
+        }
+        if ($bulletin->releveCEPD) {
+            Storage::delete('public/' . $bulletin->releveCEPD);
+        }
+        if ($bulletin->releveBEPC) {
+            Storage::delete('public/' . $bulletin->releveBEPC);
+        }
+        if ($bulletin->releveBAC1) {
+            Storage::delete('public/' . $bulletin->releveBAC1);
+        }
+        if ($bulletin->releveBAC2) {
+            Storage::delete('public/' . $bulletin->releveBAC2);
+        }
 
+        $appNiveaux = $bulletin->apprenantNiveau()->first();
+        $bulletin->delete();
         if ($appNiveaux->paiementFrai()->first() == null) {
 
             $appNiveaux->delete();
