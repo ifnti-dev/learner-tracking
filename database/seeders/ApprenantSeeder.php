@@ -30,7 +30,7 @@ class ApprenantSeeder extends Seeder
                 'cycle_de_base' => '02',
                 'created_at'     => now(),
                 'promotion_id'  => $promotions_ids[0],
-                'updated_atzebfzbu'     => now(),
+                'updated_at'     => now(),
                 'niveau_de_base'  => $noveaux_ids[4],
             ],
 

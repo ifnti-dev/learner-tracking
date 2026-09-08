@@ -30,6 +30,11 @@ class PermissionSeeder extends Seeder
             'update.bulletin',
             'delete.bulletin',
 
+            'create.paiement_frais',
+            'view.paiement_frais',
+            'update.paiement_frais',
+            'delete.paiement_frais',
+
 
             'appouver.candidat',
             'view.candidat',

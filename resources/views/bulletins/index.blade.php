@@ -7,7 +7,7 @@
             class="text-base font-medium text-gray-800 dark:text-white/90">
             Gerer les bulletins de {{$apprenant->nom}}
         </h3>
-        @can('create.personne.responsable')
+        @can('create.bulletin')
         <div class="justify-end ml-auto">
             
             <x-primary-button>

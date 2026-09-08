@@ -7,7 +7,7 @@
             class="text-base font-medium text-gray-800 dark:text-white/90">
             Gerer les Aides financières de {{$apprenant->nom}}
         </h3>
-        @can('create.personne.responsable')
+        @can('create.paiement_frais')
         <div class="justify-end ml-auto">
 
             <x-primary-button>
@@ -114,14 +114,14 @@
 
                             <td class="px-5 py-4 sm:px-6">
                                 <div class="flex items-center">
-                                    @can('update.bulletin')
+                                    @can('update.paiement_frais')
                                     <x-secondary-button>
                                         <a href="{{ route('paiement_frais.edit',[ $paiementFrais->id,$apprenant->id]) }}">
                                             {{ __('Modifier') }}
                                         </a>
                                     </x-secondary-button>
                                     @endcan
-                                    @can('delete.bulletin')
+                                    @can('delete.paiement_frais')
                                     <form action="{{ route('paiement_frais.destroy', [ $paiementFrais->id,$apprenant]) }}" onclick="deleteDialogue('Souhaitez vous vraiement supprimer ce paiement de frais de scolarité', 'oui', 'annuler', this)" method="POST" class="ml-2">
                                         @csrf
                                         @method('DELETE')

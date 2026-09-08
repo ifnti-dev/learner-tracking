@@ -5,7 +5,7 @@
     <div
         :class="sidebarToggle ? 'justify-center' : 'justify-between'"
         class="flex items-center gap-2 pt-8 sidebar-header pb-7">
-        <a href="index.html">
+        <a href="{{ route('dashboard') }}">
             <span class="logo" :class="sidebarToggle ? 'hidden' : ''">
                 <img class="dark:hidden" src="./images/logo/logo.svg" alt="Logo" />
                 <img class="hidden dark:block" src="./images/logo/logo-dark.svg" alt="Logo" />
@@ -72,6 +72,7 @@
                         </a>
 
                     </li>
+                    @can('view.personne.responsable')
                     <li>
                         <a
                             href="{{ route('personne-responsables.index') }}" class="flex space-x-2 *:items-center rounded-lg px-4 py-3 text-gray-800 transition hover:bg-gray-100 dark:text-white/90 dark:hover:bg-white/[0.03] selected:bg-blue-200 selected:dark:bg-white/[0.03]">
@@ -83,6 +84,8 @@
                             </span>
                         </a>
                     </li>
+                    @endcan
+                    @can('view.apprenant')
                     <li>
                         <a
                             href="{{ route('apprenants.index') }}" class="flex space-x-2 *:items-center rounded-lg px-4 py-3 text-gray-800 transition hover:bg-gray-100 dark:text-white/90 dark:hover:bg-white/[0.03] selected:bg-blue-200  selected:dark:bg-white/[0.03]">
@@ -94,6 +97,8 @@
                             </span>
                         </a>
                     </li>
+                    @endcan
+                    @can('promotion.view')
                     <li>
                         <a
                             href="{{ route('promotions.index') }}" class="flex space-x-2 *:items-center rounded-lg px-4 py-3 text-gray-800 transition hover:bg-gray-100 dark:text-white/90 dark:hover:bg-white/[0.03] selected:bg-blue-200  selected:dark:bg-white/[0.03]">
@@ -105,6 +110,8 @@
                             </span>
                         </a>
                     </li>
+                    @endcan
+                    @can('seance.view')
                     <li>
                         <a
                             href="{{ route('seances.index') }}"
@@ -118,6 +125,8 @@
                             </span>
                         </a>
                     </li>
+                    @endcan
+                    @can('view.candidat')
                     <li>
                         <a
                             href="{{ route('candidats.index') }}" class="flex space-x-2 *:items-center rounded-lg px-4 py-3 text-gray-800 transition hover:bg-gray-100 dark:text-white/90 dark:hover:bg-white/[0.03] selected:bg-blue-200 selected:dark:bg-white/[0.03]">
@@ -129,6 +138,8 @@
                             </span>
                         </a>
                     </li>
+                    @endcan
+                    
                     <li>
                         <a
                             href=" {{ route('document-pedagogiques.index')}}" class="flex space-x-2 *:items-center rounded-lg px-4 py-3 text-gray-800 transition hover:bg-gray-100 dark:text-white/90 dark:hover:bg-white/[0.03] selected:bg-blue-200 selected:dark:bg-white/[0.03]">

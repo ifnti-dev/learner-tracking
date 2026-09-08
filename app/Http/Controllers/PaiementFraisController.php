@@ -14,9 +14,24 @@ use App\Models\Annee;
 use App\Models\ApprenantNiveau;
 use Illuminate\Support\Facades\DB;
 
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class PaiementFraisController extends Controller
+use Spatie\Permission\Middleware\RoleMiddleware;
+use Spatie\Permission\Middleware\PermissionMiddleware;
+
+
+class PaiementFraisController extends Controller implements HasMiddleware
 {
+        public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:view.paiement_frais', only: ['index', 'show']),
+            new Middleware('permission:create.paiement_frais', only: ['create', 'store']),
+            new Middleware('permission:update.paiement_frais', only: ['edit', 'update']),
+            new Middleware('permission:delete.paiement_frais', only: ['destroy']),
+        ];
+    }
     /**
      * Display a listing of the resource.
      */

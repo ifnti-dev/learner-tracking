@@ -12,8 +12,23 @@ use Illuminate\Support\Facades\DB;
 use App\Models\ApprenantNiveau;
 use Illuminate\Support\Facades\Storage;
 
-class BulletinController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+
+use Spatie\Permission\Middleware\RoleMiddleware;
+use Spatie\Permission\Middleware\PermissionMiddleware;
+
+class BulletinController extends Controller implements HasMiddleware
 {
+        public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:view.bulletin', only: ['bulletins', 'show']),
+            new Middleware('permission:create.bulletin', only: ['create', 'store']),
+            new Middleware('permission:update.bulletin', only: ['edit', 'update']),
+            new Middleware('permission:delete.bulletin', only: ['destroy']),
+        ];
+    }
     /**
      * Display a listing of the resource.
      */
