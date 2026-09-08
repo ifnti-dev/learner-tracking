@@ -6,9 +6,13 @@
         :class="sidebarToggle ? 'justify-center' : 'justify-between'"
         class="flex items-center gap-2 pt-8 sidebar-header pb-7">
         <a href="{{ route('dashboard') }}">
-            <span class="logo" :class="sidebarToggle ? 'hidden' : ''">
-                <img class="dark:hidden" src="./images/logo/logo.svg" alt="Logo" />
-                <img class="hidden dark:block" src="./images/logo/logo-dark.svg" alt="Logo" />
+            <span class="logo flex" :class="sidebarToggle ? 'hidden' : ''">
+                <img class="  " src="./images/logo/logo.svg" alt="Logo" />
+                <div class=" h-12 flex items-center justify-center">
+                    <span class="font-sans font-black text-gray-400 uppercase dark:text-white text-lg">Learner Tracking</span>
+                </div>
+
+
             </span>
 
             <img
@@ -139,19 +143,20 @@
                         </a>
                     </li>
                     @endcan
-                    
+
                     <li>
                         <a
                             href=" {{ route('document-pedagogiques.index')}}" class="flex space-x-2 *:items-center rounded-lg px-4 py-3 text-gray-800 transition hover:bg-gray-100 dark:text-white/90 dark:hover:bg-white/[0.03] selected:bg-blue-200 selected:dark:bg-white/[0.03]">
-                            
+
                             <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
                                 Document pedagogiques
                             </span>
                         </a>
                     </li>
-                         <a
+                    <li>
+                        <a
                             href=" {{ route('emprunts.index')}}" class="flex space-x-2 *:items-center rounded-lg px-4 py-3 text-gray-800 transition hover:bg-gray-100 dark:text-white/90 dark:hover:bg-white/[0.03] selected:bg-blue-200 selected:dark:bg-white/[0.03]">
-                            
+
                             <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
                                 Emprunts
                             </span>

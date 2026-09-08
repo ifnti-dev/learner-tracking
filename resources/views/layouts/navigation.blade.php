@@ -27,9 +27,11 @@
             </button>
 
             {{-- Logo (mobile) --}}
-            <a href="{{ route('dashboard') }}" class="lg:hidden">
+            <a href="{{ route('dashboard') }}" class="lg:hidden flex">
                 <img class="dark:hidden" src="{{ asset('images/logo/logo.svg') }}" alt="Logo" />
-                <img class="hidden dark:block" src="{{ asset('images/logo/logo-dark.svg') }}" alt="Logo" />
+                 <div class=" h-12 flex items-center justify-center">
+                    <span class="font-sans font-black text-gray-400 uppercase dark:text-white text-lg">Learner Tracking</span>
+                </div>
             </a>
 
             {{-- Application nav menu button (mobile) --}}
