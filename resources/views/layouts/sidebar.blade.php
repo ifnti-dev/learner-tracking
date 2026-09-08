@@ -1,6 +1,6 @@
 <aside
     :class="sidebarToggle ? 'translate-x-0 lg:w-[90px]' : '-translate-x-full'"
-    class="sidebar fixed left-0 top-0 z-9999 flex h-screen w-[290px] flex-col overflow-y-hidden border-r border-gray-200 bg-white px-5 dark:border-gray-800 dark:bg-gray-900 lg:static lg:translate-x-0">
+    class="sidebar fixed left-0 top-0 z-[999999] flex h-screen w-[290px] flex-col overflow-y-hidden border-r border-gray-200 bg-white px-5 dark:border-gray-800 dark:bg-gray-900 lg:static lg:translate-x-0">
     <!-- SIDEBAR HEADER -->
     <div
         :class="sidebarToggle ? 'justify-center' : 'justify-between'"
@@ -147,9 +147,6 @@
                     <li>
                         <a
                             href=" {{ route('document-pedagogiques.index')}}" class="flex space-x-2 *:items-center rounded-lg px-4 py-3 text-gray-800 transition hover:bg-gray-100 dark:text-white/90 dark:hover:bg-white/[0.03] selected:bg-blue-200 selected:dark:bg-white/[0.03]">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-slate-500">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
-                            </svg>
 
                             <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
                                 Document pedagogiques
