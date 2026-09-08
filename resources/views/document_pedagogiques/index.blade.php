@@ -7,7 +7,7 @@
             class="text-base font-medium text-gray-800 dark:text-white/90">
             Liste des document pedagogiques
         </h3>
-
+        @can('document.pedagogique.create')
         <div class="justify-end ml-auto">
             <x-primary-button>
                 <a href="{{ route('document-pedagogiques.create') }}">
@@ -15,6 +15,7 @@
                 </a>
             </x-primary-button>
         </div>
+        @endcan
     </div>
     <div
         class="">
@@ -110,13 +111,17 @@
                                 </div>
                             </td>
                             <td class="px-5 py-4 sm:px-6">
+                                
                                 <div class="flex items-center">
+                                    @can('document.pedagogique.update')
                                     <x-secondary-button>
                                         <a href="{{ route('document-pedagogiques.edit', $document->id) }}">
                                             {{ __('Modifier') }}
                                         </a>
                                     </x-secondary-button>
-
+                                    @endcan
+                                    
+                                    @can('document.pedagogique.destroy')
                                     <form action="{{ route('document-pedagogiques.destroy', $document->id) }}" onclick="deleteDialogue('Souhaitez vous vraiem.....', 'oui', 'annuler', this)" method="POST" class="ml-2">
                                         @csrf
                                         @method('DELETE')
@@ -124,6 +129,7 @@
                                             {{ __('Retirer') }}
                                         </x-danger-button>
                                     </form>
+                                    @endcan
 
                                 </div>
                             </td>

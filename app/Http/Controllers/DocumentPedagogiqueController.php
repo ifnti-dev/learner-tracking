@@ -7,12 +7,23 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\Message;
 use App\Models\Niveau;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class DocumentPedagogiqueController extends Controller
+class DocumentPedagogiqueController extends Controller implements  HasMiddleware
 {
     /**
      * Display a listing of the resource.
      */
+     public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:document.pedagogique.view', only: ['index']),
+            new Middleware('permission:document.pedagogique.create', only: ['create', 'store']),
+            new Middleware('permission:document.pedagogique.update', only: ['edit', 'update']),
+            new Middleware('permission:document.pedagogique.destroy', only: ['destroy']),
+        ];
+    }
     public function index()
     {
         $document_pedagogiques = DocumentPedagogique::with('niveau')->get();

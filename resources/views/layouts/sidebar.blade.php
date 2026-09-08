@@ -143,25 +143,32 @@
                         </a>
                     </li>
                     @endcan
-
+                     @can('document.pedagogique.view')
                     <li>
                         <a
                             href=" {{ route('document-pedagogiques.index')}}" class="flex space-x-2 *:items-center rounded-lg px-4 py-3 text-gray-800 transition hover:bg-gray-100 dark:text-white/90 dark:hover:bg-white/[0.03] selected:bg-blue-200 selected:dark:bg-white/[0.03]">
-
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-slate-500">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
+                            </svg>
                             <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
                                 Document pedagogiques
                             </span>
                         </a>
                     </li>
+                    @endcan
+                     @can('emprunt.view')
                     <li>
                         <a
                             href=" {{ route('emprunts.index')}}" class="flex space-x-2 *:items-center rounded-lg px-4 py-3 text-gray-800 transition hover:bg-gray-100 dark:text-white/90 dark:hover:bg-white/[0.03] selected:bg-blue-200 selected:dark:bg-white/[0.03]">
-
+                            <svg xmlns="http://w3.org" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-500">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 13.5l3-3m0 0l3 3m-3-3v6m1.06-12l1.062 1.062a1.875 1.875 0 002.652 0L19.5 6M3 15.75A2.25 2.25 0 005.25 18H15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0015 4.5H5.25A2.25 2.25 0 003 6.75v9z" />
+                            </svg>
                             <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
                                 Emprunts
                             </span>
                         </a>
                     </li>
+                    @endcan
                 </ul>
             </div>
         </nav>

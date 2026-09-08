@@ -55,7 +55,13 @@ class PermissionSeeder extends Seeder
             'emprunt.create',
             'emprunt.update',
             'emprunt.destroy',
-            'emprunt.restituer'
+            'emprunt.restituer',
+
+            'document.pedagogique.view',
+            'document.pedagogique.create',
+            'document.pedagogique.update',
+            'document.pedagogique.destroy'
+
 
             
             
