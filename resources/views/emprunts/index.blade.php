@@ -28,7 +28,8 @@
                             </th>
                             <th class="px-5 py-3 sm:px-6 text-left">
                                 <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">
-                                    Date Prévue
+                                    Date Prévue 
+
                                 </p>
                             </th>
                             <th class="px-5 py-3 sm:px-6 text-left">
