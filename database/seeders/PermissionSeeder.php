@@ -46,6 +46,12 @@ class PermissionSeeder extends Seeder
             'seance.gerer.absence',
             'seance.update',
 
+            'emprunt.view',
+            'emprunt.create',
+            'emprunt.update',
+            'emprunt.destroy',
+            'emprunt.restituer'
+
             
             
         ];

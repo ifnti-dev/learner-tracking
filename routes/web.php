@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function () {
             
         ]
     );
+    Route::patch('/emprunts/{emprunt}/restituer', [EmpruntController::class, 'restituer'])->name('emprunts.restituer');
     //custom index for bulletin
     Route::get("bulletins/{apprenant}/",[BulletinController::class,'bulletins'])->name('bulletins');
     Route::get("bulletins/{bulletin}/{apprenant}/edit",[BulletinController::class,'edit'])->name('bulletins.edit');

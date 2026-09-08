@@ -13,11 +13,14 @@ return new class extends Migration
     {
         Schema::create('emprunts', function (Blueprint $table) {
             $table->id();
-            $table->date('date');
-            $table->date('date_restitution');
+            $table->date('date_emprunt')->nullable()->default('now()');
+            $table->date('date_restitution')->nullable();
+            $table->date('date_restitution_prevue');
+            $table->boolean('est_restitue')->default(false);
             $table->foreignId('apprenant_id')->nullable()->constrained('apprenants')->onDelete('set null');
             $table->timestamps();
         });
+        
     }
 
     /**

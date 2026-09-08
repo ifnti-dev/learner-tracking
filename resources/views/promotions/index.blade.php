@@ -66,7 +66,7 @@
                             </td>
                             <td class="px-5 py-4 sm:px-6">
                                 <p class="text-gray-500 text-theme-sm dark:text-gray-400">
-                                    {{ $promotion->annee_creation }}
+                                    {{ $promotion->annee->annee_scolaire }}
                                 </p>
                             </td>
                             <td class="px-5 py-4 sm:px-6">
@@ -85,6 +85,7 @@
                                 </p>
                             </td>
                             <td class="px-5 py-4 sm:px-6">
+                                
                                 <details class=" ">
                                      <summary
                                         class="cursor-pointer list-none rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 shadow-sm hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">
@@ -146,6 +147,5 @@
                 </table>
             </div>
         </div>
-        <!-- ====== Table Six End -->
     </div>
 </x-app-layout>

@@ -13,36 +13,34 @@ class EmpruntSeeder extends Seeder
      */
     public function run(): void
     {
-
-
         DB::table('emprunts')->insert([
             [
-                'date'              => '2026-08-01',
-                'date_restitution'  => '2026-08-15',
+                'date_restitution_prevue'=>'12-10-2026',
                 'apprenant_id'      => 1,
                 'created_at'        => now(),
                 'updated_at'        => now(),
+                'date_restitution' => null
             ],
             [
-                'date'              => '2026-08-03',
-                'date_restitution'  => '2026-08-17',
+                'date_restitution_prevue'=>'05-09-2026',
                 'apprenant_id'      => 2,
                 'created_at'        => now(),
                 'updated_at'        => now(),
+                'date_restitution' => null
             ],
             [
-                'date'              => '2026-08-05',
-                'date_restitution'  => '2026-08-20',
+                'date_restitution_prevue'=>'06-09-2026',
                 'apprenant_id'      => 3,
                 'created_at'        => now(),
                 'updated_at'        => now(),
+                'date_restitution' => null
             ],
             [
-                'date'              => '2026-08-07',
-                'date_restitution'  => '2026-08-21',
+                'date_restitution_prevue'=>'08-09-2026',
                 'apprenant_id'      => 4,
                 'created_at'        => now(),
                 'updated_at'        => now(),
+                'date_restitution' => null
             ],
         ]);
         echo "emprunt seeder";

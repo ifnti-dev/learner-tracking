@@ -10,6 +10,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Emprunt extends Model
 {
+      protected $fillable = [
+        'date_emprunt',
+        'date_restitution',
+        'date_restitution_prevue',
+        'est_restitue',
+        'apprenant_id',
+    ];
     public function apprenant(): BelongsTo
     {
         return $this->belongsTo(Apprenant::class);

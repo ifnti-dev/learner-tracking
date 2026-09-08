@@ -19,8 +19,8 @@
                     <thead>
                         <tr class="border-b border-gray-100 dark:border-gray-800">
                             <th class="px-5 py-3 text-left">Apprenant</th>
-                            <th class="px-5 py-3 text-left">Absent ?</th>
-                            <th class="px-5 py-3 text-left">Justifié ?</th>
+                            <th class="px-5 py-3 text-left">Absent </th>
+                            <th class="px-5 py-3 text-left">Justifié </th>
                             <th class="px-5 py-3 text-left">Justification</th>
                         </tr>
                     </thead>
@@ -67,6 +67,9 @@
                 <x-primary-button type="submit">
                     Enregistrer les absences
                 </x-primary-button>
+                <x-secondary-button>
+                        <a href="{{ route('seances.index') }}">Annuler</a>
+                </x-secondary-button>
             </div>
         </form>
     </div>

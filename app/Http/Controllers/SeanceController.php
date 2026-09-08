@@ -154,6 +154,7 @@ class SeanceController extends Controller implements HasMiddleware
             'absents.*.justification' => 'nullable|required_if:absents.*.est_justifie,1|string|max:500',
             'absents.*.absent'       => 'nullable|boolean',
         ]);
+        
         Absence::where('seance_id', $seance->id)->delete();
         if (!empty($validated['absents'])) {
             foreach ($validated['absents'] as $absent) {

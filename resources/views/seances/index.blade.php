@@ -6,7 +6,7 @@
             Liste des séances
         </h3>
         <div class="justify-end ml-auto">
-          
+
             @can("seance.planifier")
             <x-primary-button>
                 <a href="{{ route('seances.planifierSeance') }}">
@@ -14,7 +14,7 @@
                 </a>
             </x-primary-button>
             @endcan
-            
+
         </div>
     </div>
 
@@ -91,9 +91,24 @@
                                 </p>
                             </td>
                             <td class="px-5 py-4 sm:px-6">
-                                <span class="inline-flex rounded-full px-3 py-1 text-xs font-medium bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300">
-                                    {{ $seance->etat }}
+                                @if($seance->etat=='TERMINER')
+                                <span class="inline-flex rounded-full px-3 py-1 text-xs font-medium bg-green-100 text-green-700 dark:bg-gray-800 dark:text-gray-300">
+                                    TERMINER
                                 </span>
+                                @elseif($seance->etat=='ANNULER')
+                                <span class="inline-flex rounded-full px-3 py-1 text-xs font-medium bg-red-100 text-red-700 dark:bg-gray-800 dark:text-gray-300">
+                                    ANNULER
+                                </span>
+                                @elseif($seance->etat=='ENCOURS')
+                                <span class="inline-flex rounded-full px-3 py-1 text-xs font-medium bg-orange-100 text-orange-700 dark:bg-gray-800 dark:text-gray-300">
+                                    ENCOURS
+                                </span>
+                                @elseif($seance->etat=='PLANIFIER')
+                                <span class="inline-flex rounded-full px-3 py-1 text-xs font-medium bg-blue-100 text-blue-700 dark:bg-gray-800 dark:text-gray-300">
+                                    PLANIFIER
+                                </span>
+                                @endif
+
                             </td>
                             <td class="px-5 py-4 sm:px-6">
                                 <div class="flex items-center space-x-3">
@@ -141,13 +156,12 @@
                                     @endcan
                                     @can("seance.view")
                                     <a href="{{ route('seances.voirAbsents', $seance->id) }}">
-                                        <x-secondary-button >
+                                        <x-secondary-button>
                                             Voir absents
                                         </x-secondary-button>
                                     </a>
                                     @endcan
                                     @endif
-
                                 </div>
                             </td>
                         </tr>

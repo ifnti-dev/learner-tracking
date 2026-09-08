@@ -9,13 +9,12 @@
 
     <form action="{{ route('seances.creer') }}" method="POST">
         @csrf
-        <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
-            <div class="grid grid-cols-12 gap-6 border-t border-gray-100 p-5 sm:p-6 dark:border-gray-800">
+            <div class="grid grid-cols-12 gap-6 border-gray-100 p-5 sm:p-6 dark:border-gray-800">
 
                
                 <div class="col-span-5">
                     <x-input-label for="intitule" value="Intitulé de la séance" />
-                    <x-text-input id="intitule" name="intitule" type="text" :value="old('intitule')" autofocus />
+                    <x-text-input id="intitule" name="intitule" type="text" :value="old('intitule')" required autofocus />
                     <x-input-error :messages="$errors->get('intitule')" class="mt-2" />
                 </div>
                 <div class="col-span-4">
@@ -25,14 +24,14 @@
                         <option value="">Promotion concernée</option>
                         @foreach ($promotions as $promotion)
                             <option value="{{ $promotion->id }}" @selected(old('promotion_id') == $promotion->id)>
-                                {{ $promotion->nom }} ({{ $promotion->annee_creation }})
+                                {{ $promotion->nom }} 
                             </option>
                         @endforeach
                     </select>
                     <x-input-error :messages="$errors->get('promotion_id')" class="mt-2" />
                 </div>
                 <div class="col-span-3">
-                    <x-input-label for="type_seance" value="Type de séance" />
+                    <x-input-label for="type_seance" value="Type de séance" required />
                     <select name="type_seance" id="type_seance"
                         class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-white/90">
                         <option value="PRESENTIEL" @selected(old('type_seance') === 'PRESENTIEL')>PRESENTIEL</option>
@@ -45,22 +44,22 @@
                 <div class="col-span-4">
                     <x-input-label for="date" value="Date de la séance" />
                     <input id="date" name="date" type="date" value="{{ old('date') }}"
-                        class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-white/90">
+                        class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-white/90" required >
                     <x-input-error :messages="$errors->get('date')" class="mt-2" />
                 </div>
 
                
                 <div class="col-span-4">
                     <x-input-label for="heure_debut" value="Heure de début" />
-                    <x-text-input id="heure_debut" name="heure_debut" type="time" :value="old('heure_debut')" />
+                    <x-text-input id="heure_debut" name="heure_debut" type="time" :value="old('heure_debut')" required />
                     <x-input-error :messages="$errors->get('heure_debut')" class="mt-2" />
                 </div>
 
                
                 <div class="col-span-4">
                     <x-input-label for="heure_fin" value="Heure de fin" />
-                    <x-text-input id="heure_fin" name="heure_fin" type="time" :value="old('heure_fin')" />
-                    <x-input-error :messages="$errors->get('heure_fin')" class="mt-2" />
+                    <x-text-input id="heure_fin" name="heure_fin" type="time" :value="old('heure_fin')" required />
+                    <x-input-error :messages="$errors->get('heure_fin')" class="mt-2"/>
                 </div>
 
                
@@ -75,7 +74,7 @@
                 <div class="col-span-12">
                     <x-input-label for="description" value="Description" />
                     <textarea id="description" name="description" rows="3"
-                        class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90">{{ old('description') }}</textarea>
+                        class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90" required >{{ old('description') }}</textarea>
                     <x-input-error :messages="$errors->get('description')" class="mt-2" />
                 </div>
             </div>
@@ -90,7 +89,7 @@
                     </x-primary-button>
                 </div>
             </div>
-        </div>
+        
     </form>
     <script>
         document.addEventListener('DOMContentLoaded', function () {

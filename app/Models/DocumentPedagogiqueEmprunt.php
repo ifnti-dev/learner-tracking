@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class DocumentPedagogiqueEmprunt extends Model
 {
+     public $incrementing = false;
+    protected $fillable = [
+        'emprunt_id',
+        'document_pedagogique_id'
+    ];
     public function document_pedagogique():BelongsTo{
         return $this->belongsTo(DocumentPedagogique::class);
     }

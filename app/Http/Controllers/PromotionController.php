@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Message;
+use App\Models\Annee;
 use App\Models\Promotion;
 use Illuminate\Http\Request;
 use App\Models\Apprenant;
@@ -25,9 +26,10 @@ class PromotionController extends Controller implements HasMiddleware
             new Middleware('permission:promotion.destroy', only: ['destroy']),
         ];
     }
+    
     public function index()
     {
-        $promotions = Promotion::withCount('apprenants')->get();
+        $promotions = Promotion::withCount('apprenants','annee')->get();
         return view("promotions.index", compact("promotions"));
     }
 
@@ -38,7 +40,8 @@ class PromotionController extends Controller implements HasMiddleware
      */
     public function create()
     {
-        return view("promotions.create");
+        $annees=Annee::all();
+        return view("promotions.create",compact('annees'));
     }
 
     /**
@@ -46,14 +49,14 @@ class PromotionController extends Controller implements HasMiddleware
      */
     public function store(Request $request)
     {
-
         $validated = $request->validate([
             'nom'   => ['required', 'string', 'max:255', 'unique:promotions,nom'],
-            'annee_creation' => ['required', 'integer', 'min:1900'],
-            'est_active' => "required",
-            "date_limite" => "required|date"
-        ]);
+             'est_active' => "required", Rule::in(['oui', 'non']),
+            "date_limite" => "required|date",
+            'annee_id'=>'required|integer|exists:annees,id'
 
+        ]);
+    
         $message = Message::success('la promotion est enregistrée avec succès');
         Promotion::create($validated);
         return to_route('promotions.index')->with($message->toMap());
@@ -74,7 +77,9 @@ class PromotionController extends Controller implements HasMiddleware
      */
     public function edit(Promotion $promotion)
     {
-        return view("promotions.edit", compact("promotion"));
+        
+        $annees=Annee::all();
+        return view("promotions.edit", compact("promotion","annees"));
     }
 
     /**
@@ -90,9 +95,10 @@ class PromotionController extends Controller implements HasMiddleware
                 'max:255',
                 Rule::unique("promotions")->ignore($promotion->id),
             ],
-            'annee_creation' => ['required', 'integer', 'min:1900'],
             "date_limite" => "required",
-            'est_active' => "required"
+            'est_active' => "required", Rule::in(['oui', 'non']),
+            'annee_id'=>'required|integer|exists:annees,id'
+
 
         ]);
         $promotion->update($validated);
